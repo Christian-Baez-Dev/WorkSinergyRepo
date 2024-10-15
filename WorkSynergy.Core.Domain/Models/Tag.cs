@@ -5,5 +5,6 @@ namespace WorkSynergy.Core.Domain.Models
     public class Tag : BaseEntity
     {
         public string Name { get; set; }
+        public ICollection<PostTags> Posts { get; set; }
     }
 }

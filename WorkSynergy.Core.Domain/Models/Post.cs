@@ -11,5 +11,10 @@ namespace WorkSynergy.Core.Domain.Models
         public string PaymentMethod { get; set; }
         public string Category { get; set; }
         public string CreatorUserId { get; set; }
+
+        public ICollection<JobApplications> Applications { get; set; }
+        public ICollection<JobRating> Ratings { get; set; }
+        public ICollection<PostTags> Tags { get; set; }
+
     }
 }

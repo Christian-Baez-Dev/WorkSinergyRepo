@@ -5,7 +5,8 @@ namespace WorkSynergy.Core.Domain.Models
     public class JobApplications : BaseEntity
     {
         public string ApplicantId { get; set; }
-        public int JobId { get; set; }
+        public int PostId { get; set; }
+        public Post Post { get; set; }
         public string Status { get; set; }
 
     }
