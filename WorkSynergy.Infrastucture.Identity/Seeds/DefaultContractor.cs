@@ -20,6 +20,7 @@ namespace WorkSynergy.Infrastucture.Identity.Seeds
             defaultUser.LastName = "Contractor";
             defaultUser.EmailConfirmed = true;
             defaultUser.PhoneNumberConfirmed = true;
+            defaultUser.Uuid = "kbsfbhklf7923bufasd";
             defaultUser.IsActive = true;
             if (userManager.Users.All(u => u.Id != defaultUser.Id))
             {
