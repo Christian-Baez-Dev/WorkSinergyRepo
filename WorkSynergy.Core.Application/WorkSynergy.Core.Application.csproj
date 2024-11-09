@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Enums\" />
+    <Folder Include="Features\Tags\Queries\" />
     <Folder Include="Mappings\" />
     <Folder Include="Services\" />
   </ItemGroup>
