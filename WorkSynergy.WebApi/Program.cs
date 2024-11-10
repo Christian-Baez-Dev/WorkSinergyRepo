@@ -5,6 +5,7 @@ using WorkSynergy.Infrastucture.Identity;
 using WorkSynergy.Infrastucture.Identity.Models;
 using WorkSynergy.Infrastucture.Identity.Seeds;
 using WorkSynergy.Infrastucture.Persistence;
+using WorkSynergy.WebApi.Extensions;
 
 namespace WorkSynergy.WebApi
 {
@@ -73,6 +74,8 @@ namespace WorkSynergy.WebApi
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSwaggerExtension();
+            app.UseErrorHandlingMiddleware();
             app.UseHealthChecks("/health");
             app.UseSession();
             app.MapControllers();

@@ -11,17 +11,13 @@ namespace WorkSynergy.Core.Application.Dtos.Account
     {
         [SwaggerParameter(Description = "El correo electronico del usuario")]
         public string Email { get; set; }
+        [SwaggerParameter(Description = "Fecha de nacimiento del usuario")]
+        public DateTime BirthDate { get; set; }
         [SwaggerParameter(Description = "El nombre de usuario")]
-        public string Username { get; set; }
-        [SwaggerParameter(Description = "El nombre del usuario")]
         public string FirstName { get; set; }
         [SwaggerParameter(Description = "El apellido del usuario")]
         public string LastName { get; set; }
         [SwaggerParameter(Description = "El documento de identidad del usuario")]
-        public string DocumentId { get; set; }
-        [SwaggerParameter(Description = "El numero de telefono del usuario")]
-        public string PhoneNumber { get; set; }
-        [SwaggerParameter(Description = "La contraseña del usuario")]
         public string? Password { get; set; }
         [SwaggerParameter(Description = "La confirmacion de la contraseña del usuario")]
         public string? ConfirmPassword { get; set; }
