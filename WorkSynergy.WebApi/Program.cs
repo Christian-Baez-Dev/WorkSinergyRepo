@@ -72,6 +72,9 @@ namespace WorkSynergy.WebApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseCors(a => a.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+            app.UseHttpsRedirection();
             app.UseRouting();
 
             app.UseAuthentication();
