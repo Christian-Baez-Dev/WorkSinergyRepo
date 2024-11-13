@@ -140,6 +140,13 @@ namespace WorkSynergy.Infrastucture.Identity.Services
                 return response;
             }
 
+            if (request.Password != request.ConfirmPassword)
+            {
+                response.HasError = true;
+                response.Error = $"The password and confirm password are diferent";
+                return response;
+            }
+
             if (!Enum.IsDefined(typeof(UserRoles), request.Role))
             {
 
