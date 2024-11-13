@@ -25,7 +25,7 @@ namespace WorkSynergy.WebApi.Controllers
          Description = "Autentica un usuario en el sistema y le retorna un JWT"
         )]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> AuthenticateAsync(AuthenticationRequest request)
+        public async Task<IActionResult> AuthenticateAsync([FromBody] AuthenticationRequest request)
         {
             return Ok(await _accountService.AuthenticateAsync(request));
         }
