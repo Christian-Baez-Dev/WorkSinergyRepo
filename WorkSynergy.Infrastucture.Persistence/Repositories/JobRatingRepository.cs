@@ -7,7 +7,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Repositories
 {
     public class JobRatingRepository : GenericRepository<JobRating>, IJobRatingRepository
     {
-        public JobRatingRepository(ApplicationContext context, DbSet<JobRating> dbSet) : base(context, dbSet)
+        public JobRatingRepository(ApplicationContext context) : base(context)
         {
         }
     }

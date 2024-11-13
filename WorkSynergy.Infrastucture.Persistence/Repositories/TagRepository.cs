@@ -7,7 +7,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Repositories
 {
     public class TagRepository : GenericRepository<Tag>, ITagRepository
     {
-        public TagRepository(ApplicationContext context, DbSet<Tag> dbSet) : base(context, dbSet)
+        public TagRepository(ApplicationContext context) : base(context)
         {
         }
     }

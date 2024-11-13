@@ -7,8 +7,18 @@ namespace WorkSynergy.Infrastucture.Persistence.Repositories
 {
     public class PostRepository : GenericRepository<Post>, IPostRepository
     {
-        public PostRepository(ApplicationContext context, DbSet<Post> dbSet) : base(context, dbSet)
+        public PostRepository(ApplicationContext context) : base(context)
         {
+
+        }
+        public virtual async Task<Post> GetByIdWithIncludeAsync(int id, List<string> properties)
+        {
+            var query = _dbSet.AsQueryable();
+            foreach (var property in properties)
+            {
+                query = query.Include(property);
+            }
+            return await query.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

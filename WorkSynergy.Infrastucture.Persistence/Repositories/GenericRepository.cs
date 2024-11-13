@@ -1,19 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
+using WorkSynergy.Core.Domain.Common;
 using WorkSynergy.Infrastucture.Persistence.Contexts;
 
 namespace WorkSynergy.Infrastucture.Persistence.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T>
-        where T : class
+        where T : BaseEntity
     {
-        private readonly ApplicationContext _context;
-        private readonly DbSet<T> _dbSet;
+        protected readonly ApplicationContext _context;
+        protected readonly DbSet<T> _dbSet;
 
-        public GenericRepository(ApplicationContext context, DbSet<T> dbSet)
+        public GenericRepository(ApplicationContext context)
         {
             _context = context;
-            _dbSet = dbSet;
+            _dbSet = context.Set<T>();
         }
 
         public async Task<T> CreateAsync(T entity)
@@ -32,14 +33,13 @@ namespace WorkSynergy.Infrastucture.Persistence.Repositories
 
         public async Task DeleteAsync(T entity)
         {
-
-                _dbSet.Remove(entity);
-                await _context.SaveChangesAsync();
-            
-
+            entity.IsDeleted = true;
+            entity.DeletedAt = DateTime.UtcNow;
+            await UpdateAsync(entity, entity.Id);
         }
 
         public async Task<List<T>> GetAllAsync() => await _dbSet.ToListAsync();
+        public async Task<List<T>> GetAllAsync(int skip, int count) => await _dbSet.Skip(skip).Take(count).ToListAsync();
 
         public async Task<List<T>> GetAllWithIncludeAsync(List<string> properties)
         {

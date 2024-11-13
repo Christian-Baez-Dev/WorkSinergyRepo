@@ -7,7 +7,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Repositories
 {
     public class FreelancerJobOffersRepository : GenericRepository<FreelancerJobOffers>, IFreelancerJobOffersRepository
     {
-        public FreelancerJobOffersRepository(ApplicationContext context, DbSet<FreelancerJobOffers> dbSet) : base(context, dbSet)
+        public FreelancerJobOffersRepository(ApplicationContext context) : base(context)
         {
         }
     }
