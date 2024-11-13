@@ -8,8 +8,8 @@ namespace WorkSynergy.Infrastucture.Identity.Seeds
     {
         public static async Task SeedAsync(UserManager<WorkSynergyUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            await roleManager.CreateAsync(new IdentityRole(UserRoles.Applicant.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(UserRoles.Contractor.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(UserRoles.Client.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(UserRoles.Freelancer.ToString()));
         }
     }
 }

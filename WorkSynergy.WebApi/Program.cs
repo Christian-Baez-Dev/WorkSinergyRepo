@@ -54,8 +54,8 @@ namespace WorkSynergy.WebApi
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
                     await DefaultRoles.SeedAsync(userManager, roleManager);
-                    await DefaultApplicant.SeedAsync(userManager, roleManager);
-                    await DefaultContractor.SeedAsync(userManager, roleManager);
+                    await DefaultFreelancer.SeedAsync(userManager, roleManager);
+                    await DefaultClient.SeedAsync(userManager, roleManager);
 
                 }
                 catch (Exception ex)

@@ -36,7 +36,7 @@ namespace WorkSynergy.WebApi.Controllers
             Description = "Recibe los parametros necesarios para crear un usuario"
         )]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> RegisterUserAsync(UserRegisterRequest request)
+        public async Task<IActionResult> RegisterUserAsync([FromBody] UserRegisterRequest request)
         {
             var origin = Request.Headers["origin"];
             return Ok(await _accountService.RegisterUserAsync(request, origin));

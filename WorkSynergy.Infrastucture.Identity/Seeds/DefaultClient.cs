@@ -9,7 +9,7 @@ using WorkSynergy.Infrastucture.Identity.Models;
 
 namespace WorkSynergy.Infrastucture.Identity.Seeds
 {
-    public static class DefaultContractor
+    public static class DefaultClient
     {
         public static async Task SeedAsync(UserManager<WorkSynergyUser> userManager, RoleManager<IdentityRole> roleManager)
         {
@@ -28,7 +28,7 @@ namespace WorkSynergy.Infrastucture.Identity.Seeds
                 if (user == null)
                 {
                     await userManager.CreateAsync(defaultUser, "123Pa$$word!");
-                    await userManager.AddToRoleAsync(defaultUser, nameof(UserRoles.Contractor));
+                    await userManager.AddToRoleAsync(defaultUser, nameof(UserRoles.Client));
                 }
             }
 

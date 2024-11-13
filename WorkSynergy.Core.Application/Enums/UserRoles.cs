@@ -2,7 +2,7 @@
 {
     public enum UserRoles
     {
-        Applicant,
-        Contractor
+        Freelancer,
+        Client
     }
 }

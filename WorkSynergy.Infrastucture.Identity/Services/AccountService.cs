@@ -152,13 +152,14 @@ namespace WorkSynergy.Infrastucture.Identity.Services
             var user = new WorkSynergyUser
             {
                 Email = request.Email,
+                UserName = request.Username,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 PhoneNumberConfirmed = true,
-                IsActive = false,
-                EmailConfirmed = false,
+                IsActive = true,
+                EmailConfirmed = true,
                 Uuid = Guid.NewGuid().ToString()
-                
+
 
             };
 
@@ -166,12 +167,12 @@ namespace WorkSynergy.Infrastucture.Identity.Services
             var createdUser = await _userManager.FindByNameAsync(user.UserName);
             if (result.Succeeded && createdUser != null)
             {
-                if (request.UserImage != null)
-                {
-                    createdUser.UserImagePath = UploadHelper.UploadFile(request.UserImage, createdUser.Id, nameof(UploadEntities.User));
-                    await _userManager.UpdateAsync(createdUser);
+                //if (request.UserImage != null)
+                //{
+                //    createdUser.UserImagePath = UploadHelper.UploadFile(request.UserImage, createdUser.Id, nameof(UploadEntities.User));
+                //    await _userManager.UpdateAsync(createdUser);
 
-                }
+                //}
                 await _userManager.AddToRoleAsync(user, request.Role);
 
 
@@ -216,7 +217,7 @@ namespace WorkSynergy.Infrastucture.Identity.Services
                 return response;
             }
 
-            if (request.Role == nameof(UserRoles.Contractor) || request.Role == nameof(UserRoles.Applicant))
+            if (request.Role == nameof(UserRoles.Client) || request.Role == nameof(UserRoles.Freelancer))
             {
                 response = await EditInternalUsersValidations(request);
                 if (response.HasError)
@@ -393,7 +394,7 @@ namespace WorkSynergy.Infrastucture.Identity.Services
             if (names.Length == 1)
             {
                 var result = await _userManager.Users.Where(x => x.FirstName.Contains(names[0]) || x.LastName.Contains(names[0])).ToListAsync();
-                result = result.Where(x => _userManager.GetRolesAsync(x).Result.Contains(nameof(UserRoles.Applicant))).ToList();
+                result = result.Where(x => _userManager.GetRolesAsync(x).Result.Contains(nameof(UserRoles.Freelancer))).ToList();
                 users = _mapper.Map<List<UserViewModel>>(result);
                 foreach (UserViewModel user in users)
                 {
@@ -404,7 +405,7 @@ namespace WorkSynergy.Infrastucture.Identity.Services
             else if (names.Length == 2)
             {
                 var result = await _userManager.Users.Where(x => (x.FirstName.Contains(names[0]) && x.LastName.Contains(names[1])) || (x.FirstName.Contains(names[0]) && x.LastName.Contains(names[1]))).ToListAsync();
-                result = result.Where(x => _userManager.GetRolesAsync(x).Result.Contains(nameof(UserRoles.Applicant))).ToList();
+                result = result.Where(x => _userManager.GetRolesAsync(x).Result.Contains(nameof(UserRoles.Freelancer))).ToList();
                 users = _mapper.Map<List<UserViewModel>>(result);
                 foreach (UserViewModel user in users)
                 {
