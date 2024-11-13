@@ -10,7 +10,7 @@ namespace WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPPost
 {
     public class GetAllPostQuery : IRequest<Response<IEnumerable<PostResponse>>>
     {
-        public int Page { get; set; }
+        public int Count { get; set; }
         public int Skip { get; set; }
 
     }
@@ -28,7 +28,7 @@ namespace WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPPost
 
         public async Task<Response<IEnumerable<PostResponse>>> Handle(GetAllPostQuery request, CancellationToken cancellationToken)
         {
-            var result = await _postRepository.GetAllAsync();
+            var result = await _postRepository.GetAllAsync(request.Skip, request.Count);
             Response<IEnumerable<PostResponse>> response = new();
             response.Data = _mapper.Map<List<PostResponse>>(result);
             return response;

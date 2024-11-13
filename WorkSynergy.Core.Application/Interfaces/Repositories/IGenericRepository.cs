@@ -8,6 +8,7 @@
         Task DeleteAsync(T entity);
         Task<T> GetByIdAsync(int id);
         Task<List<T>> GetAllAsync();
+        Task<List<T>> GetAllAsync(int skip, int count);
         Task<List<T>> GetAllWithIncludeAsync(List<string> properties);
     }
 }
