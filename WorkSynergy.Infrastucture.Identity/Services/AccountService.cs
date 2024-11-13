@@ -132,14 +132,6 @@ namespace WorkSynergy.Infrastucture.Identity.Services
                 HasError = false
             };
 
-            var userWithSameUserName = await _userManager.FindByNameAsync(request.Username);
-            if (userWithSameUserName != null)
-            {
-                response.HasError = true;
-                response.Error = $"username '{request.Username}' is already taken.";
-                return response;
-            }
-
             var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
             if (userWithSameEmail != null)
             {
@@ -162,8 +154,6 @@ namespace WorkSynergy.Infrastucture.Identity.Services
                 Email = request.Email,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                UserName = request.Username,
-                PhoneNumber = request.PhoneNumber,
                 PhoneNumberConfirmed = true,
                 IsActive = false,
                 EmailConfirmed = false,

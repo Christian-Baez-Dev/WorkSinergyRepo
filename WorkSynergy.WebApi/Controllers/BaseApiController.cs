@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WorkSynergy.WebApi
+namespace WorkSynergy.WebApi.Controllers
 {
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]

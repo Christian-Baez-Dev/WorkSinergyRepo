@@ -1,6 +1,7 @@
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WorkSynergy.Core.Application;
 using WorkSynergy.Infrastucture.Identity;
 using WorkSynergy.Infrastucture.Identity.Models;
 using WorkSynergy.Infrastucture.Identity.Seeds;
@@ -27,14 +28,15 @@ namespace WorkSynergy.WebApi
                 options.SuppressMapClientErrors = true;
             });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddPersistenceLayer(builder.Configuration);
             builder.Services.AddIdentityInfrastructure(builder.Configuration);
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddApplicationLayer();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddHealthChecks();
+            builder.Services.AddSwaggerExtension();
+            builder.Services.AddApiVersioningExtension();
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession();
 

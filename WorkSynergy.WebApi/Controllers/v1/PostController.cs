@@ -1,72 +1,74 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
-using WorkSynergy.Core.Application.DTOs.Entities.Tag;
-using WorkSynergy.Core.Application.Features.Tags.Commands.CreateTagCommand;
-using WorkSynergy.Core.Application.Features.Tags.Commands.DeleteTag;
-using WorkSynergy.Core.Application.Features.Tags.Commands.UpdateTag;
-using WorkSynergy.Core.Application.Features.Tags.Queries.GetAllTag;
-using WorkSynergy.Core.Application.Features.Tags.Queries.GetByIdTag;
+using WorkSynergy.Core.Application.DTOs.Entities.Post;
+using WorkSynergy.Core.Application.Features.Posts.Commands.CreatePost;
+using WorkSynergy.Core.Application.Features.Posts.Commands.DeletePost;
+using WorkSynergy.Core.Application.Features.Posts.Commands.UpdatePost;
+using WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPPost;
+using WorkSynergy.Core.Application.Features.Posts.Queries.GetByIdPost;
 
 namespace WorkSynergy.WebApi.Controllers.v1
 {
     [ApiVersion("1.0")]
     //[Authorize]
-    [SwaggerTag("Controller for the Tags")]
-    public class TagController : BaseApiController
+    [SwaggerTag("Controller for the Posts")]
+    public class PostController : BaseApiController
     {
         [HttpPost]
         [SwaggerOperation(
-            Summary = "Creation of a new tag",
-            Description = "Recieve the parameter for the creation of a new tag"
+            Summary = "Create a new Post",
+            Description = "This endpoint is responsible for the creation of a new Post"
         )]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Post([FromBody]CreateTagCommand command)
+        public async Task<IActionResult> Post([FromBody]CreatePostCommand command)
         {
-            if (!ModelState.IsValid)
+            if(!ModelState.IsValid)
                 return BadRequest(ModelState);
             return Ok(await Mediator.Send(command));
+            
         }
         [HttpGet]
         [SwaggerOperation(
-     Summary = "Get all Tags",
-     Description = "This endpoint is responsible for the retrieve of all Tags"
-     )]
+        Summary = "Get all Post",
+        Description = "This endpoint is responsible for the retrieve of all post"
+        )]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Get(GetAllTagQuery query)
+        public async Task<IActionResult> Get(GetAllPostQuery query)
         {
             return Ok(await Mediator.Send(query));
         }
         [HttpGet("{id}")]
         [SwaggerOperation(
-        Summary = "Get one Tags by id",
-        Description = "This endpoint is responsible for the retrieve of an Tags based on it's Id"
+        Summary = "Get one post by id",
+        Description = "This endpoint is responsible for the retrieve of an post based on it's Id"
         )]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TagResponse))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PostResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Get(GetByIdTagQuery query)
+        public async Task<IActionResult> Get(GetByIdPostQuery query)
         {
             return Ok(await Mediator.Send(query));
         }
 
         [HttpPut("{id}")]
         [SwaggerOperation(
-               Summary = "Update for Tags",
-               Description = "Recieve the parameter needed for the update of a Tags"
+               Summary = "Update for posts",
+               Description = "Recieve the parameter needed for the update of a post"
         )]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Put(int id, UpdateTagCommand command)
+        public async Task<IActionResult> Put(int id, UpdatePostCommand command)
         {
             if (!ModelState.IsValid)
             {
@@ -83,17 +85,16 @@ namespace WorkSynergy.WebApi.Controllers.v1
 
         [HttpDelete("{id}")]
         [SwaggerOperation(
-            Summary = "Delete Tags",
-            Description = "Recieve the Id to delete the Tags"
+            Summary = "Delete post",
+            Description = "Recieve the Id to delete the post"
         )]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
         {
-            await Mediator.Send(new DeleteTagCommand { Id = id });
+            await Mediator.Send(new DeletePostCommand { Id = id });
             return NoContent();
         }
-
     }
 }
