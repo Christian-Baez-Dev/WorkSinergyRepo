@@ -38,6 +38,8 @@ namespace WorkSynergy.Core.Application.Features.Posts.Commands.UpdatePost
             post.Currency = request.Currency ?? post.Currency;
             post.Title = request.Title ?? post.Title;
 
+            await _postRepository.UpdateAsync(post, post.Id);
+
             for (int i = 0; i < post.Tags.Count(); i++)
             {
                 var tag = post.Tags.ElementAt(i);

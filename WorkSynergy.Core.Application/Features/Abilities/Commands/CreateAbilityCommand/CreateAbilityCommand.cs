@@ -26,7 +26,6 @@ namespace WorkSynergy.Core.Application.Features.Abilities.Commands.CreateAbiliti
         {
             var entity = _mapper.Map<Ability>(request);
             await _abilityRepository.CreateAsync(entity);
-
             return new Response<int>();
         }
     }

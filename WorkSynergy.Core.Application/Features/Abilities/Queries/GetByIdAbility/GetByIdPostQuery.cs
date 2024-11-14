@@ -25,7 +25,7 @@ namespace WorkSynergy.Core.Application.Features.Abilities.Queries.GetByIdAbiliti
 
         public async Task<Response<AbilityResponse>> Handle(GetByIdAbilityQuery request, CancellationToken cancellationToken)
         {
-            var result = _abilityRepository.GetByIdAsync(request.Id);
+            var result = await _abilityRepository.GetByIdAsync(request.Id);
             Response<AbilityResponse> response = new();
             response.Data = _mapper.Map<AbilityResponse>(result);
             return response;

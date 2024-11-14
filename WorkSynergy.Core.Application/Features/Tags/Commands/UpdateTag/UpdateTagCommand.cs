@@ -27,7 +27,7 @@ namespace WorkSynergy.Core.Application.Features.Tags.Commands.UpdateTag
         {
             Response<int> response = new();
             response.Succeeded = true;
-            var result = _tagRepository.UpdateAsync(_mapper.Map<Tag>(request), request.Id);
+            var result = await _tagRepository.UpdateAsync(_mapper.Map<Tag>(request), request.Id);
             return response;
         }
     }

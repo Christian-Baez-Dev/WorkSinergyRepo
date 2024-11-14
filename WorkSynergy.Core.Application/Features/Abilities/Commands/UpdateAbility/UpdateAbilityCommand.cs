@@ -15,19 +15,20 @@ namespace WorkSynergy.Core.Application.Features.Abilities.Commands.UpdateAbility
     public class UpdateAbilityCommandHandler : IRequestHandler<UpdateAbilityCommand, Response<int>>
     {
         private readonly IMapper _mapper;
-        private readonly IAbilityRepository _tagRepository;
+        private readonly IAbilityRepository _abilityRepository;
 
-        public UpdateAbilityCommandHandler(IMapper mapper, IAbilityRepository tagRepository)
+        public UpdateAbilityCommandHandler(IMapper mapper, IAbilityRepository abilityRepository)
         {
             _mapper = mapper;
-            _tagRepository = tagRepository;
+            _abilityRepository = abilityRepository;
         }
 
         public async Task<Response<int>> Handle(UpdateAbilityCommand request, CancellationToken cancellationToken)
         {
             Response<int> response = new();
             response.Succeeded = true;
-            var result = _tagRepository.UpdateAsync(_mapper.Map<Ability>(request), request.Id);
+            var ability = _mapper.Map<Ability>(request);
+            var result = await _abilityRepository.UpdateAsync(ability, request.Id);
             return response;
         }
     }
