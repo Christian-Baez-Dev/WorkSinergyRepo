@@ -59,6 +59,9 @@ namespace WorkSynergy.Infrastucture.Persistence.Repositories
             {
                 var entry = await _context.Set<T>().FindAsync(id);
                 _context.Entry(entry).CurrentValues.SetValues(entity);
+                _context.Entry(entry).Property(x => x.CreatedAt).IsModified = false;
+                _context.Entry(entry).Property(x => x.IsDeleted).IsModified = false;
+
                 await _context.SaveChangesAsync();
                 return entity;
             }
