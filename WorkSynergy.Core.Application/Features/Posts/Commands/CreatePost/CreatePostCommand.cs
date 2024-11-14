@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Razor.TagHelpers;
+using WorkSynergy.Core.Application.Enums;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 using WorkSynergy.Core.Domain.Models;
@@ -39,8 +39,15 @@ namespace WorkSynergy.Core.Application.Features.Posts.Commands.CreatePost
         {
             Response<int> response = new();
             var post = _mapper.Map<Post>(request);
+            if (!Enum.TryParse(request.ContractOption, true, out ContractOptions enumResult))
+            {
+                response.Succeeded = true;
+                response.Message = "Incorrect contract option provided";
+                return response;
+            }
             post.Abilities = new List<PostAbilities>();
             post.Tags = new List<PostTags>();
+            post.ContractOptionId = (int)enumResult;
 
             var result = await _postRepository.CreateAsync(post);
             foreach (var item in request.Abilities)

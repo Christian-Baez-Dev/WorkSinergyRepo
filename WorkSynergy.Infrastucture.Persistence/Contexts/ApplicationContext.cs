@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using WorkSynergy.Core.Application.Enums;
 using WorkSynergy.Core.Domain.Common;
 using WorkSynergy.Core.Domain.Models;
 
@@ -11,6 +13,8 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
         public DbSet<JobApplications> JobApplications { get; set; }
         public DbSet<JobRating> JobRatings { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<ContractOption> ContractOptions { get; set; }
+
         public DbSet<PostTags> PostTags { get; set; }
         public DbSet<Ability> Abilities { get; set; }
         public DbSet<UserAbilities> UserAbilities { get; set; }
@@ -62,7 +66,12 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
             });
             modelBuilder.Entity<PostAbilities>(opt =>
             {
-                opt.ToTable("User_Abilitis");
+                opt.ToTable("Post_Abilities");
+                opt.HasKey(x => x.Id);
+            });
+            modelBuilder.Entity<ContractOption>(opt =>
+            {
+                opt.ToTable("Contract_Options");
                 opt.HasKey(x => x.Id);
             });
             #endregion
@@ -79,6 +88,10 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
                 .WithMany(x => x.Ratings)
                 .HasForeignKey(x => x.PostId);
 
+            modelBuilder.Entity<Post>()
+                .HasOne(x => x.ContractOption)
+                .WithMany(x => x.Posts)
+                .HasForeignKey(x => x.ContractOptionId);
 
             modelBuilder.Entity<PostTags>()
                 .HasOne(x => x.Post)
@@ -109,7 +122,15 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
                 .HasForeignKey(x => x.AbilityId);
             #endregion
 
-
+            modelBuilder.Entity<ContractOption>().HasData(
+            Enum.GetValues(typeof(ContractOptions))
+                .Cast<ContractOptions>()
+                .Select(e => new ContractOption
+                {
+                    Id = (int)e, // Valor numérico del enum
+                    Name = e.ToString() // Nombre de la propiedad del enum
+                })
+            );
 
 
 

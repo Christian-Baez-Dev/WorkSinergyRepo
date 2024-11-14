@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkSynergy.Infrastucture.Persistence.Contexts;
 
@@ -11,9 +12,11 @@ using WorkSynergy.Infrastucture.Persistence.Contexts;
 namespace WorkSynergy.Infrastucture.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20241114121639_NormalizingContractOptionTable")]
+    partial class NormalizingContractOptionTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,26 +81,6 @@ namespace WorkSynergy.Infrastucture.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Contract_Options", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsDeleted = false,
-                            Name = "FixedPrice",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsDeleted = false,
-                            Name = "PerHour",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("WorkSynergy.Core.Domain.Models.JobApplications", b =>
@@ -251,7 +234,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Post_Abilities", (string)null);
+                    b.ToTable("User_Abilitis", (string)null);
                 });
 
             modelBuilder.Entity("WorkSynergy.Core.Domain.Models.PostTags", b =>

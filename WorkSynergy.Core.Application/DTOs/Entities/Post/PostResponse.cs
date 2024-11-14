@@ -6,6 +6,6 @@
         public string Description { get; set; }
         public string Currency { get; set; }
         public string Title { get; set; }
-        public string PaymentMethod { get; set; }
+        public string ContractOption { get; set; }
     }
 }

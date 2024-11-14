@@ -26,6 +26,7 @@ namespace WorkSynergy.Core.Application.Mappings
 
             CreateMap<CreatePostCommand, Post>()
                 .ForMember(x => x.Abilities, opt => opt.Ignore())
+                .ForMember(x => x.ContractOption, opt => opt.Ignore())
                 .ReverseMap()
                 .ForMember(x => x.Categories, opt => opt.Ignore())
                 .ForMember(x => x.Abilities, opt => opt.Ignore());
