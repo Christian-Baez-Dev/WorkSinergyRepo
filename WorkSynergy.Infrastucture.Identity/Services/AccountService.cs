@@ -98,6 +98,9 @@ namespace WorkSynergy.Infrastucture.Identity.Services
             response.Email = user.Email;
             response.Username = user.UserName;
             response.UserImagePath = user.UserImagePath;
+            response.BirthDate = user.BirthDate;
+            response.FirstName = user.FirstName;
+            response.LastName = user.LastName;
 
             var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
 
