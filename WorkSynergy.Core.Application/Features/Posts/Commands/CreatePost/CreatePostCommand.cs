@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using WorkSynergy.Core.Application.Enums;
+using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 using WorkSynergy.Core.Domain.Models;
@@ -26,13 +28,16 @@ namespace WorkSynergy.Core.Application.Features.Posts.Commands.CreatePost
     {
         private readonly IMapper _mapper;
         private readonly IPostRepository _postRepository;
-        private readonly IPostTagsRepository _postTagsRepository;
+        private readonly IAbilityRepository _abilityRepository;
 
-        public CreatePostCommandHandler(IMapper mapper, IPostRepository postRepository, IPostTagsRepository postTagsRepository)
+        private readonly ITagRepository _tagRepository;
+
+        public CreatePostCommandHandler(IMapper mapper, IPostRepository postRepository, IAbilityRepository abilityRepository, ITagRepository tagRepository)
         {
             _mapper = mapper;
             _postRepository = postRepository;
-            _postTagsRepository = postTagsRepository;
+            _abilityRepository = abilityRepository;
+            _tagRepository = tagRepository;
         }
 
         public async Task<Response<int>> Handle(CreatePostCommand request, CancellationToken cancellationToken)
@@ -41,26 +46,42 @@ namespace WorkSynergy.Core.Application.Features.Posts.Commands.CreatePost
             var post = _mapper.Map<Post>(request);
             if (!Enum.TryParse(request.ContractOption, true, out ContractOptions enumResult))
             {
-                response.Succeeded = true;
-                response.Message = "Incorrect contract option provided";
-                return response;
+                throw new ApiException("Incorrect contract option provided", StatusCodes.Status400BadRequest);
             }
             post.Abilities = new List<PostAbilities>();
             post.Tags = new List<PostTags>();
             post.ContractOptionId = (int)enumResult;
 
-            var result = await _postRepository.CreateAsync(post);
             foreach (var item in request.Abilities)
             {
-                PostAbilities postAbilities = new PostAbilities { PostId = result.Id, AbilityId = item };
+                var ability = await _abilityRepository.GetByIdAsync(item);
+                if (ability == null)
+                {
+                    throw new ApiException("Invalid tag provided", StatusCodes.Status400BadRequest);
+                }
+                PostAbilities postAbilities = new PostAbilities { PostId = post.Id, AbilityId = item };
                 post.Abilities.Add(postAbilities);
             }
             foreach (var item in request.Categories)
             {
-                PostTags postTag = new PostTags { PostId = result.Id, TagId = item };
+                var tag = await _tagRepository.GetByIdAsync(item);
+                if (tag == null)
+                {
+                    throw new ApiException("Invalid tag provided", StatusCodes.Status400BadRequest);
+                }
+
+                PostTags postTag = new PostTags { PostId = post.Id, TagId = item };
                 post.Tags.Add(postTag);
             }
+            var result = await _postRepository.CreateAsync(post);
+            if(result == null)
+            {
+                throw new ApiException("Error while creating the post", StatusCodes.Status500InternalServerError);
+            }
             await _postRepository.UpdateAsync(post, post.Id);
+            response.Succeeded = true;
+            response.Data = post.Id;
+            response.StatusCode = StatusCodes.Status201Created;
             return response;
         }
     }

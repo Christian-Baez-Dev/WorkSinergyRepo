@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
-using System.Collections.Generic;
-using WorkSynergy.Core.Application.DTOs.Entities.Post;
+using Microsoft.AspNetCore.Http;
 using WorkSynergy.Core.Application.DTOs.Entities.Tag;
+using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 using WorkSynergy.Core.Domain.Models;
@@ -28,7 +28,13 @@ namespace WorkSynergy.Core.Application.Features.Tags.Queries.GetAllTag
         public async Task<Response<IEnumerable<TagResponse>>> Handle(GetAllTagQuery request, CancellationToken cancellationToken)
         {
             var result = await _tagRepository.GetAllAsync(request.Skip, request.Count);
+            if (result == null)
+            {
+                throw new ApiException("No Tags were found", StatusCodes.Status404NotFound);
+            }
             Response<IEnumerable<TagResponse>> response = new();
+            response.Succeeded = true;
+            response.StatusCode = StatusCodes.Status200OK;
             response.Data = _mapper.Map<List<TagResponse>>(result);
             return response;
         }

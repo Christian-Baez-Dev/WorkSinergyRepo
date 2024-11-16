@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
+using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 
@@ -25,10 +27,15 @@ namespace WorkSynergy.Core.Application.Features.Posts.Commands.DeletePost
         public async Task<Response<int>> Handle(DeletePostCommand request, CancellationToken cancellationToken)
         {
             Response<int> response = new();
-            response.Succeeded = true;
             var post = await _postRepository.GetByIdAsync(request.Id);
+            if (post == null)
+            {
+                throw new ApiException("Post not found", StatusCodes.Status404NotFound);
+            }
             await _postRepository.DeleteAsync(post);
 
+            response.Succeeded = true;
+            response.StatusCode = StatusCodes.Status204NoContent;
             return response;
         }
     }

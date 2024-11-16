@@ -7,6 +7,7 @@ using WorkSynergy.Core.Application.Features.Abilities.Commands.DeleteAbility;
 using WorkSynergy.Core.Application.Features.Abilities.Commands.UpdateAbility;
 using WorkSynergy.Core.Application.Features.Abilities.Queries.GetAllAbilities;
 using WorkSynergy.Core.Application.Features.Abilities.Queries.GetByIdAbilities;
+using WorkSynergy.WebApi.Helpers;
 
 namespace WorkSynergy.WebApi.Controllers.v1
 {
@@ -28,7 +29,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            return Ok(await Mediator.Send(command));
+            return ResponseHelper.CreateResponse(await Mediator.Send(command), this);
         }
         [HttpGet]
         [SwaggerOperation(
@@ -36,7 +37,8 @@ namespace WorkSynergy.WebApi.Controllers.v1
      Description = "This endpoint is responsible for the retrieve of all Abilities"
      )]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<AbilityResponse>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetAllAbilityQuery query)
@@ -50,6 +52,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         )]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AbilityResponse))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetByIdAbilityQuery query)
@@ -88,6 +91,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         )]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
         {

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
+using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 using WorkSynergy.Core.Domain.Models;
@@ -26,9 +28,18 @@ namespace WorkSynergy.Core.Application.Features.Abilities.Commands.UpdateAbility
         public async Task<Response<int>> Handle(UpdateAbilityCommand request, CancellationToken cancellationToken)
         {
             Response<int> response = new();
-            response.Succeeded = true;
             var ability = _mapper.Map<Ability>(request);
+            if(await _abilityRepository.GetByIdAsync(request.Id) == null)
+            {
+                throw new ApiException("Ability not found", StatusCodes.Status404NotFound);
+            }
             var result = await _abilityRepository.UpdateAsync(ability, request.Id);
+            if(result == null)
+            {
+                throw new ApiException("Error while creating ability", StatusCodes.Status500InternalServerError);
+            }
+            response.Succeeded = true;
+            response.StatusCode = StatusCodes.Status200OK;
             return response;
         }
     }

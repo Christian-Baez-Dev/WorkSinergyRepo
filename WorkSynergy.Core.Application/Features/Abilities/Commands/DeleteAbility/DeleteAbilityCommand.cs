@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
+using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 
@@ -23,9 +25,14 @@ namespace WorkSynergy.Core.Application.Features.Abilities.Commands.DeleteAbility
         public async Task<Response<int>> Handle(DeleteAbilityCommand request, CancellationToken cancellationToken)
         {
             Response<int> response = new();
+            var ability = await _abilityRepository.GetByIdAsync(request.Id);
+            if(ability == null)
+            {
+                throw new ApiException("Ability not found", StatusCodes.Status404NotFound);
+            }
+            await _abilityRepository.DeleteAsync(ability);
             response.Succeeded = true;
-            var post = await _abilityRepository.GetByIdAsync(request.Id);
-            await _abilityRepository.DeleteAsync(post);
+            response.StatusCode = StatusCodes.Status204NoContent;
             return response;
         }
     }
