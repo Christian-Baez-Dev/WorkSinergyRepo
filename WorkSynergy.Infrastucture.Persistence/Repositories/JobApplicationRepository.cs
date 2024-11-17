@@ -5,7 +5,7 @@ using WorkSynergy.Infrastucture.Persistence.Contexts;
 
 namespace WorkSynergy.Infrastucture.Persistence.Repositories
 {
-    public class JobApplicationRepository : GenericRepository<JobApplications>, IJobApplicationRepository
+    public class JobApplicationRepository : GenericRepository<JobApplication>, IJobApplicationRepository
     {
         public JobApplicationRepository(ApplicationContext context) : base(context)
         {

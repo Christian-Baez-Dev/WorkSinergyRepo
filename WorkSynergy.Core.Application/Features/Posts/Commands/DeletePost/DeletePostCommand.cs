@@ -15,9 +15,9 @@ namespace WorkSynergy.Core.Application.Features.Posts.Commands.DeletePost
     {
         private readonly IMapper _mapper;
         private readonly IPostRepository _postRepository;
-        private readonly IPostTagsRepository _postTagsRepository;
+        private readonly IPostTagRepository _postTagsRepository;
 
-        public DeletePostCommandHandler(IMapper mapper, IPostRepository postRepository, IPostTagsRepository postTagsRepository)
+        public DeletePostCommandHandler(IMapper mapper, IPostRepository postRepository, IPostTagRepository postTagsRepository)
         {
             _mapper = mapper;
             _postRepository = postRepository;

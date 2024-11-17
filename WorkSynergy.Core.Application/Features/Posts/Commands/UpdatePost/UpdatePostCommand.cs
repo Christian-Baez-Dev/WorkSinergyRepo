@@ -22,9 +22,9 @@ namespace WorkSynergy.Core.Application.Features.Posts.Commands.UpdatePost
     {
         private readonly IMapper _mapper;
         private readonly IPostRepository _postRepository;
-        private readonly IPostTagsRepository _postTagsRepository;
+        private readonly IPostTagRepository _postTagsRepository;
 
-        public UpdatePostCommandHandler(IMapper mapper, IPostRepository postRepository, IPostTagsRepository postTagsRepository)
+        public UpdatePostCommandHandler(IMapper mapper, IPostRepository postRepository, IPostTagRepository postTagsRepository)
         {
             _mapper = mapper;
             _postRepository = postRepository;
@@ -62,7 +62,7 @@ namespace WorkSynergy.Core.Application.Features.Posts.Commands.UpdatePost
 
             foreach (var item in request.Categories)
             {
-                PostTags postTag = new PostTags { PostId = post.Id, TagId = item };
+                PostTag postTag = new PostTag { PostId = post.Id, TagId = item };
                 await _postTagsRepository.CreateAsync(postTag);
             }
 

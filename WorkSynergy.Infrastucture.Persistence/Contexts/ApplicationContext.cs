@@ -10,15 +10,15 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
-        public DbSet<JobApplications> JobApplications { get; set; }
+        public DbSet<JobApplication> JobApplications { get; set; }
         public DbSet<JobRating> JobRatings { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<ContractOption> ContractOptions { get; set; }
 
-        public DbSet<PostTags> PostTags { get; set; }
+        public DbSet<PostTag> PostTags { get; set; }
         public DbSet<Ability> Abilities { get; set; }
-        public DbSet<UserAbilities> UserAbilities { get; set; }
-        public DbSet<PostAbilities> PostAbilities { get; set; }
+        public DbSet<UserAbility> UserAbilities { get; set; }
+        public DbSet<PostAbility> PostAbilities { get; set; }
 
 
 
@@ -28,7 +28,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region Tables and keys
-            modelBuilder.Entity<JobApplications>(opt =>
+            modelBuilder.Entity<JobApplication>(opt =>
             {
                 opt.ToTable("Job_Applications");
                 opt.HasKey(x => new {x.PostId, x.ApplicantId});
@@ -43,7 +43,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
                 opt.ToTable("Post");
                 opt.HasKey(x => x.Id);
             });
-            modelBuilder.Entity<PostTags>(opt =>
+            modelBuilder.Entity<PostTag>(opt =>
             {
                 opt.ToTable("Post_Tags");
                 opt.HasKey(x => new { x.PostId, x.TagId });
@@ -58,13 +58,13 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
                 opt.ToTable("Ability");
                 opt.HasKey(x => x.Id);
             });
-            modelBuilder.Entity<UserAbilities>(opt =>
+            modelBuilder.Entity<UserAbility>(opt =>
             {
                 opt.ToTable("User_Abilities");
                 opt.HasKey(x => x.Id);
 
             });
-            modelBuilder.Entity<PostAbilities>(opt =>
+            modelBuilder.Entity<PostAbility>(opt =>
             {
                 opt.ToTable("Post_Abilities");
                 opt.HasKey(x => x.Id);
@@ -78,7 +78,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
 
             #region Relationships
 
-            modelBuilder.Entity<JobApplications>()
+            modelBuilder.Entity<JobApplication>()
                 .HasOne(x => x.Post)
                 .WithMany(x => x.Applications)
                 .HasForeignKey(x => x.PostId);
@@ -93,30 +93,30 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
                 .WithMany(x => x.Posts)
                 .HasForeignKey(x => x.ContractOptionId);
 
-            modelBuilder.Entity<PostTags>()
+            modelBuilder.Entity<PostTag>()
                 .HasOne(x => x.Post)
                 .WithMany(x => x.Tags)
                 .HasForeignKey(x => x.PostId);
 
 
-            modelBuilder.Entity<PostTags>()
+            modelBuilder.Entity<PostTag>()
                 .HasOne(x => x.Tag)
                 .WithMany(x => x.Posts)
                 .HasForeignKey(x => x.TagId);
 
 
-            modelBuilder.Entity<PostAbilities>()
+            modelBuilder.Entity<PostAbility>()
                 .HasOne(x => x.Ability)
                 .WithMany(x => x.Posts)
                 .HasForeignKey(x => x.AbilityId);
 
 
-            modelBuilder.Entity<PostAbilities>()
+            modelBuilder.Entity<PostAbility>()
                 .HasOne(x => x.Post)
                 .WithMany(x => x.Abilities)
                 .HasForeignKey(x => x.PostId);
 
-            modelBuilder.Entity<UserAbilities>()
+            modelBuilder.Entity<UserAbility>()
                 .HasOne(x => x.Ability)
                 .WithMany(x => x.Users)
                 .HasForeignKey(x => x.AbilityId);

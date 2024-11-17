@@ -2,7 +2,7 @@
 
 namespace WorkSynergy.Core.Domain.Models
 {
-    public class FreelancerJobOffers : BaseEntity
+    public class FreelancerJobOffer : BaseEntity
     {
         public string ApplicantId { get; set; }
         public int JobOfferId { get; set; }

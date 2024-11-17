@@ -2,7 +2,7 @@
 
 namespace WorkSynergy.Core.Application.Interfaces.Repositories
 {
-    public interface IPostTagsRepository : IGenericRepository<PostTags>
+    public interface IUserAbilityRepository : IGenericRepository<UserAbility>
     {
     }
 }

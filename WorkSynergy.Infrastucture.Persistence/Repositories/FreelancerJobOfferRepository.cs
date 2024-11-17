@@ -5,9 +5,9 @@ using WorkSynergy.Infrastucture.Persistence.Contexts;
 
 namespace WorkSynergy.Infrastucture.Persistence.Repositories
 {
-    public class FreelancerJobOffersRepository : GenericRepository<FreelancerJobOffers>, IFreelancerJobOffersRepository
+    public class FreelancerJobOfferRepository : GenericRepository<FreelancerJobOffer>, IFreelancerJobOfferRepository
     {
-        public FreelancerJobOffersRepository(ApplicationContext context) : base(context)
+        public FreelancerJobOfferRepository(ApplicationContext context) : base(context)
         {
         }
     }

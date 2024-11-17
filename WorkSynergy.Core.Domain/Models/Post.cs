@@ -13,10 +13,10 @@ namespace WorkSynergy.Core.Domain.Models
         public double To { get; set; }
         public int ContractOptionId { get; set; }
         public ContractOption ContractOption { get; set; }
-        public ICollection<JobApplications> Applications { get; set; }
+        public ICollection<JobApplication> Applications { get; set; }
         public ICollection<JobRating> Ratings { get; set; }
-        public ICollection<PostTags> Tags { get; set; }
-        public ICollection<PostAbilities> Abilities { get; set; }
+        public ICollection<PostTag> Tags { get; set; }
+        public ICollection<PostAbility> Abilities { get; set; }
 
 
     }

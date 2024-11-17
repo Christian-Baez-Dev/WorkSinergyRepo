@@ -2,7 +2,7 @@
 
 namespace WorkSynergy.Core.Domain.Models
 {
-    public class PostTags : BaseEntity
+    public class PostTag : BaseEntity
     {
         public int PostId { get; set; }
         public Post Post { get; set; }

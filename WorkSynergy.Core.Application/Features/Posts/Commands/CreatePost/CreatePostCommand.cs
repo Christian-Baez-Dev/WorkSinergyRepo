@@ -48,8 +48,8 @@ namespace WorkSynergy.Core.Application.Features.Posts.Commands.CreatePost
             {
                 throw new ApiException("Incorrect contract option provided", StatusCodes.Status400BadRequest);
             }
-            post.Abilities = new List<PostAbilities>();
-            post.Tags = new List<PostTags>();
+            post.Abilities = new List<PostAbility>();
+            post.Tags = new List<PostTag>();
             post.ContractOptionId = (int)enumResult;
 
             foreach (var item in request.Abilities)
@@ -59,7 +59,7 @@ namespace WorkSynergy.Core.Application.Features.Posts.Commands.CreatePost
                 {
                     throw new ApiException("Invalid tag provided", StatusCodes.Status400BadRequest);
                 }
-                PostAbilities postAbilities = new PostAbilities { PostId = post.Id, AbilityId = item };
+                PostAbility postAbilities = new PostAbility { PostId = post.Id, AbilityId = item };
                 post.Abilities.Add(postAbilities);
             }
             foreach (var item in request.Categories)
@@ -70,7 +70,7 @@ namespace WorkSynergy.Core.Application.Features.Posts.Commands.CreatePost
                     throw new ApiException("Invalid tag provided", StatusCodes.Status400BadRequest);
                 }
 
-                PostTags postTag = new PostTags { PostId = post.Id, TagId = item };
+                PostTag postTag = new PostTag { PostId = post.Id, TagId = item };
                 post.Tags.Add(postTag);
             }
             var result = await _postRepository.CreateAsync(post);

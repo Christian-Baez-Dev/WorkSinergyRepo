@@ -5,9 +5,9 @@ using WorkSynergy.Infrastucture.Persistence.Contexts;
 
 namespace WorkSynergy.Infrastucture.Persistence.Repositories
 {
-    public class PostTagsRepository : GenericRepository<PostTags>, IPostTagsRepository
+    public class PostTagRepository : GenericRepository<PostTag>, IPostTagRepository
     {
-        public PostTagsRepository(ApplicationContext context) : base(context)
+        public PostTagRepository(ApplicationContext context) : base(context)
         {
         }
     }

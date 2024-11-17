@@ -29,15 +29,15 @@ namespace WorkSynergy.Infrastucture.Persistence
 
             #region Repositories
             services.AddTransient<ITagRepository, TagRepository>();
-            services.AddTransient<IPostAbilitiesRepository, PostAbilitiesRepository>();
+            services.AddTransient<IPostAbilityRepository, PostAbilityRepository>();
             services.AddTransient<IAbilityRepository, AbilityRepository>();
-            services.AddTransient<IUserAbilitiesRepository, UserAbilitiesRepository>();
-            services.AddTransient<IFreelancerJobOffersRepository, FreelancerJobOffersRepository>();
+            services.AddTransient<IUserAbilityRepository, UserAbilityRepository>();
+            services.AddTransient<IFreelancerJobOfferRepository, FreelancerJobOfferRepository>();
             services.AddTransient<IJobRatingRepository, JobRatingRepository>();
             services.AddTransient<IJobOfferRepository, JobOfferRepository>();
             services.AddTransient<IJobApplicationRepository, JobApplicationRepository>();
             services.AddTransient<IPostRepository, PostRepository>();
-            services.AddTransient<IPostTagsRepository, PostTagsRepository>();
+            services.AddTransient<IPostTagRepository, PostTagRepository>();
             #endregion
         }
 

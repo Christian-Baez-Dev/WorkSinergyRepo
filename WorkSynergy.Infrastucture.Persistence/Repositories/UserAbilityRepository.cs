@@ -4,9 +4,9 @@ using WorkSynergy.Infrastucture.Persistence.Contexts;
 
 namespace WorkSynergy.Infrastucture.Persistence.Repositories
 {
-    public class PostAbilitiesRepository : GenericRepository<PostAbilities>, IPostAbilitiesRepository
+    public class UserAbilityRepository : GenericRepository<UserAbility>, IUserAbilityRepository
     {
-        public PostAbilitiesRepository(ApplicationContext context) : base(context)
+        public UserAbilityRepository(ApplicationContext context) : base(context)
         {
         }
     }

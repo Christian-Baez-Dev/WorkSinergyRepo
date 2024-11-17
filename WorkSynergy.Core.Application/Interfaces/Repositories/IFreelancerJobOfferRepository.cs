@@ -2,7 +2,7 @@
 
 namespace WorkSynergy.Core.Application.Interfaces.Repositories
 {
-    public interface IPostAbilitiesRepository : IGenericRepository<PostAbilities>
+    public interface IFreelancerJobOfferRepository : IGenericRepository<FreelancerJobOffer>
     {
     }
 }
