@@ -12,8 +12,8 @@ using WorkSynergy.Infrastucture.Persistence.Contexts;
 namespace WorkSynergy.Infrastucture.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241111185246_AddingNewEntitiesAndFixingApplicationContext")]
-    partial class AddingNewEntitiesAndFixingApplicationContext
+    [Migration("20241118095430_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,39 +54,130 @@ namespace WorkSynergy.Infrastucture.Persistence.Migrations
                     b.ToTable("Ability", (string)null);
                 });
 
-            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.JobApplications", b =>
+            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.ContractOption", b =>
                 {
-                    b.Property<int>("PostId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Contract_Options", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Name = "FixedPrice",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Name = "PerHour",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
+
+            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.JobApplication", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<string>("ApplicantId")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PostId", "ApplicantId");
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
 
                     b.ToTable("Job_Applications", (string)null);
                 });
 
             modelBuilder.Entity("WorkSynergy.Core.Domain.Models.JobRating", b =>
                 {
-                    b.Property<int>("PostId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<string>("ApplicantId")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Rate")
                         .HasColumnType("int");
 
-                    b.HasKey("PostId", "ApplicantId");
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
 
                     b.ToTable("Job_Rating", (string)null);
                 });
@@ -99,9 +190,8 @@ namespace WorkSynergy.Infrastucture.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ContractOption")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ContractOptionId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -139,33 +229,75 @@ namespace WorkSynergy.Infrastucture.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ContractOptionId");
+
                     b.ToTable("Post", (string)null);
                 });
 
-            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.PostAbilities", b =>
+            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.PostAbility", b =>
                 {
-                    b.Property<int>("PostId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AbilityId")
                         .HasColumnType("int");
 
-                    b.HasKey("PostId", "AbilityId");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("AbilityId");
 
-                    b.ToTable("User_Abilitis", (string)null);
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Post_Abilities", (string)null);
                 });
 
-            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.PostTags", b =>
+            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.PostTag", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("PostId")
                         .HasColumnType("int");
 
                     b.Property<int>("TagId")
                         .HasColumnType("int");
 
-                    b.HasKey("PostId", "TagId");
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
 
                     b.HasIndex("TagId");
 
@@ -201,22 +333,41 @@ namespace WorkSynergy.Infrastucture.Persistence.Migrations
                     b.ToTable("Tag", (string)null);
                 });
 
-            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.UserAbilities", b =>
+            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.UserAbility", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AbilityId")
                         .HasColumnType("int");
 
-                    b.HasKey("UserId", "AbilityId");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("AbilityId");
 
                     b.ToTable("User_Abilities", (string)null);
                 });
 
-            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.JobApplications", b =>
+            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.JobApplication", b =>
                 {
                     b.HasOne("WorkSynergy.Core.Domain.Models.Post", "Post")
                         .WithMany("Applications")
@@ -238,7 +389,18 @@ namespace WorkSynergy.Infrastucture.Persistence.Migrations
                     b.Navigation("Post");
                 });
 
-            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.PostAbilities", b =>
+            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.Post", b =>
+                {
+                    b.HasOne("WorkSynergy.Core.Domain.Models.ContractOption", "ContractOption")
+                        .WithMany("Posts")
+                        .HasForeignKey("ContractOptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ContractOption");
+                });
+
+            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.PostAbility", b =>
                 {
                     b.HasOne("WorkSynergy.Core.Domain.Models.Ability", "Ability")
                         .WithMany("Posts")
@@ -257,7 +419,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Migrations
                     b.Navigation("Post");
                 });
 
-            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.PostTags", b =>
+            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.PostTag", b =>
                 {
                     b.HasOne("WorkSynergy.Core.Domain.Models.Post", "Post")
                         .WithMany("Tags")
@@ -276,7 +438,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Migrations
                     b.Navigation("Tag");
                 });
 
-            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.UserAbilities", b =>
+            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.UserAbility", b =>
                 {
                     b.HasOne("WorkSynergy.Core.Domain.Models.Ability", "Ability")
                         .WithMany("Users")
@@ -292,6 +454,11 @@ namespace WorkSynergy.Infrastucture.Persistence.Migrations
                     b.Navigation("Posts");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("WorkSynergy.Core.Domain.Models.ContractOption", b =>
+                {
+                    b.Navigation("Posts");
                 });
 
             modelBuilder.Entity("WorkSynergy.Core.Domain.Models.Post", b =>

@@ -31,12 +31,12 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
             modelBuilder.Entity<JobApplication>(opt =>
             {
                 opt.ToTable("Job_Applications");
-                opt.HasKey(x => new {x.PostId, x.ApplicantId});
+                opt.HasKey(x => x.Id);
             });
             modelBuilder.Entity<JobRating>(opt =>
             {
                 opt.ToTable("Job_Rating");
-                opt.HasKey(x => new { x.PostId, x.ApplicantId });
+                opt.HasKey(x => x.Id);
             });
             modelBuilder.Entity<Post>(opt =>
             {
@@ -46,7 +46,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
             modelBuilder.Entity<PostTag>(opt =>
             {
                 opt.ToTable("Post_Tags");
-                opt.HasKey(x => new { x.PostId, x.TagId });
+                opt.HasKey(x => x.Id);
             });
             modelBuilder.Entity<Tag>(opt =>
             {

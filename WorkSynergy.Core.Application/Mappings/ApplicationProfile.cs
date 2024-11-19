@@ -4,6 +4,7 @@ using WorkSynergy.Core.Application.DTOs.Entities.Post;
 using WorkSynergy.Core.Application.DTOs.Entities.Tag;
 using WorkSynergy.Core.Application.Features.Abilities.Commands.CreateAbilitiesCommand;
 using WorkSynergy.Core.Application.Features.Abilities.Commands.UpdateAbility;
+using WorkSynergy.Core.Application.Features.JobApplications.Commands;
 using WorkSynergy.Core.Application.Features.Posts.Commands.CreatePost;
 using WorkSynergy.Core.Application.Features.Posts.Commands.UpdatePost;
 using WorkSynergy.Core.Application.Features.Tags.Commands.CreateTagCommand;
@@ -30,6 +31,17 @@ namespace WorkSynergy.Core.Application.Mappings
                 .ReverseMap()
                 .ForMember(x => x.Categories, opt => opt.Ignore())
                 .ForMember(x => x.Abilities, opt => opt.Ignore());
+            #endregion
+            #region Job Application
+            //CreateMap<Post, PostResponse>()
+            //    .ReverseMap();
+            //CreateMap<UpdatePostCommand, Post>()
+            //    .ReverseMap()
+            //    .ForMember(x => x.Categories, opt => opt.Ignore())
+            //    .ForMember(x => x.DeleteCategories, opt => opt.Ignore());
+
+            CreateMap<CreateJobApplicationCommand, JobApplication>()
+                .ReverseMap();
             #endregion
 
             #region Ability

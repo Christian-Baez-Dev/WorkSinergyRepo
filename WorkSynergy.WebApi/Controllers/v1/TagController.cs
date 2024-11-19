@@ -7,6 +7,9 @@ using WorkSynergy.Core.Application.Features.Tags.Commands.DeleteTag;
 using WorkSynergy.Core.Application.Features.Tags.Commands.UpdateTag;
 using WorkSynergy.Core.Application.Features.Tags.Queries.GetAllTag;
 using WorkSynergy.Core.Application.Features.Tags.Queries.GetByIdTag;
+using WorkSynergy.WebApi.Helpers;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WorkSynergy.WebApi.Controllers.v1
 {
@@ -28,7 +31,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            return Ok(await Mediator.Send(command));
+            return ResponseHelper.CreateResponse(await Mediator.Send(command), this);
         }
         [HttpGet]
         [SwaggerOperation(
@@ -42,7 +45,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetAllTagQuery query)
         {
-            return Ok(await Mediator.Send(query));
+            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
         }
         [HttpGet("{id}")]
         [SwaggerOperation(
@@ -56,7 +59,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetByIdTagQuery query)
         {
-            return Ok(await Mediator.Send(query));
+            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
         }
 
         [HttpPut("{id}")]
@@ -79,7 +82,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
                 return BadRequest();
             }
 
-            return Ok(await Mediator.Send(command));
+            return ResponseHelper.CreateResponse(await Mediator.Send(command), this);
         }
 
 
@@ -92,10 +95,9 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromQuery]DeleteTagCommand command)
         {
-            await Mediator.Send(new DeleteTagCommand { Id = id });
-            return NoContent();
+            return ResponseHelper.CreateResponse(await Mediator.Send(command), this);
         }
 
     }
