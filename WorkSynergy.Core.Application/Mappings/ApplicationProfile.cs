@@ -2,6 +2,7 @@
 using WorkSynergy.Core.Application.DTOs.Entities.Ability;
 using WorkSynergy.Core.Application.DTOs.Entities.Post;
 using WorkSynergy.Core.Application.DTOs.Entities.Tag;
+using WorkSynergy.Core.Application.DTOs.Entities.UserAbility;
 using WorkSynergy.Core.Application.Features.Abilities.Commands.CreateAbilitiesCommand;
 using WorkSynergy.Core.Application.Features.Abilities.Commands.UpdateAbility;
 using WorkSynergy.Core.Application.Features.JobApplications.Commands;
@@ -9,6 +10,7 @@ using WorkSynergy.Core.Application.Features.Posts.Commands.CreatePost;
 using WorkSynergy.Core.Application.Features.Posts.Commands.UpdatePost;
 using WorkSynergy.Core.Application.Features.Tags.Commands.CreateTagCommand;
 using WorkSynergy.Core.Application.Features.Tags.Commands.UpdateTag;
+using WorkSynergy.Core.Application.Features.UserAbilities.Commands;
 using WorkSynergy.Core.Domain.Models;
 
 namespace WorkSynergy.Core.Application.Mappings
@@ -52,7 +54,14 @@ namespace WorkSynergy.Core.Application.Mappings
             CreateMap<CreateAbilityCommand, Ability>()
                 .ReverseMap();
             #endregion
-
+            #region User Ability
+            CreateMap<UserAbility, UserAbilityResponse>()
+                .ReverseMap();
+            //CreateMap<UpdateAbilityCommand, Ability>()
+            //    .ReverseMap();
+            CreateMap<CreateUserAbilityCommand, UserAbility>()
+                .ReverseMap();
+            #endregion
 
             #region Tags
             CreateMap<Tag, TagResponse>()
