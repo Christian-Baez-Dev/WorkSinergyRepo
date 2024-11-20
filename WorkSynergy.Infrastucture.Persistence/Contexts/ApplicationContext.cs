@@ -76,6 +76,21 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
             });
             #endregion
 
+
+            #region Filters
+            modelBuilder.Entity<JobApplication>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<JobRating>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<Post>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<PostTag>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<Tag>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<Ability>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<UserAbility>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<PostAbility>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<ContractOption>().HasQueryFilter(x => !x.IsDeleted);
+            #endregion
+
+
+
             #region Relationships
 
             modelBuilder.Entity<JobApplication>()
@@ -146,6 +161,11 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
                         break;
                     case EntityState.Modified:
                         entry.Entity.UpdatedAt = DateTime.Now;
+                        break;
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Modified;
+                        entry.Entity.DeletedAt = DateTime.Now;
+                        entry.Entity.IsDeleted = true;
                         break;
                 }
             }

@@ -95,7 +95,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
         {
-            await Mediator.Send(new DeleteAbilityCommand { Id = id });
+            await Mediator.Send(new DeleteUserAbilityCommand { Id = id });
             return NoContent();
         }
 

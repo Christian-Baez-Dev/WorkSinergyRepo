@@ -8,36 +8,30 @@ using WorkSynergy.Core.Domain.Models;
 
 namespace WorkSynergy.Core.Application.Features.UserAbilities.Commands
 {
-    public class CreateUserAbilityCommand : IRequest<Response<int>>
+    public class DeleteUserAbilityCommand : IRequest<Response<int>>
     {
-        public string UserId { get; set; }
-        public int AbilityId { get; set; }
+        public int Id { get; set; }
     }
 
-    public class CreateUserAbilityCommandHandler : IRequestHandler<CreateUserAbilityCommand, Response<int>>
+    public class DeleteUserAbilityCommandCommandHandler : IRequestHandler<DeleteUserAbilityCommand, Response<int>>
     {
         private readonly IMapper _mapper;
         private readonly IUserAbilityRepository _userAbilityRepository;
 
-        public CreateUserAbilityCommandHandler(IMapper mapper, IUserAbilityRepository userAbilityRepository)
+        public DeleteUserAbilityCommandCommandHandler(IMapper mapper, IUserAbilityRepository userAbilityRepository)
         {
             _mapper = mapper;
             _userAbilityRepository = userAbilityRepository;
         }
 
-        public async Task<Response<int>> Handle(CreateUserAbilityCommand request, CancellationToken cancellationToken)
+        public async Task<Response<int>> Handle(DeleteUserAbilityCommand request, CancellationToken cancellationToken)
         {
-            var userAbility = _mapper.Map<UserAbility>(request);
-            var result = await _userAbilityRepository.CreateAsync(userAbility);
-            if (result.Id == 0)
-            {
-                throw new ApiException("Error while creating the user ability", StatusCodes.Status500InternalServerError);
+            var userAbility = await _userAbilityRepository.GetByIdAsync(request.Id);
+            await _userAbilityRepository.DeleteAsync(userAbility);
 
-            }
             Response<int> response = new();
             response.Succeeded = true;
-            response.Data = result.Id;
-            response.StatusCode = StatusCodes.Status201Created;
+            response.StatusCode = StatusCodes.Status204NoContent;
 
             return response;
         }

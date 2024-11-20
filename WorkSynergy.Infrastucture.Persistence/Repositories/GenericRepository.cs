@@ -36,9 +36,8 @@ namespace WorkSynergy.Infrastucture.Persistence.Repositories
 
         public async Task DeleteAsync(T entity)
         {
-            entity.IsDeleted = true;
-            entity.DeletedAt = DateTime.UtcNow;
-            await UpdateAsync(entity, entity.Id);
+            _dbSet.Remove(entity);
+            await _context.SaveChangesAsync();  
         }
         public async Task<(List<T> Result, int TotalCount,
             int TotalPages, bool HasPrevious, bool HasNext)>
@@ -107,6 +106,8 @@ namespace WorkSynergy.Infrastucture.Persistence.Repositories
                 _context.Entry(entry).CurrentValues.SetValues(entity);
                 _context.Entry(entry).Property(x => x.CreatedAt).IsModified = false;
                 _context.Entry(entry).Property(x => x.IsDeleted).IsModified = false;
+                _context.Entry(entry).Property(x => x.DeletedAt).IsModified = false;
+
 
                 await _context.SaveChangesAsync();
                 return entity;
