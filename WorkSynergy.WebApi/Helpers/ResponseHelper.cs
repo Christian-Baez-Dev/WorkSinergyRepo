@@ -16,7 +16,7 @@ namespace WorkSynergy.WebApi.Helpers
                 StatusCodes.Status204NoContent => controller.NoContent(),
                 StatusCodes.Status400BadRequest => controller.BadRequest(response.Message),
                 StatusCodes.Status500InternalServerError => controller.StatusCode(StatusCodes.Status500InternalServerError, response.Message),
-                _ => controller.Ok(response.Data)
+                _ => controller.Ok(response)
             };
         }
     }
