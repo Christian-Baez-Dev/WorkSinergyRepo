@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Swashbuckle.AspNetCore.Annotations;
 using WorkSynergy.Core.Application.Enums;
 using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
@@ -11,7 +12,9 @@ namespace WorkSynergy.Core.Application.Features.JobApplications.Commands
 {
     public class ChangeStatusJobApplicationCommand : IRequest<Response<int>>
     {
+        [SwaggerParameter(Description = "This is the id of the job application that you want to change its status")]
         public int JobApplicationId { get; set; }
+        [SwaggerParameter(Description = "This is the status to apply. you can change it to \"Accepted\" or \"Declined\" but you cannot change it to \"Waiting\"")]
         public string StatusName { get; set; }
     }
 
