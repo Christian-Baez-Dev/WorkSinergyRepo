@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
+using WorkSynergy.Core.Application.DTOs.Entities.Ability;
 using WorkSynergy.Core.Application.DTOs.Entities.Post;
 using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
@@ -11,14 +12,14 @@ using WorkSynergy.Core.Domain.Models;
 
 namespace WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPPost
 {
-    public class GetAllPostQuery : IRequest<Response<IEnumerable<PostResponse>>>
+    public class GetAllPostQuery : IRequest<ManyPostsResponse>
     {
         public int Count { get; set; }
         public int Skip { get; set; }
 
     }
 
-    public class GetAllPostQueryHandler : IRequestHandler<GetAllPostQuery, Response<IEnumerable<PostResponse>>>
+    public class GetAllPostQueryHandler : IRequestHandler<GetAllPostQuery, ManyPostsResponse>
     {
         private readonly IPostRepository _postRepository;
         private readonly IMapper _mapper;
@@ -29,17 +30,27 @@ namespace WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPPost
             _mapper = mapper;
         }
 
-        public async Task<Response<IEnumerable<PostResponse>>> Handle(GetAllPostQuery request, CancellationToken cancellationToken)
+        public async Task<ManyPostsResponse> Handle(GetAllPostQuery request, CancellationToken cancellationToken)
         {
-            var result = await _postRepository.GetAllAsync(request.Skip, request.Count);
-            if (result == null)
+            var result = await _postRepository.GetAllOrderAndPaginateAsync(null, null, false, request.Skip, request.Count, x => x.Abilities, x => x.ContractOption, x => x.Tags);
+            if (result.Result == null)
             {
                 throw new ApiException("No posts were found", StatusCodes.Status404NotFound);
             }
-            Response<IEnumerable<PostResponse>> response = new();
+
+            ManyPostsResponse response = new();
+            if (result.Result == null || result.Result.Count == 0)
+            {
+                throw new ApiException("No abilities were found", StatusCodes.Status404NotFound);
+            }
+            response.Data = _mapper.Map<List<PostResponse>>(result.Result);
+            response.TotalPages = result.TotalPages;
+            response.HasPrevious = result.HasPrevious;
+            response.HasNext = result.HasNext;
+            response.PageNumber = request.Skip;
+            response.TotalCount = result.TotalCount;
             response.Succeeded = true;
             response.StatusCode = StatusCodes.Status200OK;
-            response.Data = _mapper.Map<List<PostResponse>>(result);
             return response;
         }
     }

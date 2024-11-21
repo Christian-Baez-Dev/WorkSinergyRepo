@@ -39,7 +39,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
      Description = "This endpoint is responsible for the retrieve of all Tags"
      )]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TagResponse>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ManyTagsResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

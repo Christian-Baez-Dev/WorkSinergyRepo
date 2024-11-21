@@ -89,6 +89,16 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
             modelBuilder.Entity<ContractOption>().HasQueryFilter(x => !x.IsDeleted);
             #endregion
 
+            #region Filters
+            modelBuilder.Entity<PostAbility>().Navigation(x => x.Ability).AutoInclude();
+            modelBuilder.Entity<PostAbility>().Navigation(x => x.Post).AutoInclude();
+            modelBuilder.Entity<UserAbility>().Navigation(x => x.Ability).AutoInclude();
+            modelBuilder.Entity<PostTag>().Navigation(x => x.Post).AutoInclude();
+            modelBuilder.Entity<PostTag>().Navigation(x => x.Tag).AutoInclude();
+
+
+            #endregion
+
 
 
             #region Relationships

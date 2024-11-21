@@ -38,7 +38,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         Description = "This endpoint is responsible for the retrieve of all post"
         )]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PostResponse>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ManyPostsResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

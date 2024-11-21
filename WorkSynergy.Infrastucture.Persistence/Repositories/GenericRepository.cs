@@ -71,7 +71,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Repositories
                 : null;
             bool? hasPrevious = pageNumber.HasValue ? pageNumber > 1 : null;
             bool? hasNext = pageNumber.HasValue ? pageNumber < totalPages : null;
-            var result = await query.AsNoTracking().ToListAsync();
+            var result = await query.ToListAsync();
             return (result, totalNumber, totalPages ?? 0, hasPrevious ?? false, hasNext ?? false );
         }
         public async Task<List<T>> GetAllAsync() => await _dbSet.ToListAsync();

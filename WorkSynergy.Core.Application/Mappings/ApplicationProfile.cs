@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using WorkSynergy.Core.Application.DTOs.Entities.Ability;
+using WorkSynergy.Core.Application.DTOs.Entities.ContractOption;
 using WorkSynergy.Core.Application.DTOs.Entities.Post;
 using WorkSynergy.Core.Application.DTOs.Entities.Tag;
 using WorkSynergy.Core.Application.DTOs.Entities.UserAbility;
@@ -45,9 +46,25 @@ namespace WorkSynergy.Core.Application.Mappings
             CreateMap<CreateJobApplicationCommand, JobApplication>()
                 .ReverseMap();
             #endregion
+            #region Contract Option
+            CreateMap<ContractOption, ContractOptionResponse>()
+                .ReverseMap();
+
+            //CreateMap<UpdatePostCommand, Post>()
+            //    .ReverseMap()
+            //    .ForMember(x => x.Categories, opt => opt.Ignore())
+            //    .ForMember(x => x.DeleteCategories, opt => opt.Ignore());
+
+            //CreateMap<CreateJobApplicationCommand, JobApplication>()
+            //    .ReverseMap();
+            #endregion
+
 
             #region Ability
             CreateMap<Ability, AbilityResponse>()
+                .ReverseMap();
+            CreateMap<PostAbility, AbilityResponse>()
+                .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Ability.Name))
                 .ReverseMap();
             CreateMap<UpdateAbilityCommand, Ability>()
                 .ReverseMap();
@@ -65,6 +82,9 @@ namespace WorkSynergy.Core.Application.Mappings
 
             #region Tags
             CreateMap<Tag, TagResponse>()
+                .ReverseMap();
+            CreateMap<PostTag, TagResponse>()
+                .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Tag.Name))
                 .ReverseMap();
             CreateMap<UpdateTagCommand, Tag>()
                 .ReverseMap();
