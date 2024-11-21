@@ -32,7 +32,12 @@ namespace WorkSynergy.Core.Application.Features.JobApplications.Commands
         public async Task<Response<int>> Handle(CreateJobApplicationCommand request, CancellationToken cancellationToken)
         {
             var jobApplication = _mapper.Map<JobApplication>(request);
-            jobApplication.Status = nameof(JobApplicationStatus.Waiting);
+            jobApplication.Status = nameof(JobApplicationStatusEnum.Waiting);
+            var jobApplicationWithSameUser = await _jobApplicationRepository.FindAsync(x => x.ApplicantId == request.ApplicantId);
+            if (jobApplicationWithSameUser != null)
+            {
+                throw new ApiException("You cannot apply more than once to a job", StatusCodes.Status400BadRequest);
+            }
             var result = await _jobApplicationRepository.CreateAsync(jobApplication);
             if (result == null)
             {

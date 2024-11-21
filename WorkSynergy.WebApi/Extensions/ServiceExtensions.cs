@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using System.Security.Cryptography.Xml;
+using WorkSynergy.WebApi.Filters;
 
 
 namespace WorkSynergy.WebApi.Extensions
@@ -26,6 +27,7 @@ namespace WorkSynergy.WebApi.Extensions
                         Url = new Uri("https://www.linkedin.com/in/oscarbaezitla/")
                     }
                 });
+                options.AddOperationFilterInstance(new FromRouteOperationFilter());
                 options.EnableAnnotations();
                 options.DescribeAllParametersInCamelCase();
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

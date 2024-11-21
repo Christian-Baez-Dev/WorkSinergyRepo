@@ -21,6 +21,7 @@ namespace WorkSynergy.Core.Application.Interfaces.Repositories
             int? pageNumber = null,
             int? pageSize = null,
             params Expression<Func<T, object>>[] properties);
+        Task<T> FindAsync(Expression<Func<T, bool>> match);
 
         Task<T> GetByIdIncludeAsync(int id, params Expression<Func<T, object>>[] properties);
 

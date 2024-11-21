@@ -96,6 +96,8 @@ namespace WorkSynergy.Infrastucture.Persistence.Repositories
             return await query.FirstOrDefaultAsync(x => x.Id == id);
         }
         public async Task<List<T>> FindAllAsync(Expression<Func<T, bool>> match) => await _dbSet.Where(match).ToListAsync();
+        public async Task<T> FindAsync(Expression<Func<T, bool>> match) => await _dbSet.FirstOrDefaultAsync(match);
+
         public async Task<T> GetByIdAsync(int id) => await _dbSet.FindAsync(id);
 
         public async Task<T> UpdateAsync(T entity, int id)

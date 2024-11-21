@@ -2,12 +2,14 @@
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 using WorkSynergy.Core.Application.DTOs.Entities.Ability;
+using WorkSynergy.Core.Application.DTOs.Entities.JobApplication;
 using WorkSynergy.Core.Application.Features.Abilities.Commands.CreateAbilitiesCommand;
 using WorkSynergy.Core.Application.Features.Abilities.Commands.DeleteAbility;
 using WorkSynergy.Core.Application.Features.Abilities.Commands.UpdateAbility;
 using WorkSynergy.Core.Application.Features.Abilities.Queries.GetAllAbilities;
 using WorkSynergy.Core.Application.Features.Abilities.Queries.GetByIdAbilities;
 using WorkSynergy.Core.Application.Features.JobApplications.Commands;
+using WorkSynergy.Core.Application.Features.JobApplications.Queries;
 using WorkSynergy.WebApi.Helpers;
 
 namespace WorkSynergy.WebApi.Controllers.v1
@@ -46,43 +48,41 @@ namespace WorkSynergy.WebApi.Controllers.v1
         //{
         //    return Ok(await Mediator.Send(query));
         //}
-        //[HttpGet("{id}")]
-        //[SwaggerOperation(
-        //Summary = "Get one Tags by id",
-        //Description = "This endpoint is responsible for the retrieve of an ability based on it's Id"
-        //)]
-        //[Consumes(MediaTypeNames.Application.Json)]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AbilityResponse))]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //public async Task<IActionResult> Get(GetByIdAbilityQuery query)
-        //{
-        //    return Ok(await Mediator.Send(query));
-        //}
+        [HttpGet("GetByPost/{id}")]
+        [SwaggerOperation(
+        Summary = "Get many job application based on a post id",
+        Description = "This endpoint is responsible for the retrieve all the job applications of an post"
+        )]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ManyJobApplicationResponse))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Get(GetAllJobApplicationByPostQuery query)
+        {
+            return Ok(await Mediator.Send(query));
+        }
 
-        //[HttpPut("{id}")]
-        //[SwaggerOperation(
-        //       Summary = "Update for Tags",
-        //       Description = "Recieve the parameter needed for the update of the Abilities"
-        //)]
-        //[Consumes(MediaTypeNames.Application.Json)]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //public async Task<IActionResult> Put(int id, UpdateAbilityCommand command)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    if (id != command.Id)
-        //    {
-        //        return BadRequest();
-        //    }
+        [HttpPut]
+        [SwaggerOperation(
+               Summary = "Change status of a job application",
+               Description = "Recieve the parameter needed to change the status of a job application"
+        )]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Put(ChangeStatusJobApplicationCommand command)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
 
-        //    return Ok(await Mediator.Send(command));
-        //}
+
+            return Ok(await Mediator.Send(command));
+        }
 
 
         //[HttpDelete("{id}")]

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using WorkSynergy.Core.Application.DTOs.Entities.Ability;
 using WorkSynergy.Core.Application.DTOs.Entities.ContractOption;
+using WorkSynergy.Core.Application.DTOs.Entities.JobApplication;
 using WorkSynergy.Core.Application.DTOs.Entities.Post;
 using WorkSynergy.Core.Application.DTOs.Entities.Tag;
 using WorkSynergy.Core.Application.DTOs.Entities.UserAbility;
@@ -36,8 +37,8 @@ namespace WorkSynergy.Core.Application.Mappings
                 .ForMember(x => x.Abilities, opt => opt.Ignore());
             #endregion
             #region Job Application
-            //CreateMap<Post, PostResponse>()
-            //    .ReverseMap();
+            CreateMap<JobApplication, JobApplicationResponse>()
+                .ReverseMap();
             //CreateMap<UpdatePostCommand, Post>()
             //    .ReverseMap()
             //    .ForMember(x => x.Categories, opt => opt.Ignore())

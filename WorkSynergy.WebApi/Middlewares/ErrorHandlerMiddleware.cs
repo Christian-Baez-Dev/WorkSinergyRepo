@@ -32,26 +32,33 @@ namespace WorkSynergy.WebApi.Middlewares
                         switch (e.ErrorCode)
                         {
                             case (int)HttpStatusCode.BadRequest:
+                                responseModel.StatusCode = (int)HttpStatusCode.BadRequest;
                                 response.StatusCode = (int)HttpStatusCode.BadRequest;
                                 break;
                             case (int)HttpStatusCode.Forbidden:
+                                responseModel.StatusCode = (int)HttpStatusCode.Forbidden;
                                 response.StatusCode = (int)HttpStatusCode.Forbidden;
                                 break;
                             case (int)HttpStatusCode.NotFound:
+                                responseModel.StatusCode = (int)HttpStatusCode.NotFound;
                                 response.StatusCode = (int)HttpStatusCode.NotFound;
                                 break;
                             case (int)HttpStatusCode.InternalServerError:
+                                responseModel.StatusCode = (int)HttpStatusCode.InternalServerError;
                                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
                                 break;
                             default:
+                                responseModel.StatusCode = (int)HttpStatusCode.InternalServerError;
                                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
                                 break;
                         }
                         break;
                     case KeyNotFoundException e:
+                        responseModel.StatusCode = (int)HttpStatusCode.NotFound;
                         response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;
                     default:
+                        responseModel.StatusCode = (int)HttpStatusCode.InternalServerError;
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         break;
                 }
