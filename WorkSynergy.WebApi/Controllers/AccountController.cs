@@ -30,6 +30,17 @@ namespace WorkSynergy.WebApi.Controllers
             return Ok(await _accountService.AuthenticateAsync(request));
         }
 
+        [HttpGet("{id}")]
+        [SwaggerOperation(
+             Summary = "Get user by id",
+             Description = "Find a user by id"
+            )]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public async Task<IActionResult> Get(string id)
+        {
+            return Ok(await _accountService.GetByIdAsyncDTO(id));
+        }
+
         [HttpPost("registerUser")]
         [SwaggerOperation(
             Summary = "Creacion de usuarios",

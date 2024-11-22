@@ -5,6 +5,7 @@ using WorkSynergy.Core.Application.DTOs.Entities.JobApplication;
 using WorkSynergy.Core.Application.DTOs.Entities.Post;
 using WorkSynergy.Core.Application.DTOs.Entities.Tag;
 using WorkSynergy.Core.Application.DTOs.Entities.UserAbility;
+using WorkSynergy.Core.Application.Enums;
 using WorkSynergy.Core.Application.Features.Abilities.Commands.CreateAbilitiesCommand;
 using WorkSynergy.Core.Application.Features.Abilities.Commands.UpdateAbility;
 using WorkSynergy.Core.Application.Features.JobApplications.Commands;
@@ -23,6 +24,7 @@ namespace WorkSynergy.Core.Application.Mappings
         {
             #region Post
             CreateMap<Post, PostResponse>()
+                .ForMember(x => x.ApplicationsCount, opt => opt.MapFrom(x => x.Applications.Count))
                 .ReverseMap();
             CreateMap<UpdatePostCommand, Post>()
                 .ReverseMap()
