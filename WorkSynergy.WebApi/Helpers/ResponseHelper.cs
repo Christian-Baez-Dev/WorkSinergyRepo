@@ -12,7 +12,7 @@ namespace WorkSynergy.WebApi.Helpers
                 StatusCodes.Status201Created => controller.CreatedAtAction(
                     "Get", // Asume que tienes un endpoint de "Get" para CreatedAtAction
                     new { id = response.Data },
-                    response.Data),
+                    response),
                 StatusCodes.Status204NoContent => controller.NoContent(),
                 StatusCodes.Status400BadRequest => controller.BadRequest(response.Message),
                 StatusCodes.Status500InternalServerError => controller.StatusCode(StatusCodes.Status500InternalServerError, response.Message),
