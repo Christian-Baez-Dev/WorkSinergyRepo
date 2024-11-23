@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Security.Cryptography.X509Certificates;
 using WorkSynergy.Core.Application.DTOs.Entities.Ability;
 using WorkSynergy.Core.Application.DTOs.Entities.ContractOption;
 using WorkSynergy.Core.Application.DTOs.Entities.JobApplication;
@@ -25,6 +26,7 @@ namespace WorkSynergy.Core.Application.Mappings
             #region Post
             CreateMap<Post, PostResponse>()
                 .ForMember(x => x.ApplicationsCount, opt => opt.MapFrom(x => x.Applications.Count))
+                .ForMember(x => x.CreatedAt, opt => opt.MapFrom(x => DateOnly.FromDateTime(x.CreatedAt.Date)))
                 .ReverseMap();
             CreateMap<UpdatePostCommand, Post>()
                 .ReverseMap()
@@ -68,6 +70,7 @@ namespace WorkSynergy.Core.Application.Mappings
                 .ReverseMap();
             CreateMap<PostAbility, AbilityResponse>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Ability.Name))
+                .ForMember(x => x.Id, opt => opt.MapFrom(x => x.AbilityId))
                 .ReverseMap();
             CreateMap<UpdateAbilityCommand, Ability>()
                 .ReverseMap();
@@ -88,6 +91,8 @@ namespace WorkSynergy.Core.Application.Mappings
                 .ReverseMap();
             CreateMap<PostTag, TagResponse>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Tag.Name))
+                .ForMember(x => x.Id, opt => opt.MapFrom(x => x.TagId))
+
                 .ReverseMap();
             CreateMap<UpdateTagCommand, Tag>()
                 .ReverseMap();

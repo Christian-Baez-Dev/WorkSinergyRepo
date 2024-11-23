@@ -9,6 +9,8 @@ namespace WorkSynergy.Core.Application.DTOs.Entities.Post
         public int Id { get; set; } 
         public string Description { get; set; }
         public string Currency { get; set; }
+        public DateOnly CreatedAt { get; set; }
+
         public string Title { get; set; }
         public int ApplicationsCount { get; set; }
         public ContractOptionResponse ContractOption { get; set; }
