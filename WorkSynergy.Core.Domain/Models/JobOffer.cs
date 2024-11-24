@@ -7,10 +7,10 @@ namespace WorkSynergy.Core.Domain.Models
         public string Description { get; set; }
         public string Currency { get; set; }
         public string Title { get; set; }
-        public string PaymentType { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public double HourlyRate { get; set; }
+        public string ContractOption { get; set; } //opcion de contrato
+        public DateTime StartDate { get; set; } //fecha de inicio
+        public DateTime EndDate { get; set; }  // fecha de cierre
+        public double HourlyRate { get; set; } // promedio de money por horas
         public string ClientUserId { get; set; }
         public string FreelancerUserId { get; set; }
         public int PostId { get; set; }

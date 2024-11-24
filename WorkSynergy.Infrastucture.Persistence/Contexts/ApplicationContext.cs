@@ -12,6 +12,8 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
 
         public DbSet<JobApplication> JobApplications { get; set; }
         public DbSet<JobRating> JobRatings { get; set; }
+        public DbSet<JobOffer> JobOffers { get; set; }
+
         public DbSet<Post> Posts { get; set; }
         public DbSet<ContractOption> ContractOptions { get; set; }
 
@@ -31,6 +33,11 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
             modelBuilder.Entity<JobApplication>(opt =>
             {
                 opt.ToTable("Job_Applications");
+                opt.HasKey(x => x.Id);
+            });
+            modelBuilder.Entity<JobOffer>(opt =>
+            {
+                opt.ToTable("Job_Offers");
                 opt.HasKey(x => x.Id);
             });
             modelBuilder.Entity<JobRating>(opt =>
@@ -87,6 +94,8 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
             modelBuilder.Entity<UserAbility>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<PostAbility>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<ContractOption>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<JobOffer>().HasQueryFilter(x => !x.IsDeleted);
+
             #endregion
 
             #region Filters
@@ -145,6 +154,11 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
                 .HasOne(x => x.Ability)
                 .WithMany(x => x.Users)
                 .HasForeignKey(x => x.AbilityId);
+
+            modelBuilder.Entity<JobOffer>()
+                .HasOne(x => x.Post)
+                .WithMany(x => x.JobOffers)
+                .HasForeignKey(x => x.PostId);
             #endregion
 
             modelBuilder.Entity<ContractOption>().HasData(

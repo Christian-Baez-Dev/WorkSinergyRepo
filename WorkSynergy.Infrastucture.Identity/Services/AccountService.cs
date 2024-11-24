@@ -168,7 +168,6 @@ namespace WorkSynergy.Infrastucture.Identity.Services
                 PhoneNumberConfirmed = true,
                 IsActive = true,
                 EmailConfirmed = true,
-                Uuid = Guid.NewGuid().ToString()
 
 
             };

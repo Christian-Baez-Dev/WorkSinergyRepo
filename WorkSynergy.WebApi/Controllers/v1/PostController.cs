@@ -6,7 +6,8 @@ using WorkSynergy.Core.Application.DTOs.Entities.Post;
 using WorkSynergy.Core.Application.Features.Posts.Commands.CreatePost;
 using WorkSynergy.Core.Application.Features.Posts.Commands.DeletePost;
 using WorkSynergy.Core.Application.Features.Posts.Commands.UpdatePost;
-using WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPPost;
+using WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPost;
+using WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPostByUserId;
 using WorkSynergy.Core.Application.Features.Posts.Queries.GetByIdPost;
 
 namespace WorkSynergy.WebApi.Controllers.v1
@@ -25,12 +26,12 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Post([FromBody]CreatePostCommand command)
+        public async Task<IActionResult> Post([FromBody] CreatePostCommand command)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             return Ok(await Mediator.Send(command));
-            
+
         }
         [HttpGet]
         [SwaggerOperation(
@@ -43,6 +44,20 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetAllPostQuery query)
+        {
+            return Ok(await Mediator.Send(query));
+        }
+        [HttpGet("GetByUser/{id}")]
+        [SwaggerOperation(
+        Summary = "Get all Post",
+        Description = "This endpoint is responsible for the retrieve of all post"
+        )]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ManyPostsResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Get(GetAllPostByUserIdQuery query)
         {
             return Ok(await Mediator.Send(query));
         }

@@ -17,6 +17,7 @@ namespace WorkSynergy.Core.Domain.Models
         public ICollection<JobRating> Ratings { get; set; }
         public ICollection<PostTag> Tags { get; set; }
         public ICollection<PostAbility> Abilities { get; set; }
+        public ICollection<JobOffer> JobOffers { get; set; }
 
 
     }

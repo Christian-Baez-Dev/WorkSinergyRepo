@@ -11,7 +11,7 @@ using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 using WorkSynergy.Core.Domain.Models;
 
-namespace WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPPost
+namespace WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPost
 {
     public class GetAllPostQuery : IRequest<ManyPostsResponse>
     {
