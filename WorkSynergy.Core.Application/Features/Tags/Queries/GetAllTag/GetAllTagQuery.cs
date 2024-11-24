@@ -12,8 +12,8 @@ namespace WorkSynergy.Core.Application.Features.Tags.Queries.GetAllTag
 {
     public class GetAllTagQuery : IRequest<ManyTagsResponse>
     {
-        public int Count { get; set; }
-        public int Skip { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
     }
 
     public class GetAllTagQueryHandler : IRequestHandler<GetAllTagQuery, ManyTagsResponse>

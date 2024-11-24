@@ -11,8 +11,8 @@ namespace WorkSynergy.Core.Application.Features.Abilities.Queries.GetAllAbilitie
 {
     public class GetAllAbilityQuery : IRequest<ManyAbilityResponse>
     {
-        public int Count { get; set; }
-        public int Skip { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
 
     }
 

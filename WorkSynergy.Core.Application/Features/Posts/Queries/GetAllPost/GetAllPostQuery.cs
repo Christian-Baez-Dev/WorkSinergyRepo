@@ -15,8 +15,8 @@ namespace WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPost
 {
     public class GetAllPostQuery : IRequest<ManyPostsResponse>
     {
-        public int Count { get; set; }
-        public int Skip { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
 
     }
 

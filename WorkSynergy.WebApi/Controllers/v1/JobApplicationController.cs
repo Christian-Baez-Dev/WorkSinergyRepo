@@ -9,7 +9,7 @@ using WorkSynergy.Core.Application.Features.Abilities.Commands.UpdateAbility;
 using WorkSynergy.Core.Application.Features.Abilities.Queries.GetAllAbilities;
 using WorkSynergy.Core.Application.Features.Abilities.Queries.GetByIdAbilities;
 using WorkSynergy.Core.Application.Features.JobApplications.Commands;
-using WorkSynergy.Core.Application.Features.JobApplications.Queries;
+using WorkSynergy.Core.Application.Features.JobApplications.Queries.GetAllJobApplicationByPost;
 using WorkSynergy.WebApi.Helpers;
 
 namespace WorkSynergy.WebApi.Controllers.v1

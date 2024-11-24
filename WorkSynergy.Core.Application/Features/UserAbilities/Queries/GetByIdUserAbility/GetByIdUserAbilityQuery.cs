@@ -7,7 +7,7 @@ using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 
-namespace WorkSynergy.Core.Application.Features.UserAbilities.Queries
+namespace WorkSynergy.Core.Application.Features.UserAbilities.Queries.GetByIdUserAbility
 {
     public class GetByIdUserAbilityQuery : IRequest<Response<UserAbilityResponse>>
     {
@@ -30,7 +30,7 @@ namespace WorkSynergy.Core.Application.Features.UserAbilities.Queries
         public async Task<Response<UserAbilityResponse>> Handle(GetByIdUserAbilityQuery request, CancellationToken cancellationToken)
         {
             var userAbility = await _userAbilityRepository.GetByIdIncludeAsync(request.Id, x => x.Ability);
-            if(userAbility == null)
+            if (userAbility == null)
             {
                 throw new ApiException("No user ability were found", StatusCodes.Status404NotFound);
 

@@ -6,7 +6,8 @@ using WorkSynergy.Core.Application.DTOs.Entities.UserAbility;
 using WorkSynergy.Core.Application.Features.Abilities.Commands.DeleteAbility;
 using WorkSynergy.Core.Application.Features.Abilities.Queries.GetAllAbilities;
 using WorkSynergy.Core.Application.Features.UserAbilities.Commands;
-using WorkSynergy.Core.Application.Features.UserAbilities.Queries;
+using WorkSynergy.Core.Application.Features.UserAbilities.Queries.GetAllUserAbility;
+using WorkSynergy.Core.Application.Features.UserAbilities.Queries.GetByIdUserAbility;
 using WorkSynergy.WebApi.Helpers;
 
 namespace WorkSynergy.WebApi.Controllers.v1

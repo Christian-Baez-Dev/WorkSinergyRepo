@@ -7,7 +7,7 @@ using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 
-namespace WorkSynergy.Core.Application.Features.UserAbilities.Queries
+namespace WorkSynergy.Core.Application.Features.UserAbilities.Queries.GetAllUserAbility
 {
     public class GetAllUserAbilityQuery : IRequest<ManyUserAbilityResponse>
     {
@@ -36,7 +36,7 @@ namespace WorkSynergy.Core.Application.Features.UserAbilities.Queries
                 false,
                 request.PageNumber,
                 request.PageSize,
-                x => x.Ability); 
+                x => x.Ability);
 
 
 

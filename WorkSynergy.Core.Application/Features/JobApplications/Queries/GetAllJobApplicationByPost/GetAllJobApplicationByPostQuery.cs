@@ -6,7 +6,7 @@ using WorkSynergy.Core.Application.Enums;
 using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
 
-namespace WorkSynergy.Core.Application.Features.JobApplications.Queries
+namespace WorkSynergy.Core.Application.Features.JobApplications.Queries.GetAllJobApplicationByPost
 {
     public class GetAllJobApplicationByPostQuery : IRequest<ManyJobApplicationResponse>
     {
@@ -34,7 +34,7 @@ namespace WorkSynergy.Core.Application.Features.JobApplications.Queries
 
             if (result.Result == null || result.TotalCount == 0)
                 throw new ApiException("No job applications were found based on this provided identificator", StatusCodes.Status404NotFound);
-           
+
             ManyJobApplicationResponse response = new();
             response.PageNumber = request.PageNumber;
             response.TotalPages = result.TotalPages;
