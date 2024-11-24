@@ -8,7 +8,7 @@ using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 using WorkSynergy.Core.Domain.Models;
 
-namespace WorkSynergy.Core.Application.Features.JobApplications.Commands
+namespace WorkSynergy.Core.Application.Features.JobApplications.Commands.ChangeStatusJobApplication
 {
     public class ChangeStatusJobApplicationCommand : IRequest<Response<int>>
     {
@@ -37,7 +37,7 @@ namespace WorkSynergy.Core.Application.Features.JobApplications.Commands
 
             jobApplication.Status = request.StatusName;
             var result = await _jobApplicationRepository.UpdateAsync(jobApplication, jobApplication.Id);
-            if(result == null) throw new ApiException("Error while updating the job application status", StatusCodes.Status500InternalServerError);
+            if (result == null) throw new ApiException("Error while updating the job application status", StatusCodes.Status500InternalServerError);
             Response<int> response = new();
             response.StatusCode = StatusCodes.Status204NoContent;
             response.Succeeded = true;

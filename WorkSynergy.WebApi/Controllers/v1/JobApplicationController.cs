@@ -8,7 +8,8 @@ using WorkSynergy.Core.Application.Features.Abilities.Commands.DeleteAbility;
 using WorkSynergy.Core.Application.Features.Abilities.Commands.UpdateAbility;
 using WorkSynergy.Core.Application.Features.Abilities.Queries.GetAllAbilities;
 using WorkSynergy.Core.Application.Features.Abilities.Queries.GetByIdAbilities;
-using WorkSynergy.Core.Application.Features.JobApplications.Commands;
+using WorkSynergy.Core.Application.Features.JobApplications.Commands.ChangeStatusJobApplication;
+using WorkSynergy.Core.Application.Features.JobApplications.Commands.CreateJobApplication;
 using WorkSynergy.Core.Application.Features.JobApplications.Queries.GetAllJobApplicationByPost;
 using WorkSynergy.WebApi.Helpers;
 

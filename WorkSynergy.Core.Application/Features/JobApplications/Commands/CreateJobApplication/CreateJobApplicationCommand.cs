@@ -8,7 +8,7 @@ using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 using WorkSynergy.Core.Domain.Models;
 
-namespace WorkSynergy.Core.Application.Features.JobApplications.Commands
+namespace WorkSynergy.Core.Application.Features.JobApplications.Commands.CreateJobApplication
 {
     public class CreateJobApplicationCommand : IRequest<Response<int>>
     {

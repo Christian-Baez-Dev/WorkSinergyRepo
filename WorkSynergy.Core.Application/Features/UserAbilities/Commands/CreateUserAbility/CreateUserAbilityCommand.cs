@@ -6,7 +6,7 @@ using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 using WorkSynergy.Core.Domain.Models;
 
-namespace WorkSynergy.Core.Application.Features.UserAbilities.Commands
+namespace WorkSynergy.Core.Application.Features.UserAbilities.Commands.CreateUserAbility
 {
     public class CreateUserAbilityCommand : IRequest<Response<int>>
     {

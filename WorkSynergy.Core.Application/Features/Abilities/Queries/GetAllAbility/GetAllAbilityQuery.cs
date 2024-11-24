@@ -30,7 +30,7 @@ namespace WorkSynergy.Core.Application.Features.Abilities.Queries.GetAllAbilitie
 
         public async Task<ManyAbilityResponse> Handle(GetAllAbilityQuery request, CancellationToken cancellationToken)
         {
-            var result = await _abilityRepository.GetAllOrderAndPaginateAsync(null, null, false, request.Skip, request.Count);
+            var result = await _abilityRepository.GetAllOrderAndPaginateAsync(null, null, false, request.PageNumber, request.PageSize);
             ManyAbilityResponse response = new();
             if (result.Result == null || result.Result.Count == 0) 
             {
@@ -40,7 +40,7 @@ namespace WorkSynergy.Core.Application.Features.Abilities.Queries.GetAllAbilitie
             response.TotalPages = result.TotalPages;
             response.HasPrevious = result.HasPrevious;
             response.HasNext = result.HasNext;
-            response.PageNumber = request.Skip;
+            response.PageNumber = request.PageSize;
             response.TotalCount = result.TotalCount;
             response.Succeeded = true;
             response.StatusCode = StatusCodes.Status200OK;

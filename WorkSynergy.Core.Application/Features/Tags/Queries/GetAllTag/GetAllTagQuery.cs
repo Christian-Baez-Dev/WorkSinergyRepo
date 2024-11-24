@@ -28,7 +28,7 @@ namespace WorkSynergy.Core.Application.Features.Tags.Queries.GetAllTag
 
         public async Task<ManyTagsResponse> Handle(GetAllTagQuery request, CancellationToken cancellationToken)
         {
-            var result = await _tagRepository.GetAllOrderAndPaginateAsync(null, null, false, request.Skip, request.Count);
+            var result = await _tagRepository.GetAllOrderAndPaginateAsync(null, null, false, request.PageNumber, request.PageSize);
             if (result.Result == null)
             {
                 throw new ApiException("No Tags were found", StatusCodes.Status404NotFound);
@@ -41,7 +41,7 @@ namespace WorkSynergy.Core.Application.Features.Tags.Queries.GetAllTag
             response.TotalPages = result.TotalPages;
             response.HasPrevious = result.HasPrevious;
             response.HasNext = result.HasNext;
-            response.PageNumber = request.Skip;
+            response.PageNumber = request.PageNumber;
             response.TotalCount = result.TotalCount;
             response.Succeeded = true;
             response.StatusCode = StatusCodes.Status200OK;

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using System.Security.Cryptography.X509Certificates;
 using WorkSynergy.Core.Application.DTOs.Entities.Ability;
 using WorkSynergy.Core.Application.DTOs.Entities.ContractOption;
 using WorkSynergy.Core.Application.DTOs.Entities.JobApplication;
@@ -9,12 +8,12 @@ using WorkSynergy.Core.Application.DTOs.Entities.UserAbility;
 using WorkSynergy.Core.Application.Enums;
 using WorkSynergy.Core.Application.Features.Abilities.Commands.CreateAbilitiesCommand;
 using WorkSynergy.Core.Application.Features.Abilities.Commands.UpdateAbility;
-using WorkSynergy.Core.Application.Features.JobApplications.Commands;
+using WorkSynergy.Core.Application.Features.JobApplications.Commands.CreateJobApplication;
 using WorkSynergy.Core.Application.Features.Posts.Commands.CreatePost;
 using WorkSynergy.Core.Application.Features.Posts.Commands.UpdatePost;
 using WorkSynergy.Core.Application.Features.Tags.Commands.CreateTagCommand;
 using WorkSynergy.Core.Application.Features.Tags.Commands.UpdateTag;
-using WorkSynergy.Core.Application.Features.UserAbilities.Commands;
+using WorkSynergy.Core.Application.Features.UserAbilities.Commands.CreateUserAbility;
 using WorkSynergy.Core.Domain.Models;
 
 namespace WorkSynergy.Core.Application.Mappings
@@ -26,7 +25,6 @@ namespace WorkSynergy.Core.Application.Mappings
             #region Post
             CreateMap<Post, PostResponse>()
                 .ForMember(x => x.ApplicationsCount, opt => opt.MapFrom(x => x.Applications.Count))
-                .ForMember(x => x.CreatedAt, opt => opt.MapFrom(x => DateOnly.FromDateTime(x.CreatedAt.Date)))
                 .ReverseMap();
             CreateMap<UpdatePostCommand, Post>()
                 .ReverseMap()
@@ -70,7 +68,6 @@ namespace WorkSynergy.Core.Application.Mappings
                 .ReverseMap();
             CreateMap<PostAbility, AbilityResponse>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Ability.Name))
-                .ForMember(x => x.Id, opt => opt.MapFrom(x => x.AbilityId))
                 .ReverseMap();
             CreateMap<UpdateAbilityCommand, Ability>()
                 .ReverseMap();
@@ -91,8 +88,6 @@ namespace WorkSynergy.Core.Application.Mappings
                 .ReverseMap();
             CreateMap<PostTag, TagResponse>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Tag.Name))
-                .ForMember(x => x.Id, opt => opt.MapFrom(x => x.TagId))
-
                 .ReverseMap();
             CreateMap<UpdateTagCommand, Tag>()
                 .ReverseMap();
