@@ -10,21 +10,21 @@ using WorkSynergy.Infrastucture.Persistence.Contexts;
 
 namespace WorkSynergy.Infrastucture.Persistence.Seeds
 {
-    public static class ContractOptionsSeeding
+    public static class CurrencySeeding
     {
 
         public static async Task SeedAsync(ApplicationContext context)
         {
-            if (context.ContractOptions.Count() == 0)
+            if (context.Currencies.Count() == 0)
             {
 
-                var contractOptions = new List<ContractOption>
+                var currencies = new List<Currency>
                 {
-                    new ContractOption { Name = nameof(ContractOptions.FixedPrice) },
-                    new ContractOption { Name = nameof(ContractOptions.PerHour) }
+                    new Currency { Name = "US Dollar", Iso3Code = "USD" },
+                    new Currency { Name = "Dominican Peso", Iso3Code = "DOP" }
                 };
 
-                context.ContractOptions.AddRange(contractOptions);
+                context.Currencies.AddRange(currencies);
                 await context.SaveChangesAsync();
             }
         }

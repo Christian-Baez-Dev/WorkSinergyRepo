@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using WorkSynergy.Core.Application.DTOs.Entities.Ability;
 using WorkSynergy.Core.Application.DTOs.Entities.ContractOption;
+using WorkSynergy.Core.Application.DTOs.Entities.Currency;
 using WorkSynergy.Core.Application.DTOs.Entities.JobApplication;
 using WorkSynergy.Core.Application.DTOs.Entities.Post;
 using WorkSynergy.Core.Application.DTOs.Entities.Tag;
@@ -25,6 +26,7 @@ namespace WorkSynergy.Core.Application.Mappings
             #region Post
             CreateMap<Post, PostResponse>()
                 .ForMember(x => x.ApplicationsCount, opt => opt.MapFrom(x => x.Applications.Count))
+                .ForMember(x => x.CreatedAt, opt => opt.MapFrom(x => DateOnly.FromDateTime(x.CreatedAt)))
                 .ReverseMap();
             CreateMap<UpdatePostCommand, Post>()
                 .ReverseMap()
@@ -68,6 +70,7 @@ namespace WorkSynergy.Core.Application.Mappings
                 .ReverseMap();
             CreateMap<PostAbility, AbilityResponse>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Ability.Name))
+                .ForMember(x => x.Id, opt => opt.MapFrom(x => x.AbilityId))
                 .ReverseMap();
             CreateMap<UpdateAbilityCommand, Ability>()
                 .ReverseMap();
@@ -88,11 +91,17 @@ namespace WorkSynergy.Core.Application.Mappings
                 .ReverseMap();
             CreateMap<PostTag, TagResponse>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Tag.Name))
+                .ForMember(x => x.Id, opt => opt.MapFrom(x => x.TagId))
                 .ReverseMap();
             CreateMap<UpdateTagCommand, Tag>()
                 .ReverseMap();
             CreateMap<CreateTagCommand, Tag>()
                 .ReverseMap();
+            #endregion
+            #region Currencies
+            CreateMap<Currency, CurrencyResponse>()
+                .ReverseMap();
+
             #endregion
         }
 

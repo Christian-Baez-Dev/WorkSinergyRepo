@@ -5,8 +5,8 @@ namespace WorkSynergy.Core.Domain.Models
     public class PostAbility : BaseEntity
     {
         public int PostId { get; set; }
-        public Post Post { get; set; }
+        public Post? Post { get; set; }
         public int AbilityId { get; set; }
-        public Ability Ability { get; set; }
+        public Ability? Ability { get; set; }
     }
 }

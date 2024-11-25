@@ -6,6 +6,8 @@ using WorkSynergy.Infrastucture.Identity;
 using WorkSynergy.Infrastucture.Identity.Models;
 using WorkSynergy.Infrastucture.Identity.Seeds;
 using WorkSynergy.Infrastucture.Persistence;
+using WorkSynergy.Infrastucture.Persistence.Contexts;
+using WorkSynergy.Infrastucture.Persistence.Seeds;
 using WorkSynergy.WebApi.Extensions;
 
 namespace WorkSynergy.WebApi
@@ -50,12 +52,20 @@ namespace WorkSynergy.WebApi
 
                 try
                 {
+
+                    var context = services.GetRequiredService<ApplicationContext>();
                     var userManager = services.GetRequiredService<UserManager<WorkSynergyUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
                     await DefaultRoles.SeedAsync(userManager, roleManager);
                     await DefaultFreelancer.SeedAsync(userManager, roleManager);
                     await DefaultClient.SeedAsync(userManager, roleManager);
+                    await AbilitySeeding.SeedAsync(context);
+                    await ContractOptionsSeeding.SeedAsync(context);
+                    await CurrencySeeding.SeedAsync(context);
+                    await TagSeeding.SeedAsync(context);
+                    await PostSeeding.SeedAsync(context);
+
 
                 }
                 catch (Exception ex)

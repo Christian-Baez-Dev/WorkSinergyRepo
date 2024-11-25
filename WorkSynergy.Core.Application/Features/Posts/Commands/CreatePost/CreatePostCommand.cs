@@ -12,7 +12,7 @@ namespace WorkSynergy.Core.Application.Features.Posts.Commands.CreatePost
     public class CreatePostCommand : IRequest<Response<int>>
     {
         public string Description { get; set; }
-        public string Currency { get; set; }
+        public int CurrencyId { get; set; }
         public string Title { get; set; }
         public string ContractOption { get; set; }
         //Aproximate budget

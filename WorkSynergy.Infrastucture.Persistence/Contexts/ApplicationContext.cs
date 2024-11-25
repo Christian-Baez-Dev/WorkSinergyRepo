@@ -10,26 +10,55 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
-        public DbSet<JobApplication> JobApplications { get; set; }
-        public DbSet<JobRating> JobRatings { get; set; }
-        public DbSet<JobOffer> JobOffers { get; set; }
-
-        public DbSet<Post> Posts { get; set; }
-        public DbSet<ContractOption> ContractOptions { get; set; }
-
-        public DbSet<PostTag> PostTags { get; set; }
         public DbSet<Ability> Abilities { get; set; }
-        public DbSet<UserAbility> UserAbilities { get; set; }
+        public DbSet<Contract> Contracts { get; set; }
+        public DbSet<ContractOption> ContractOptions { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
+        public DbSet<FixedPriceMilestone> FixedPriceMilestones { get; set; }
+        public DbSet<HourlyMilestone> HourlyMilestones { get; set; }
+        public DbSet<JobApplication> JobApplications { get; set; }
+        public DbSet<JobOffer> JobOffers { get; set; }
+        public DbSet<JobRating> JobRatings { get; set; }
+        public DbSet<Post> Posts { get; set; }
         public DbSet<PostAbility> PostAbilities { get; set; }
-
-
-
-
-
+        public DbSet<PostTag> PostTags { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<UserAbility> UserAbilities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region Tables and keys
+            modelBuilder.Entity<Ability>(opt =>
+            {
+                opt.ToTable("Ability");
+                opt.HasKey(x => x.Id);
+            });
+            modelBuilder.Entity<Contract>(opt =>
+            {
+                opt.ToTable("Contracts");
+                opt.HasKey(x => x.Id);
+            });
+            modelBuilder.Entity<ContractOption>(opt =>
+            {
+                opt.ToTable("Contract_Options");
+                opt.HasKey(x => x.Id);
+            });
+            modelBuilder.Entity<Currency>(opt =>
+            {
+                opt.ToTable("Currencies");
+                opt.HasKey(x => x.Id);
+            });
+            modelBuilder.Entity<FixedPriceMilestone>(opt =>
+            {
+                opt.ToTable("Fixed_Price_Milestones");
+                opt.HasKey(x => x.Id);
+            });
+
+            modelBuilder.Entity<HourlyMilestone>(opt =>
+            {
+                opt.ToTable("Hourly_Milestone");
+                opt.HasKey(x => x.Id);
+            });
             modelBuilder.Entity<JobApplication>(opt =>
             {
                 opt.ToTable("Job_Applications");
@@ -50,6 +79,11 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
                 opt.ToTable("Post");
                 opt.HasKey(x => x.Id);
             });
+            modelBuilder.Entity<PostAbility>(opt =>
+            {
+                opt.ToTable("Post_Abilities");
+                opt.HasKey(x => x.Id);
+            });
             modelBuilder.Entity<PostTag>(opt =>
             {
                 opt.ToTable("Post_Tags");
@@ -60,27 +94,13 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
                 opt.ToTable("Tag");
                 opt.HasKey(x => x.Id);
             });
-            modelBuilder.Entity<Ability>(opt =>
-            {
-                opt.ToTable("Ability");
-                opt.HasKey(x => x.Id);
-            });
             modelBuilder.Entity<UserAbility>(opt =>
             {
                 opt.ToTable("User_Abilities");
                 opt.HasKey(x => x.Id);
 
             });
-            modelBuilder.Entity<PostAbility>(opt =>
-            {
-                opt.ToTable("Post_Abilities");
-                opt.HasKey(x => x.Id);
-            });
-            modelBuilder.Entity<ContractOption>(opt =>
-            {
-                opt.ToTable("Contract_Options");
-                opt.HasKey(x => x.Id);
-            });
+
             #endregion
 
 
@@ -98,7 +118,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
 
             #endregion
 
-            #region Filters
+            #region Includes
             modelBuilder.Entity<PostAbility>().Navigation(x => x.Ability).AutoInclude();
             modelBuilder.Entity<PostAbility>().Navigation(x => x.Post).AutoInclude();
             modelBuilder.Entity<UserAbility>().Navigation(x => x.Ability).AutoInclude();
@@ -112,10 +132,52 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
 
             #region Relationships
 
+
+            modelBuilder.Entity<Contract>()
+                .HasOne(x => x.Currency)
+                .WithMany(x => x.Contracts)
+                .HasForeignKey(x => x.CurrencyId);
+
+            modelBuilder.Entity<Contract>()
+                .HasOne(x => x.Currency)
+                .WithMany(x => x.Contracts)
+                .HasForeignKey(x => x.CurrencyId);
+
+            modelBuilder.Entity<FixedPriceMilestone>()
+                .HasOne(x => x.Contract)
+                .WithMany(x => x.FixedPriceMilestones)
+                .HasForeignKey(x => x.ContractId);
+
+            modelBuilder.Entity<HourlyMilestone>()
+                .HasOne(x => x.Contract)
+                .WithMany(x => x.HourlyMilestones)
+                .HasForeignKey(x => x.ContractId);
+
             modelBuilder.Entity<JobApplication>()
                 .HasOne(x => x.Post)
                 .WithMany(x => x.Applications)
                 .HasForeignKey(x => x.PostId);
+
+
+            modelBuilder.Entity<JobOffer>()
+                .HasOne(x => x.Currency)
+                .WithMany(x => x.JobOffers)
+                .HasForeignKey(x => x.CurrencyId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<JobOffer>()
+                .HasOne(x => x.ContractOption)
+                .WithMany(x => x.JobOffers)
+                .HasForeignKey(x => x.ContractOptionId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
+            modelBuilder.Entity<JobOffer>()
+                .HasOne(x => x.Post)
+                .WithMany(x => x.JobOffers)
+                .HasForeignKey(x => x.PostId)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
             modelBuilder.Entity<JobRating>()
                 .HasOne(x => x.Post)
@@ -127,27 +189,24 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
                 .WithMany(x => x.Posts)
                 .HasForeignKey(x => x.ContractOptionId);
 
-            modelBuilder.Entity<PostTag>()
-                .HasOne(x => x.Post)
-                .WithMany(x => x.Tags)
-                .HasForeignKey(x => x.PostId);
-
-
-            modelBuilder.Entity<PostTag>()
-                .HasOne(x => x.Tag)
+            modelBuilder.Entity<Post>()
+                .HasOne(x => x.Currency)
                 .WithMany(x => x.Posts)
-                .HasForeignKey(x => x.TagId);
+                .HasForeignKey(x => x.CurrencyId);
 
+            modelBuilder.Entity<PostAbility>()
+                .HasOne(x => x.Post)
+                .WithMany(x => x.Abilities)
+                .HasForeignKey(x => x.PostId);
 
             modelBuilder.Entity<PostAbility>()
                 .HasOne(x => x.Ability)
                 .WithMany(x => x.Posts)
                 .HasForeignKey(x => x.AbilityId);
 
-
-            modelBuilder.Entity<PostAbility>()
+            modelBuilder.Entity<PostTag>()
                 .HasOne(x => x.Post)
-                .WithMany(x => x.Abilities)
+                .WithMany(x => x.Tags)
                 .HasForeignKey(x => x.PostId);
 
             modelBuilder.Entity<UserAbility>()
@@ -155,10 +214,12 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
                 .WithMany(x => x.Users)
                 .HasForeignKey(x => x.AbilityId);
 
-            modelBuilder.Entity<JobOffer>()
-                .HasOne(x => x.Post)
-                .WithMany(x => x.JobOffers)
-                .HasForeignKey(x => x.PostId);
+
+
+
+
+
+
             #endregion
 
             modelBuilder.Entity<ContractOption>().HasData(

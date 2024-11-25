@@ -6,6 +6,6 @@ namespace WorkSynergy.Core.Domain.Models
     {
         public string UserId { get; set; }
         public int AbilityId { get; set; }
-        public Ability Ability { get; set; }
+        public Ability? Ability { get; set; }
     }
 }

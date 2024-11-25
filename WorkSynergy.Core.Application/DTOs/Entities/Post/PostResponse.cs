@@ -1,5 +1,6 @@
 ﻿using WorkSynergy.Core.Application.DTOs.Entities.Ability;
 using WorkSynergy.Core.Application.DTOs.Entities.ContractOption;
+using WorkSynergy.Core.Application.DTOs.Entities.Currency;
 using WorkSynergy.Core.Application.DTOs.Entities.Tag;
 
 namespace WorkSynergy.Core.Application.DTOs.Entities.Post
@@ -8,7 +9,7 @@ namespace WorkSynergy.Core.Application.DTOs.Entities.Post
     {
         public int Id { get; set; } 
         public string Description { get; set; }
-        public string Currency { get; set; }
+        public CurrencyResponse Currency { get; set; }
         public DateOnly CreatedAt { get; set; }
 
         public string Title { get; set; }

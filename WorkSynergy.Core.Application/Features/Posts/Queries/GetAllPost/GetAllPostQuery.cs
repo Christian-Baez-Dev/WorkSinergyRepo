@@ -33,7 +33,7 @@ namespace WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPost
 
         public async Task<ManyPostsResponse> Handle(GetAllPostQuery request, CancellationToken cancellationToken)
         {
-            var result = await _postRepository.GetAllOrderAndPaginateAsync(null, null, false, request.PageNumber, request.PageSize, x => x.Abilities, x => x.ContractOption, x => x.Tags, x => x.Applications);
+            var result = await _postRepository.GetAllOrderAndPaginateAsync(null, null, false, request.PageNumber, request.PageSize, x => x.Abilities, x => x.ContractOption, x => x.Tags, x => x.Applications, x => x.Currency);
             if (result.Result == null)
             {
                 throw new ApiException("No posts were found", StatusCodes.Status404NotFound);

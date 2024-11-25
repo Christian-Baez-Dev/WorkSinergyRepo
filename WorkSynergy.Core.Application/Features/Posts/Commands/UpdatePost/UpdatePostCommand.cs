@@ -13,7 +13,7 @@ namespace WorkSynergy.Core.Application.Features.Posts.Commands.UpdatePost
     {
         public int Id { get; set; }
         public string Description { get; set; }
-        public string Currency { get; set; }
+        public int CurrencyId { get; set; }
         public string Title { get; set; }
         public List<int> Categories { get; set; }
         public List<int> DeleteCategories { get; set; }
@@ -40,7 +40,7 @@ namespace WorkSynergy.Core.Application.Features.Posts.Commands.UpdatePost
                 throw new ApiException("Post not found", StatusCodes.Status404NotFound);
             }
             post.Description = request.Description ?? post.Description;
-            post.Currency = request.Currency ?? post.Currency;
+            post.CurrencyId = request.CurrencyId > 0 ? request.CurrencyId : post.CurrencyId;
             post.Title = request.Title ?? post.Title;
 
             var result = await _postRepository.UpdateAsync(post, post.Id);
