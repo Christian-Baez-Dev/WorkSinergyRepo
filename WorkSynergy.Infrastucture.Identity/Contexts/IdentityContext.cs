@@ -13,8 +13,6 @@ namespace WorkSynergy.Infrastucture.Identity.Contexts
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<WorkSynergyUser>().ToTable("Users");
-            modelBuilder.Entity<WorkSynergyUser>().Ignore(x => x.UserName);
-
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");
             modelBuilder.Entity<IdentityUserRole<string>>().ToTable("User_Roles");
             modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("User_Logins");

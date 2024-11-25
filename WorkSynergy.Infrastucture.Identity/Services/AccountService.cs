@@ -72,7 +72,7 @@ namespace WorkSynergy.Infrastucture.Identity.Services
                 return response;
             }
 
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, request.Password, false, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(user, request.Password, false, lockoutOnFailure: false);
             if (!result.Succeeded)
             {
                 response.HasError = true;
@@ -96,7 +96,6 @@ namespace WorkSynergy.Infrastucture.Identity.Services
 
             response.Id = user.Id;
             response.Email = user.Email;
-            response.Username = user.UserName;
             response.UserImagePath = user.UserImagePath;
             response.BirthDate = user.BirthDate;
             response.FirstName = user.FirstName;
@@ -245,7 +244,6 @@ namespace WorkSynergy.Infrastucture.Identity.Services
             user.FirstName = request.FirstName ?? user.FirstName;
             user.LastName = request.LastName ?? user.LastName;
             user.PhoneNumber = request.PhoneNumber ?? user.PhoneNumber;
-            user.UserName = request.Username ?? user.UserName;
             user.Email = request.Email ?? user.Email;
             if (request.UserImage != null)
             {
@@ -371,12 +369,12 @@ namespace WorkSynergy.Infrastucture.Identity.Services
                 HasError = false
             };
 
-            var user = await _userManager.FindByNameAsync(request.Username);
+            var user = await _userManager.FindByEmailAsync(request.Email);
 
             if (user == null)
             {
                 response.HasError = true;
-                response.Error = $"No Accounts registered with {request.Username}";
+                response.Error = $"No Accounts registered with {request.Email}";
                 return response;
             }
 
@@ -400,12 +398,12 @@ namespace WorkSynergy.Infrastucture.Identity.Services
                 HasError = false
             };
 
-            var user = await _userManager.FindByNameAsync(request.Username);
+            var user = await _userManager.FindByEmailAsync(request.Email);
 
             if (user == null)
             {
                 response.HasError = true;
-                response.Error = $"No Accounts registered with {request.Username}";
+                response.Error = $"No Accounts registered with {request.Email}";
                 return response;
             }
 
@@ -485,13 +483,6 @@ namespace WorkSynergy.Infrastucture.Identity.Services
             {
                 HasError = false
             };
-            var userWithSameUserName = await _userManager.FindByNameAsync(request.Username);
-            if (userWithSameUserName != null && userWithSameUserName.Id != request.Id)
-            {
-                response.HasError = true;
-                response.Error = $"username '{request.Username}' is already taken.";
-                return response;
-            }
 
             var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
             if (userWithSameEmail != null && userWithSameEmail.Id != request.Id)
