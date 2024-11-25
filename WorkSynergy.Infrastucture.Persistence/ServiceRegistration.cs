@@ -38,6 +38,8 @@ namespace WorkSynergy.Infrastucture.Persistence
             services.AddTransient<IJobApplicationRepository, JobApplicationRepository>();
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddTransient<IPostTagRepository, PostTagRepository>();
+            services.AddTransient<ICurrencyRepository, CurrencyRepository>();
+
             #endregion
         }
 
