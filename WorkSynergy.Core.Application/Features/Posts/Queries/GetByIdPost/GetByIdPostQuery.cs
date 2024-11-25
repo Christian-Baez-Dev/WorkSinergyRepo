@@ -27,7 +27,7 @@ namespace WorkSynergy.Core.Application.Features.Posts.Queries.GetByIdPost
 
         public async Task<Response<PostResponse>> Handle(GetByIdPostQuery request, CancellationToken cancellationToken)
         {
-            var result = await _postRepository.GetByIdAsync(request.Id);
+            var result = await _postRepository.GetByIdIncludeAsync(request.Id, x => x.Abilities, x => x.ContractOption, x => x.Tags, x => x.Applications, x => x.Currency);
             if (result == null)
             {
                 throw new ApiException("No post were found", StatusCodes.Status404NotFound);

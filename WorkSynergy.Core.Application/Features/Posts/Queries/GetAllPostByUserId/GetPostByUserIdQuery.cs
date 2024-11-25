@@ -33,7 +33,7 @@ namespace WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPostByUserId
 
         public async Task<ManyPostsResponse> Handle(GetAllPostByUserIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _postRepository.GetAllOrderAndPaginateAsync(x => x.CreatorUserId == request.Id, null, false, request.PageNumber, request.PageSize, x => x.Abilities, x => x.ContractOption, x => x.Tags, x => x.Applications);
+            var result = await _postRepository.GetAllOrderAndPaginateAsync(x => x.CreatorUserId == request.Id, null, false, request.PageNumber, request.PageSize, x => x.Abilities, x => x.ContractOption, x => x.Tags, x => x.Applications, x => x.Currency);
      
 
             ManyPostsResponse response = new();
