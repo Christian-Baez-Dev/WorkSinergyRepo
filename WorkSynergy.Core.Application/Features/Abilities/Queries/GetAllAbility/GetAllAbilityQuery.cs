@@ -40,7 +40,7 @@ namespace WorkSynergy.Core.Application.Features.Abilities.Queries.GetAllAbilitie
             response.TotalPages = result.TotalPages;
             response.HasPrevious = result.HasPrevious;
             response.HasNext = result.HasNext;
-            response.PageNumber = request.PageSize;
+            response.PageNumber = request.PageNumber;
             response.TotalCount = result.TotalCount;
             response.Succeeded = true;
             response.StatusCode = StatusCodes.Status200OK;

@@ -27,7 +27,7 @@ namespace WorkSynergy.Core.Application.Features.Tags.Queries.GetByIdTag
 
         public async Task<Response<TagResponse>> Handle(GetByIdTagQuery request, CancellationToken cancellationToken)
         {
-            var result = _tagRepository.GetByIdAsync(request.Id);
+            var result = await _tagRepository.GetByIdAsync(request.Id);
             if (result == null)
             {
                 throw new ApiException("No ability were found", StatusCodes.Status404NotFound);
