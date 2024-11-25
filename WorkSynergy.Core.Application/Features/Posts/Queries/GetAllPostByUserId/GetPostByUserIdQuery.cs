@@ -39,7 +39,7 @@ namespace WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPostByUserId
             ManyPostsResponse response = new();
             if (result.Result == null || result.Result.Count == 0)
             {
-                throw new ApiException("No were were found", StatusCodes.Status404NotFound);
+                throw new ApiException("No post were found", StatusCodes.Status404NotFound);
             }
             response.Data = _mapper.Map<List<PostResponse>>(result.Result);
             response.TotalPages = result.TotalPages;

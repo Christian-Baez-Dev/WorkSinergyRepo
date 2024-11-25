@@ -51,16 +51,15 @@ namespace WorkSynergy.Infrastucture.Persistence.Repositories
             IQueryable<T> query = _dbSet;
             if(searchPredicate != null)
                 query = query.Where(searchPredicate);
-            if(orderBy != null && !isDescending)
-                query = query.OrderBy(orderBy);
-            if (orderBy != null && isDescending)
-                query = query.OrderByDescending(orderBy);
+            if(orderBy != null)
+                query = !isDescending? query.OrderBy(orderBy) : query.OrderByDescending(orderBy);
+
 
             foreach (var property in properties)
             {
                 query = query.Include(property);
             }
-            int totalNumber = await _dbSet.CountAsync();
+            int totalNumber = await query.CountAsync();
 
             if ((pageNumber.HasValue && pageNumber > 0) && (pageSize.HasValue && pageSize > 0))
             {
