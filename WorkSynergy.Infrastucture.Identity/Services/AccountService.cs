@@ -162,7 +162,7 @@ namespace WorkSynergy.Infrastucture.Identity.Services
             var user = new WorkSynergyUser
             {
                 Email = request.Email,
-                UserName = request.Username,
+                UserName = request.Email,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 PhoneNumberConfirmed = true,

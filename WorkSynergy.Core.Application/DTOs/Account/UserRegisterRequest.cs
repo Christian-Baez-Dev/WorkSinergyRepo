@@ -9,8 +9,8 @@ namespace WorkSynergy.Core.Application.Dtos.Account
     /// </summary>
     public class UserRegisterRequest
     {
-        [SwaggerParameter(Description = "El username del usuario")]
-        public string Username { get; set; }
+        //[SwaggerParameter(Description = "El username del usuario")]
+        //public string Username { get; set; }
         [SwaggerParameter(Description = "El correo electronico del usuario")]
         public string Email { get; set; }
         [SwaggerParameter(Description = "Fecha de nacimiento del usuario")]
