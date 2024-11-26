@@ -1,4 +1,5 @@
-﻿using WorkSynergy.Core.Application.DTOs.Entities.ContractOption;
+﻿using WorkSynergy.Core.Application.Dtos.Account;
+using WorkSynergy.Core.Application.DTOs.Entities.ContractOption;
 using WorkSynergy.Core.Application.DTOs.Entities.Currency;
 using WorkSynergy.Core.Application.DTOs.Entities.Post;
 
@@ -12,7 +13,9 @@ namespace WorkSynergy.Core.Application.DTOs.Entities.JobOffer
         public DateTime EndDate { get; set; }  // fecha de cierre
         public double HourlyRate { get; set; } // promedio de money por horas
         public string ClientUserId { get; set; }
+        public UserDTO Client {  get; set; }
         public string FreelancerId { get; set; }
+        public UserDTO Freelancer { get; set; }
         public bool IsAcepted { get; set; }
         public DateTime ExpirationDate { get; set; }
         public int PostId { get; set; }

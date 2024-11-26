@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 using WorkSynergy.Core.Application.Dtos.Account;
+using WorkSynergy.Core.Application.DTOs.Account;
+using WorkSynergy.Core.Application.DTOs.Entities.Ability;
 using WorkSynergy.Core.Application.Interfaces.Services;
+using WorkSynergy.Core.Application.Wrappers;
 
 namespace WorkSynergy.WebApi.Controllers
 {
@@ -36,19 +39,27 @@ namespace WorkSynergy.WebApi.Controllers
              Description = "Find a user by id"
             )]
         [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<UserDTO>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(string id)
         {
             return Ok(await _accountService.GetByIdAsyncDTO(id));
         }
         [HttpGet("GetByRole/{role}")]
         [SwaggerOperation(
-         Summary = "Get user by id",
-         Description = "Find a user by id"
+         Summary = "Get user by role",
+         Description = "Find a user by role"
         )]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> GetByRole(string role)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ManyUserResponse))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetByRole(GetAllByRoleRequest request)
         {
-            return Ok(await _accountService.GetAllByRoleDTO(role));
+            return Ok(await _accountService.GetAllByRoleDTO(request));
         }
 
         [HttpPost("registerUser")]

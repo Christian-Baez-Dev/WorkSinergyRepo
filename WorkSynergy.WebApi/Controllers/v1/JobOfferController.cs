@@ -14,6 +14,7 @@ using WorkSynergy.Core.Application.Features.JobOffers.Queries.GetAllJobOffer;
 using WorkSynergy.Core.Application.Features.JobOffers.Queries.GetAllJobOfferByClient;
 using WorkSynergy.Core.Application.Features.JobOffers.Queries.GetAllJobOfferByFreelancer;
 using WorkSynergy.Core.Application.Features.JobOffers.Queries.GetByIdJobOffer;
+using WorkSynergy.Core.Application.Interfaces.Services;
 using WorkSynergy.WebApi.Helpers;
 
 namespace WorkSynergy.WebApi.Controllers.v1
@@ -23,6 +24,13 @@ namespace WorkSynergy.WebApi.Controllers.v1
     [SwaggerTag("Controller for the job offers")]
     public class JobOfferController : BaseApiController
     {
+        private readonly IAccountService _accountService;
+
+        public JobOfferController(IAccountService accountService)
+        {
+            _accountService = accountService;
+        }
+
         [HttpPost]
         [SwaggerOperation(
             Summary = "Creation of a new job offer",
@@ -79,6 +87,12 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetAllJobOfferByClientQuery query)
         {
+            var result = await Mediator.Send(query);
+            foreach (var item in result.Data)
+            {
+                var userResponse = await _accountService.GetByIdAsyncDTO(item.FreelancerId);
+                item.Freelancer = userResponse.Data;
+            }
             return Ok(await Mediator.Send(query));
         }
 
@@ -94,6 +108,12 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetAllJobOfferByFreelancerQuery query)
         {
+            var result = await Mediator.Send(query);
+            foreach (var item in result.Data)
+            {
+                var userResponse = await _accountService.GetByIdAsyncDTO(item.ClientUserId);
+                item.Client = userResponse.Data;
+            }
             return Ok(await Mediator.Send(query));
         }
 

@@ -74,7 +74,8 @@ namespace WorkSynergy.WebApi.Controllers.v1
             {
                 foreach(var item in result.Data)
                 {
-                    item.User = await _accountService.GetByIdAsyncDTO(item.ApplicantId);
+                    var userResponse = await _accountService.GetByIdAsyncDTO(item.ApplicantId);
+                    item.User = userResponse.Data;
                 }
             }
             return Ok(result);

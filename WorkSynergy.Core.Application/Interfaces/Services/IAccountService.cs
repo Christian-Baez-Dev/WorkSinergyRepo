@@ -1,13 +1,14 @@
 ﻿using WorkSynergy.Core.Application.Dtos.Account;
+using WorkSynergy.Core.Application.DTOs.Account;
 using WorkSynergy.Core.Application.ViewModels.Account;
+using WorkSynergy.Core.Application.Wrappers;
 
 namespace WorkSynergy.Core.Application.Interfaces.Services
 {
     public interface IAccountService
     {
-        Task<UserDTO> GetByIdAsyncDTO(string id);
-        Task<List<UserDTO>> GetAllByRoleDTO(string Role);
-
+        Task<Response<UserDTO>> GetByIdAsyncDTO(string id);
+        Task<ManyUserResponse> GetAllByRoleDTO(GetAllByRoleRequest request);
         Task<AuthenticationResponse> AuthenticateAsync(AuthenticationRequest request);
         Task<string> ConfirmAccountAsync(string userId, string token);
         Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordRequest request, string origin);
@@ -20,5 +21,6 @@ namespace WorkSynergy.Core.Application.Interfaces.Services
         Task DeactivateUser(string id);
         Task ActivateUser(string id);
         Task<UserDeleteResponse> DeleteAsync(string id);
+
     }
 }

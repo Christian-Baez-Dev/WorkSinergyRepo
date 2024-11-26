@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
@@ -9,16 +10,21 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using WorkSynergy.Core.Application.Dtos.Account;
+using WorkSynergy.Core.Application.DTOs.Account;
 using WorkSynergy.Core.Application.DTOs.Entities.Ability;
 using WorkSynergy.Core.Application.Enums;
 using WorkSynergy.Core.Application.Enums.Upload;
+using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Helpers;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Interfaces.Services;
 using WorkSynergy.Core.Application.ViewModels.Account;
+using WorkSynergy.Core.Application.Wrappers;
+using WorkSynergy.Core.Domain.Models;
 using WorkSynergy.Core.Domain.Settings;
 using WorkSynergy.Infrastucture.Identity.Models;
 using WorkSynergy.Infrastucture.Persistence.Repositories;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WorkSynergy.Infrastucture.Identity.Services
 {
@@ -304,34 +310,29 @@ namespace WorkSynergy.Infrastucture.Identity.Services
 
         #region GetsDTO
 
-        public async Task<UserDTO> GetByIdAsyncDTO(string id)
+        public async Task<Response<UserDTO>> GetByIdAsyncDTO(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
+            Response<UserDTO> response = new();
             var userDto = _mapper.Map<UserDTO>(user);
-            if (user != null)
+            if (user == null)
             {
-                var roles = await _userManager.GetRolesAsync(user);
-                userDto.Roles = roles.ToList();
-                userDto.Abilities = await GetAbilities(userDto.Id);
-            }
-            return userDto;
-        }
-
-        public async Task<UserDTO> GetByIdRoleAsync(string id)
-        {
-            var user = await _userManager.FindByIdAsync(id);
-            var userDto = _mapper.Map<UserDTO>(user);
-            if (user != null)
-            {
-                var roles = await _userManager.GetRolesAsync(user);
-                userDto.Roles = roles.ToList();
-                userDto.Abilities = await GetAbilities(userDto.Id);
+                throw new ApiException("No user user were found", StatusCodes.Status404NotFound);
 
             }
-            return userDto;
+            var roles = await _userManager.GetRolesAsync(user);
+            userDto.Roles = roles.ToList();
+            userDto.Abilities = await GetAbilities(userDto.Id);
+
+            response.Succeeded = true;
+            response.Data = userDto;
+            response.StatusCode = StatusCodes.Status200OK;
+
+            return response;
         }
 
-        public async Task<List<UserDTO>> GetAllByRoleDTO(string role)
+
+        public async Task<ManyUserResponse> GetAllByRoleDTO(GetAllByRoleRequest request)
         {
             var users = await _userManager.Users.ToListAsync();
             var usersDtos = _mapper.Map<List<UserDTO>>(users);
@@ -344,8 +345,31 @@ namespace WorkSynergy.Infrastucture.Identity.Services
                     user.Abilities = await GetAbilities(user.Id);
                 }
             }
-            usersDtos = usersDtos.Where(x => x.Roles.Contains(role)).ToList();
-            return usersDtos;
+            usersDtos = usersDtos.Where(x => x.Roles.Contains(request.Role)).ToList();
+            int totalNumber = usersDtos.Count();
+
+            if ((request.PageNumber.HasValue && request.PageNumber > 0) && (request.PageSize.HasValue && request.PageSize > 0))
+            {
+                usersDtos = usersDtos.Skip((request.PageNumber.Value - 1) * request.PageSize.Value).Take(request.PageSize.Value).ToList();
+            }
+            int? totalPages = (request.PageNumber.HasValue && request.PageNumber > 0) && (request.PageSize.HasValue && request.PageSize > 0)
+                ? (int?)Math.Ceiling((double)totalNumber / request.PageSize.Value)
+                : null;
+            bool? hasPrevious = request.PageNumber.HasValue ? request.PageNumber > 1 : null;
+            bool? hasNext = request.PageNumber.HasValue ? request.PageNumber < totalPages : null;
+            ManyUserResponse userResponse = new()
+            {
+                TotalPages = totalPages ?? 0,
+                TotalCount = usersDtos.Count(),
+                HasNext = hasNext ?? false,
+                HasPrevious = hasPrevious ?? false,
+                PageNumber = request.PageNumber ?? 0,
+                Succeeded = true,
+                StatusCode = StatusCodes.Status200OK,
+                Data = usersDtos,
+
+            };
+            return userResponse;
         }
 
         #endregion
