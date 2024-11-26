@@ -40,6 +40,16 @@ namespace WorkSynergy.WebApi.Controllers
         {
             return Ok(await _accountService.GetByIdAsyncDTO(id));
         }
+        [HttpGet("GetByRole/{role}")]
+        [SwaggerOperation(
+         Summary = "Get user by id",
+         Description = "Find a user by id"
+        )]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public async Task<IActionResult> GetByRole(string role)
+        {
+            return Ok(await _accountService.GetAllByRoleDTO(role));
+        }
 
         [HttpPost("registerUser")]
         [SwaggerOperation(
