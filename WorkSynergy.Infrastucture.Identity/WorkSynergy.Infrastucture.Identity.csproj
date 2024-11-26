@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\WorkSynergy.Core.Application\WorkSynergy.Core.Application.csproj" />
     <ProjectReference Include="..\WorkSynergy.Core.Domain\WorkSynergy.Core.Domain.csproj" />
+    <ProjectReference Include="..\WorkSynergy.Infrastucture.Persistence\WorkSynergy.Infrastucture.Persistence.csproj" />
     <ProjectReference Include="..\WorkSynergy.Infrastucture.Shared\WorkSynergy.Infrastucture.Shared.csproj" />
   </ItemGroup>
 

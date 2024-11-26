@@ -1,4 +1,6 @@
-﻿namespace WorkSynergy.Core.Application.Dtos.Account
+﻿using WorkSynergy.Core.Application.DTOs.Entities.Ability;
+
+namespace WorkSynergy.Core.Application.Dtos.Account
 {
     public class UserDTO
     {
@@ -10,6 +12,8 @@
         public string PhoneNumber { get; set; }
         public string? UserImagePath { get; set; }
         public List<string> Roles { get; set; }
+        public List<AbilityResponse> Abilities { get; set; }
+
         public bool IsActive { get; set; }
     }
 }

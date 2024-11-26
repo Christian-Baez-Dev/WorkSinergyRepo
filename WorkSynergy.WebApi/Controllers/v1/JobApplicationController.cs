@@ -11,6 +11,7 @@ using WorkSynergy.Core.Application.Features.Abilities.Queries.GetByIdAbilities;
 using WorkSynergy.Core.Application.Features.JobApplications.Commands.ChangeStatusJobApplication;
 using WorkSynergy.Core.Application.Features.JobApplications.Commands.CreateJobApplication;
 using WorkSynergy.Core.Application.Features.JobApplications.Queries.GetAllJobApplicationByPost;
+using WorkSynergy.Core.Application.Interfaces.Services;
 using WorkSynergy.WebApi.Helpers;
 
 namespace WorkSynergy.WebApi.Controllers.v1
@@ -20,6 +21,13 @@ namespace WorkSynergy.WebApi.Controllers.v1
     [SwaggerTag("Controller for the job applications")]
     public class JobApplciationController : BaseApiController
     {
+        private readonly IAccountService _accountService;
+
+        public JobApplciationController(IAccountService accountService)
+        {
+            _accountService = accountService;
+        }
+
         [HttpPost]
         [SwaggerOperation(
             Summary = "Creation of a new job application",
@@ -61,7 +69,15 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetAllJobApplicationByPostQuery query)
         {
-            return Ok(await Mediator.Send(query));
+            var result = await Mediator.Send(query);
+            if(result != null && result.Data.Count > 0)
+            {
+                foreach(var item in result.Data)
+                {
+                    item.User = await _accountService.GetByIdAsyncDTO(item.ApplicantId);
+                }
+            }
+            return Ok(result);
         }
 
         [HttpPut]

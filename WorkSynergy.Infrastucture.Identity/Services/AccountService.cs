@@ -9,13 +9,16 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using WorkSynergy.Core.Application.Dtos.Account;
+using WorkSynergy.Core.Application.DTOs.Entities.Ability;
 using WorkSynergy.Core.Application.Enums;
 using WorkSynergy.Core.Application.Enums.Upload;
 using WorkSynergy.Core.Application.Helpers;
+using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Interfaces.Services;
 using WorkSynergy.Core.Application.ViewModels.Account;
 using WorkSynergy.Core.Domain.Settings;
 using WorkSynergy.Infrastucture.Identity.Models;
+using WorkSynergy.Infrastucture.Persistence.Repositories;
 
 namespace WorkSynergy.Infrastucture.Identity.Services
 {
@@ -23,17 +26,19 @@ namespace WorkSynergy.Infrastucture.Identity.Services
     {
         private readonly UserManager<WorkSynergyUser> _userManager;
         private readonly SignInManager<WorkSynergyUser> _signInManager;
+        private readonly IUserAbilityRepository _userAbilityRepository;
         //private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
         private readonly JWTSettings _jwtSettings;
 
-        public AccountService(UserManager<WorkSynergyUser> userManager, SignInManager<WorkSynergyUser> signInManager/*, IEmailService emailService*/, IMapper mapper, IOptions<JWTSettings> jwtSettings)
+        public AccountService(UserManager<WorkSynergyUser> userManager, SignInManager<WorkSynergyUser> signInManager/*, IEmailService emailService*/, IMapper mapper, IOptions<JWTSettings> jwtSettings, IUserAbilityRepository userAbilityRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             //_emailService = emailService;
             _mapper = mapper;
             _jwtSettings = jwtSettings.Value;
+            _userAbilityRepository = userAbilityRepository;
         }
 
         #region Activate and Deactivate
@@ -302,25 +307,28 @@ namespace WorkSynergy.Infrastucture.Identity.Services
         public async Task<UserDTO> GetByIdAsyncDTO(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            var userVm = _mapper.Map<UserDTO>(user);
+            var userDto = _mapper.Map<UserDTO>(user);
             if (user != null)
             {
                 var roles = await _userManager.GetRolesAsync(user);
-                userVm.Roles = roles.ToList();
+                userDto.Roles = roles.ToList();
+                userDto.Abilities = await GetAbilities(userDto.Id);
             }
-            return userVm;
+            return userDto;
         }
 
         public async Task<UserDTO> GetByIdRoleAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            var userVm = _mapper.Map<UserDTO>(user);
+            var userDto = _mapper.Map<UserDTO>(user);
             if (user != null)
             {
                 var roles = await _userManager.GetRolesAsync(user);
-                userVm.Roles = roles.ToList();
+                userDto.Roles = roles.ToList();
+                userDto.Abilities = await GetAbilities(userDto.Id);
+
             }
-            return userVm;
+            return userDto;
         }
 
         public async Task<List<UserDTO>> GetAllByRoleDTO(string role)
@@ -333,6 +341,7 @@ namespace WorkSynergy.Infrastucture.Identity.Services
                 {
                     var roles = await _userManager.GetRolesAsync(users.FirstOrDefault(y => y.Id == user.Id));
                     user.Roles = roles.ToList();
+                    user.Abilities = await GetAbilities(user.Id);
                 }
             }
             usersDtos = usersDtos.Where(x => x.Roles.Contains(role)).ToList();
@@ -423,6 +432,11 @@ namespace WorkSynergy.Infrastucture.Identity.Services
         #endregion
 
         #region Private methods
+
+        private async Task<List<AbilityResponse>> GetAbilities(string id)
+        {
+            return _mapper.Map<List<AbilityResponse>>(await _userAbilityRepository.FindAllAsync(x => x.UserId == id));
+        }
 
         private async Task<JwtSecurityToken> GenerateJWToken(WorkSynergyUser user)
         {
