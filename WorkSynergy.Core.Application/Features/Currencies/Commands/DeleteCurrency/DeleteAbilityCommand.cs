@@ -5,24 +5,24 @@ using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 
-namespace WorkSynergy.Core.Application.Features.Abilities.Commands.DeleteAbility
+namespace WorkSynergy.Core.Application.Features.Currencies.Commands.DeleteCurrency
 {
-    public class DeletCurrencyCommand : IRequest<Response<int>>
+    public class DeleteCurrencyCommand : IRequest<Response<int>>
     {
         public int Id { get; set; }
     }
-    public class DeletCurrencyCommandHandler : IRequestHandler<DeletCurrencyCommand, Response<int>>
+    public class DeleteCurrencyCommandHandler : IRequestHandler<DeleteCurrencyCommand, Response<int>>
     {
         private readonly IMapper _mapper;
         private readonly ICurrencyRepository _currencyRepository;
 
-        public DeletCurrencyCommandHandler(IMapper mapper, ICurrencyRepository currencyRepository)
+        public DeleteCurrencyCommandHandler(IMapper mapper, ICurrencyRepository currencyRepository)
         {
             _mapper = mapper;
             _currencyRepository = currencyRepository;
         }
 
-        public async Task<Response<int>> Handle(DeletCurrencyCommand request, CancellationToken cancellationToken)
+        public async Task<Response<int>> Handle(DeleteCurrencyCommand request, CancellationToken cancellationToken)
         {
             Response<int> response = new();
             var currency = await _currencyRepository.GetByIdAsync(request.Id);

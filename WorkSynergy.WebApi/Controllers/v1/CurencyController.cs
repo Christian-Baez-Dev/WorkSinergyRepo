@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
-using WorkSynergy.Core.Application.DTOs.Entities.Ability;
 using WorkSynergy.Core.Application.DTOs.Entities.Currency;
-using WorkSynergy.Core.Application.Features.Abilities.Commands.CreateAbilitiesCommand;
-using WorkSynergy.Core.Application.Features.Abilities.Commands.DeleteAbility;
-using WorkSynergy.Core.Application.Features.Abilities.Commands.UpdateAbility;
-using WorkSynergy.Core.Application.Features.Abilities.Queries.GetAllAbilities;
-using WorkSynergy.Core.Application.Features.Abilities.Queries.GetByIdAbilities;
+using WorkSynergy.Core.Application.Features.Currencies.Commands.CreateCurrency;
+using WorkSynergy.Core.Application.Features.Currencies.Commands.DeleteCurrency;
+using WorkSynergy.Core.Application.Features.Currencies.Commands.UpdateCurrency;
+using WorkSynergy.Core.Application.Features.Currencies.Queries.GetAllCurrency;
+using WorkSynergy.Core.Application.Features.Currencies.Queries.GetByIdCurrency;
 using WorkSynergy.WebApi.Helpers;
 
 namespace WorkSynergy.WebApi.Controllers.v1
@@ -96,7 +95,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
         {
-            await Mediator.Send(new DeleteAbilityCommand { Id = id });
+            await Mediator.Send(new DeleteCurrencyCommand { Id = id });
             return NoContent();
         }
 

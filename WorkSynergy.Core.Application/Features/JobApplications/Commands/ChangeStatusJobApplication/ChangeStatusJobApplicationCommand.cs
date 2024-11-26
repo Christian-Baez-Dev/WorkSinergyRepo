@@ -33,7 +33,7 @@ namespace WorkSynergy.Core.Application.Features.JobApplications.Commands.ChangeS
         {
             var jobApplication = await _jobApplicationRepository.GetByIdAsync(request.JobApplicationId);
             if (jobApplication == null) throw new ApiException("No Job Application were found, please enter a valid identificator", StatusCodes.Status404NotFound);
-            if (!Enum.IsDefined(typeof(JobApplicationStatusEnum), request.StatusName) || request.StatusName.Equals(nameof(JobApplicationStatusEnum.Waiting))) throw new ApiException("Wrong job application status provided", StatusCodes.Status400BadRequest);
+            if (!Enum.IsDefined(typeof(AsynchronousStatus), request.StatusName) || request.StatusName.Equals(nameof(AsynchronousStatus.Waiting))) throw new ApiException("Wrong job application status provided", StatusCodes.Status400BadRequest);
 
             jobApplication.Status = request.StatusName;
             var result = await _jobApplicationRepository.UpdateAsync(jobApplication, jobApplication.Id);

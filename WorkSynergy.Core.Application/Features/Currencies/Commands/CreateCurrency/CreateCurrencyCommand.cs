@@ -7,7 +7,7 @@ using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 using WorkSynergy.Core.Domain.Models;
 
-namespace WorkSynergy.Core.Application.Features.Abilities.Commands.CreateAbilitiesCommand
+namespace WorkSynergy.Core.Application.Features.Currencies.Commands.CreateCurrency
 {
     public class CreateCurrencyCommand : IRequest<Response<int>>
     {

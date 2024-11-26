@@ -1,8 +1,10 @@
-﻿using WorkSynergy.Core.Domain.Common;
+﻿using WorkSynergy.Core.Application.DTOs.Entities.ContractOption;
+using WorkSynergy.Core.Application.DTOs.Entities.Currency;
+using WorkSynergy.Core.Application.DTOs.Entities.Post;
 
-namespace WorkSynergy.Core.Domain.Models
+namespace WorkSynergy.Core.Application.DTOs.Entities.JobOffer
 {
-    public class JobOffer : BaseEntity
+    public class JobOfferResponse
     {
         public string Description { get; set; }
         public string Title { get; set; }
@@ -11,14 +13,13 @@ namespace WorkSynergy.Core.Domain.Models
         public double HourlyRate { get; set; } // promedio de money por horas
         public string ClientUserId { get; set; }
         public string FreelancerId { get; set; }
-        public string Status { get; set; }
+        public bool IsAcepted { get; set; }
         public DateTime ExpirationDate { get; set; }
         public int PostId { get; set; }
-        public Post Post { get; set; }
+        public PostResponse? Post { get; set; }
         public int CurrencyId { get; set; }
-        public Currency? Currency { get; set; }
+        public CurrencyResponse? Currency { get; set; }
         public int ContractOptionId { get; set; }
-        public ContractOption? ContractOption { get; set; }
-
+        public ContractOptionResponse? ContractOption { get; set; }
     }
 }

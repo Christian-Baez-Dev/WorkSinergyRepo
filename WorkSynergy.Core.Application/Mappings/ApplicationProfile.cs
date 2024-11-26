@@ -3,6 +3,7 @@ using WorkSynergy.Core.Application.DTOs.Entities.Ability;
 using WorkSynergy.Core.Application.DTOs.Entities.ContractOption;
 using WorkSynergy.Core.Application.DTOs.Entities.Currency;
 using WorkSynergy.Core.Application.DTOs.Entities.JobApplication;
+using WorkSynergy.Core.Application.DTOs.Entities.JobOffer;
 using WorkSynergy.Core.Application.DTOs.Entities.Post;
 using WorkSynergy.Core.Application.DTOs.Entities.Tag;
 using WorkSynergy.Core.Application.DTOs.Entities.UserAbility;
@@ -10,6 +11,7 @@ using WorkSynergy.Core.Application.Enums;
 using WorkSynergy.Core.Application.Features.Abilities.Commands.CreateAbilitiesCommand;
 using WorkSynergy.Core.Application.Features.Abilities.Commands.UpdateAbility;
 using WorkSynergy.Core.Application.Features.JobApplications.Commands.CreateJobApplication;
+using WorkSynergy.Core.Application.Features.JobOffers.Commands.CreateJobOfferCommand;
 using WorkSynergy.Core.Application.Features.Posts.Commands.CreatePost;
 using WorkSynergy.Core.Application.Features.Posts.Commands.UpdatePost;
 using WorkSynergy.Core.Application.Features.Tags.Commands.CreateTagCommand;
@@ -21,7 +23,7 @@ namespace WorkSynergy.Core.Application.Mappings
 {
     public class ApplicationProfile : Profile
     {
-        public ApplicationProfile() 
+        public ApplicationProfile()
         {
             #region Post
             CreateMap<Post, PostResponse>()
@@ -103,6 +105,14 @@ namespace WorkSynergy.Core.Application.Mappings
                 .ReverseMap();
 
             #endregion
+
+            #region JobOffer
+            CreateMap<JobOffer, JobOfferResponse>()
+                .ReverseMap();
+            CreateMap<CreateJobOfferCommand, JobOffer>()
+                .ReverseMap();
+            #endregion
+
         }
 
     }

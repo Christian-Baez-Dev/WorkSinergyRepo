@@ -8,7 +8,7 @@ using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 
-namespace WorkSynergy.Core.Application.Features.Abilities.Queries.GetAllAbilities
+namespace WorkSynergy.Core.Application.Features.Currencies.Queries.GetAllCurrency
 {
     public class GetAllCurrencyQuery : IRequest<ManyCurrencyResponse>
     {

@@ -6,7 +6,7 @@ using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 using WorkSynergy.Core.Domain.Models;
 
-namespace WorkSynergy.Core.Application.Features.Abilities.Commands.UpdateAbility
+namespace WorkSynergy.Core.Application.Features.Currencies.Commands.UpdateCurrency
 {
     public class UpdateCurrencyCommand : IRequest<Response<int>>
     {

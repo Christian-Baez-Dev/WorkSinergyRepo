@@ -9,7 +9,7 @@ using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 
-namespace WorkSynergy.Core.Application.Features.Abilities.Queries.GetByIdAbilities
+namespace WorkSynergy.Core.Application.Features.Currencies.Queries.GetByIdCurrency
 {
     public class GetByIdCurrencyQuery : IRequest<Response<CurrencyResponse>>
     {

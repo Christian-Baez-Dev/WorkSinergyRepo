@@ -28,7 +28,7 @@ namespace WorkSynergy.Core.Application.Features.JobApplications.Queries.GetAllJo
 
         public async Task<ManyJobApplicationResponse> Handle(GetAllJobApplicationByPostQuery request, CancellationToken cancellationToken)
         {
-            var result = await _jobApplicationRepository.GetAllOrderAndPaginateAsync(x => x.PostId == request.Id && x.Status == nameof(JobApplicationStatusEnum.Waiting),
+            var result = await _jobApplicationRepository.GetAllOrderAndPaginateAsync(x => x.PostId == request.Id && x.Status == nameof(AsynchronousStatus.Waiting),
             null, false, request.PageNumber, request.PageSize);
 
 

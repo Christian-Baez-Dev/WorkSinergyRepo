@@ -32,7 +32,7 @@ namespace WorkSynergy.Core.Application.Features.JobApplications.Commands.CreateJ
         public async Task<Response<int>> Handle(CreateJobApplicationCommand request, CancellationToken cancellationToken)
         {
             var jobApplication = _mapper.Map<JobApplication>(request);
-            jobApplication.Status = nameof(JobApplicationStatusEnum.Waiting);
+            jobApplication.Status = nameof(AsynchronousStatus.Waiting);
             var jobApplicationWithSameUser = await _jobApplicationRepository.FindAsync(x => x.ApplicantId == request.ApplicantId);
             if (jobApplicationWithSameUser != null)
             {

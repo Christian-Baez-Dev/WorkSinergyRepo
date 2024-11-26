@@ -1,6 +1,6 @@
 ﻿namespace WorkSynergy.Core.Application.Enums
 {
-    public enum JobApplicationStatusEnum
+    public enum AsynchronousStatus
     {
         Waiting = 1,
         Accepted, 
