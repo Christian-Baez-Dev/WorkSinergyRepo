@@ -10,6 +10,7 @@ namespace WorkSynergy.Core.Domain.Models
         public long TotalPayment { get; set; }
         public long CurrentPayment { get; set; }
         public string Title { get; set; }
+        public int ContractOptionId { get; set; }
         public ContractOption? ContractOption { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

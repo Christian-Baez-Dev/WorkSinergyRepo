@@ -14,7 +14,7 @@ namespace WorkSynergy.Core.Domain.Models
         public string Status { get; set; }
         public DateTime ExpirationDate { get; set; }
         public int PostId { get; set; }
-        public Post Post { get; set; }
+        public Post? Post { get; set; }
         public int CurrencyId { get; set; }
         public Currency? Currency { get; set; }
         public int ContractOptionId { get; set; }

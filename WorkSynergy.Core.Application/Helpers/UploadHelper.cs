@@ -14,7 +14,11 @@ namespace WorkSynergy.Core.Application.Helpers
                     return imagePath;
                 }
             }
-            string basePath = BasePath(type, id);
+            if (!Enum.IsDefined(typeof(UploadEntities), type))
+            {
+                return "";
+            }
+            string basePath = $"/Images/{type}/{id}";
 
             string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot{basePath}");
 
@@ -50,45 +54,30 @@ namespace WorkSynergy.Core.Application.Helpers
 
         public static void DeleteFile(string id, string type)
         {
-            string basePath = BasePath(type, id);
-            string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot{basePath}");
-
-            if (Directory.Exists(path))
+            if (Enum.IsDefined(typeof(UploadEntities), type))
             {
-                DirectoryInfo directory = new(path);
 
-                foreach (FileInfo file in directory.GetFiles())
+                string basePath = $"/Images/{type}/{id}";
+                string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot{basePath}");
+
+                if (Directory.Exists(path))
                 {
-                    file.Delete();
+                    DirectoryInfo directory = new(path);
+
+                    foreach (FileInfo file in directory.GetFiles())
+                    {
+                        file.Delete();
+                    }
+                    foreach (DirectoryInfo folder in directory.GetDirectories())
+                    {
+                        folder.Delete(true);
+                    }
+
+                    Directory.Delete(path);
                 }
-                foreach (DirectoryInfo folder in directory.GetDirectories())
-                {
-                    folder.Delete(true);
-                }
 
-                Directory.Delete(path);
             }
-
         }
-        private static string BasePath(string type, string id)
-        {
-
-            string basePath = "";
-
-            switch (type)
-            {
-                case nameof(UploadEntities.User):
-                    basePath = $"/Images/User/{id}";
-                    break;
-                case nameof(UploadEntities.Job):
-                    basePath = $"/Images/RealEstateProperty/{id}";
-
-                    break;
-            }
-
-
-            return basePath;
-
-        }
+      
     }
 }

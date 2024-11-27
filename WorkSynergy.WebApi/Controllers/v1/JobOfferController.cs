@@ -1,13 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
-using WorkSynergy.Core.Application.DTOs.Entities.Currency;
 using WorkSynergy.Core.Application.DTOs.Entities.JobOffer;
-using WorkSynergy.Core.Application.Features.Currencies.Commands.CreateCurrency;
-using WorkSynergy.Core.Application.Features.Currencies.Commands.DeleteCurrency;
-using WorkSynergy.Core.Application.Features.Currencies.Commands.UpdateCurrency;
-using WorkSynergy.Core.Application.Features.Currencies.Queries.GetAllCurrency;
-using WorkSynergy.Core.Application.Features.Currencies.Queries.GetByIdCurrency;
 using WorkSynergy.Core.Application.Features.JobOffers.Commands.CreateJobOfferCommand;
 using WorkSynergy.Core.Application.Features.JobOffers.Commands.DeleteJobOffer;
 using WorkSynergy.Core.Application.Features.JobOffers.Queries.GetAllJobOffer;
@@ -58,7 +52,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetAllJobOfferQuery query)
         {
-            return Ok(await Mediator.Send(query));
+            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
         }
         [HttpGet("{id}")]
         [SwaggerOperation(
@@ -72,7 +66,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetByIdJobOfferQuery query)
         {
-            return Ok(await Mediator.Send(query));
+            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
         }
 
         [HttpGet("GetByClient/{id}")]
@@ -93,7 +87,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
                 var userResponse = await _accountService.GetByIdAsyncDTO(item.FreelancerId);
                 item.Freelancer = userResponse.Data;
             }
-            return Ok(await Mediator.Send(query));
+            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
         }
 
         [HttpGet("GetByFreelancer/{id}")]
@@ -114,9 +108,25 @@ namespace WorkSynergy.WebApi.Controllers.v1
                 var userResponse = await _accountService.GetByIdAsyncDTO(item.ClientUserId);
                 item.Client = userResponse.Data;
             }
-            return Ok(await Mediator.Send(query));
+            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
         }
+        [HttpPatch("{id}")]
+        [SwaggerOperation(
+            Summary = "Change status Job Offer",
+            Description = "Recieve the paremeter to change the status of a job offer"
+        )]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult>ChangeStatus (int id, [FromBody]ChangeStatusJobOfferCommand command)
+        {
+            if (command.JobOfferId != id)
+                return BadRequest("The Id in the url and the id in the body doesn't match");
 
+            return ResponseHelper.CreateResponse(await Mediator.Send(command), this);
+        }
 
         [HttpDelete("{id}")]
         [SwaggerOperation(
@@ -129,8 +139,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
         {
-            await Mediator.Send(new DeleteJobOfferCommand { Id = id });
-            return NoContent();
+            return ResponseHelper.CreateResponse(await Mediator.Send(new DeleteJobOfferCommand { Id = id }), this);
         }
 
     }

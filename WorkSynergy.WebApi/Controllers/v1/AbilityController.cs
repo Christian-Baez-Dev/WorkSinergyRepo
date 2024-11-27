@@ -43,7 +43,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetAllAbilityQuery query)
         {
-            return Ok(await Mediator.Send(query));
+            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
         }
         [HttpGet("{id}")]
         [SwaggerOperation(
@@ -57,7 +57,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetByIdAbilityQuery query)
         {
-            return Ok(await Mediator.Send(query));
+            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
         }
 
         [HttpPut("{id}")]
@@ -80,7 +80,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
                 return BadRequest();
             }
 
-            return Ok(await Mediator.Send(command));
+            return ResponseHelper.CreateResponse(await Mediator.Send(command), this);
         }
 
 
@@ -96,7 +96,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         public async Task<IActionResult> Delete(int id)
         {
             await Mediator.Send(new DeleteAbilityCommand { Id = id });
-            return NoContent();
+            return ResponseHelper.CreateResponse(await Mediator.Send(new DeleteAbilityCommand { Id = id }), this);
         }
 
     }

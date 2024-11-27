@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System.Data;
+using System.Linq.Expressions;
 
 namespace WorkSynergy.Core.Application.Interfaces.Repositories
 {
@@ -26,6 +27,12 @@ namespace WorkSynergy.Core.Application.Interfaces.Repositories
         Task<T> GetByIdIncludeAsync(int id, params Expression<Func<T, object>>[] properties);
 
         Task<List<T>> FindAllAsync(Expression<Func<T, bool>> match);
+        IDbTransaction BeginTransaction();
+        Task Commit();
+        Task Rollback();
+
+
+
 
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
@@ -55,10 +57,19 @@ namespace WorkSynergy.Infrastucture.Persistence.Repositories
                 query = !isDescending? query.OrderBy(orderBy) : query.OrderByDescending(orderBy);
 
 
+
+
+
+
+
             foreach (var property in properties)
             {
                 query = query.Include(property);
             }
+
+
+
+
             int totalNumber = await query.CountAsync();
 
             if ((pageNumber.HasValue && pageNumber > 0) && (pageSize.HasValue && pageSize > 0))
@@ -117,6 +128,22 @@ namespace WorkSynergy.Infrastucture.Persistence.Repositories
             {
                 return null;
             }
+        }
+
+        public IDbTransaction BeginTransaction()
+        {
+            return  _context.Database.BeginTransaction().GetDbTransaction();
+        }
+
+        public async Task Commit()
+        {
+            await _context.Database.CommitTransactionAsync();
+        }
+
+        public async Task Rollback()
+        {
+            await _context.Database.CommitTransactionAsync();
+            
         }
     }
 }

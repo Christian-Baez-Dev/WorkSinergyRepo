@@ -139,9 +139,9 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
                 .HasForeignKey(x => x.CurrencyId);
 
             modelBuilder.Entity<Contract>()
-                .HasOne(x => x.Currency)
+                .HasOne(x => x.ContractOption)
                 .WithMany(x => x.Contracts)
-                .HasForeignKey(x => x.CurrencyId);
+                .HasForeignKey(x => x.ContractOptionId);
 
             modelBuilder.Entity<FixedPriceMilestone>()
                 .HasOne(x => x.Contract)

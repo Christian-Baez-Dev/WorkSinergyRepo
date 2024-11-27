@@ -8,8 +8,6 @@ using WorkSynergy.Core.Application.Features.Tags.Commands.UpdateTag;
 using WorkSynergy.Core.Application.Features.Tags.Queries.GetAllTag;
 using WorkSynergy.Core.Application.Features.Tags.Queries.GetByIdTag;
 using WorkSynergy.WebApi.Helpers;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WorkSynergy.WebApi.Controllers.v1
 {

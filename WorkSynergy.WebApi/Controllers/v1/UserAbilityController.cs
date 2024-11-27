@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
-using WorkSynergy.Core.Application.DTOs.Entities.Ability;
 using WorkSynergy.Core.Application.DTOs.Entities.UserAbility;
-using WorkSynergy.Core.Application.Features.Abilities.Commands.DeleteAbility;
-using WorkSynergy.Core.Application.Features.Abilities.Queries.GetAllAbilities;
-using WorkSynergy.Core.Application.Features.UserAbilities.Commands;
 using WorkSynergy.Core.Application.Features.UserAbilities.Commands.CreateUserAbility;
 using WorkSynergy.Core.Application.Features.UserAbilities.Commands.DeleteUserAbility;
 using WorkSynergy.Core.Application.Features.UserAbilities.Queries.GetAllUserAbility;
@@ -46,7 +42,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetAllUserAbilityQuery query)
         {
-            return Ok(await Mediator.Send(query));
+            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
         }
         [HttpGet("{id}")]
         [SwaggerOperation(
@@ -60,31 +56,8 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetByIdUserAbilityQuery query)
         {
-            return Ok(await Mediator.Send(query));
+            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
         }
-
-        //[HttpPut("{id}")]
-        //[SwaggerOperation(
-        //       Summary = "Update for Tags",
-        //       Description = "Recieve the parameter needed for the update of the Abilities"
-        //)]
-        //[Consumes(MediaTypeNames.Application.Json)]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //public async Task<IActionResult> Put(int id, UpdateAbilityCommand command)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    if (id != command.Id)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    return Ok(await Mediator.Send(command));
-        //}
 
 
         [HttpDelete("{id}")]
@@ -99,7 +72,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         public async Task<IActionResult> Delete(int id)
         {
             await Mediator.Send(new DeleteUserAbilityCommand { Id = id });
-            return NoContent();
+            return ResponseHelper.CreateResponse(await Mediator.Send(new DeleteUserAbilityCommand { Id = id }), this);
         }
 
     }

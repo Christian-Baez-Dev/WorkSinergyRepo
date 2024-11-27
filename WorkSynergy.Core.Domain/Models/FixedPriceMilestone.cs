@@ -4,7 +4,7 @@ namespace WorkSynergy.Core.Domain.Models
 {
     public class FixedPriceMilestone : BaseEntity
     {
-        public string FilePath { get; set; }
+        public string? FilePath { get; set; }
         public string Name { get; set; }
         public bool IsCompleted { get; set; }
         public DateTime StartDate { get; set; }

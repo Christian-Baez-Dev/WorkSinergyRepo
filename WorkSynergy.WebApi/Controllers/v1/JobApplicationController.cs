@@ -1,13 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
-using WorkSynergy.Core.Application.DTOs.Entities.Ability;
 using WorkSynergy.Core.Application.DTOs.Entities.JobApplication;
-using WorkSynergy.Core.Application.Features.Abilities.Commands.CreateAbilitiesCommand;
-using WorkSynergy.Core.Application.Features.Abilities.Commands.DeleteAbility;
-using WorkSynergy.Core.Application.Features.Abilities.Commands.UpdateAbility;
-using WorkSynergy.Core.Application.Features.Abilities.Queries.GetAllAbilities;
-using WorkSynergy.Core.Application.Features.Abilities.Queries.GetByIdAbilities;
 using WorkSynergy.Core.Application.Features.JobApplications.Commands.ChangeStatusJobApplication;
 using WorkSynergy.Core.Application.Features.JobApplications.Commands.CreateJobApplication;
 using WorkSynergy.Core.Application.Features.JobApplications.Queries.GetAllJobApplicationByPost;
@@ -43,20 +37,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
                 return BadRequest(ModelState);
             return ResponseHelper.CreateResponse(await Mediator.Send(command), this);
         }
-        //[HttpGet]
-        //[SwaggerOperation(
-        // Summary = "Get all Tags",
-        // Description = "This endpoint is responsible for the retrieve of all Abilities"
-        // )]
-        //[Consumes(MediaTypeNames.Application.Json)]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<AbilityResponse>))]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //public async Task<IActionResult> Get(GetAllAbilityQuery query)
-        //{
-        //    return Ok(await Mediator.Send(query));
-        //}
+
         [HttpGet("GetByPost/{id}")]
         [SwaggerOperation(
         Summary = "Get many job application based on a post id",
@@ -78,7 +59,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
                     item.User = userResponse.Data;
                 }
             }
-            return Ok(result);
+            return ResponseHelper.CreateResponse(result, this);
         }
 
         [HttpPut]
@@ -99,24 +80,9 @@ namespace WorkSynergy.WebApi.Controllers.v1
             }
 
 
-            return Ok(await Mediator.Send(command));
+            return ResponseHelper.CreateResponse(await Mediator.Send(command), this);
         }
 
-
-        //[HttpDelete("{id}")]
-        //[SwaggerOperation(
-        //    Summary = "Delete Tags",
-        //    Description = "Recieve the Id to delete the Abilities"
-        //)]
-        //[Consumes(MediaTypeNames.Application.Json)]
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    await Mediator.Send(new DeleteAbilityCommand { Id = id });
-        //    return NoContent();
-        //}
 
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 using WorkSynergy.Core.Application.DTOs.Entities.Post;
@@ -9,6 +8,7 @@ using WorkSynergy.Core.Application.Features.Posts.Commands.UpdatePost;
 using WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPost;
 using WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPostByUserId;
 using WorkSynergy.Core.Application.Features.Posts.Queries.GetByIdPost;
+using WorkSynergy.WebApi.Helpers;
 
 namespace WorkSynergy.WebApi.Controllers.v1
 {
@@ -30,7 +30,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            return Ok(await Mediator.Send(command));
+            return ResponseHelper.CreateResponse(await Mediator.Send(command), this);
 
         }
         [HttpGet]
@@ -45,7 +45,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetAllPostQuery query)
         {
-            return Ok(await Mediator.Send(query));
+            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
         }
         [HttpGet("GetByUser/{id}")]
         [SwaggerOperation(
@@ -59,7 +59,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetAllPostByUserIdQuery query)
         {
-            return Ok(await Mediator.Send(query));
+            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
         }
         [HttpGet("{id}")]
         [SwaggerOperation(
@@ -72,7 +72,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetByIdPostQuery query)
         {
-            return Ok(await Mediator.Send(query));
+            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
         }
 
         [HttpPut("{id}")]
@@ -95,7 +95,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
                 return BadRequest();
             }
 
-            return Ok(await Mediator.Send(command));
+            return ResponseHelper.CreateResponse(await Mediator.Send(command), this);
         }
 
 
@@ -110,8 +110,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
         {
-            await Mediator.Send(new DeletePostCommand { Id = id });
-            return NoContent();
+            return ResponseHelper.CreateResponse(await Mediator.Send(new DeletePostCommand { Id = id }), this);
         }
     }
 }
