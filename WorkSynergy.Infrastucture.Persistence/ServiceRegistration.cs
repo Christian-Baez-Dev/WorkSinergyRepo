@@ -30,6 +30,9 @@ namespace WorkSynergy.Infrastucture.Persistence
             #region Repositories
             services.AddTransient<ITagRepository, TagRepository>();
             services.AddTransient<IContractRepository, ContractRepository>();
+            services.AddTransient<IFixedPriceMilestoneRepository, FixedPriceMilestoneRepository>();
+            services.AddTransient<IHourlyMilestoneRepository, HourlyMilestoneRepository>();
+
 
             services.AddTransient<IPostAbilityRepository, PostAbilityRepository>();
             services.AddTransient<IAbilityRepository, AbilityRepository>();

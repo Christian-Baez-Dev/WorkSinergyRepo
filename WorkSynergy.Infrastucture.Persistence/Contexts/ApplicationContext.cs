@@ -15,7 +15,9 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
         public DbSet<ContractOption> ContractOptions { get; set; }
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<FixedPriceMilestone> FixedPriceMilestones { get; set; }
+
         public DbSet<HourlyMilestone> HourlyMilestones { get; set; }
+        public DbSet<HourlyMilestoneDeliverable> HourlyMilestoneDeliverables { get; set; }
         public DbSet<JobApplication> JobApplications { get; set; }
         public DbSet<JobOffer> JobOffers { get; set; }
         public DbSet<JobRating> JobRatings { get; set; }
@@ -57,6 +59,11 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
             modelBuilder.Entity<HourlyMilestone>(opt =>
             {
                 opt.ToTable("Hourly_Milestone");
+                opt.HasKey(x => x.Id);
+            });
+            modelBuilder.Entity<HourlyMilestoneDeliverable>(opt =>
+            {
+                opt.ToTable("Hourly_Milestone_Deliverables");
                 opt.HasKey(x => x.Id);
             });
             modelBuilder.Entity<JobApplication>(opt =>
@@ -120,6 +127,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
 
             #region Includes
             modelBuilder.Entity<PostAbility>().Navigation(x => x.Ability).AutoInclude();
+            modelBuilder.Entity<HourlyMilestone>().Navigation(x => x.Deliverables).AutoInclude();
             modelBuilder.Entity<PostAbility>().Navigation(x => x.Post).AutoInclude();
             modelBuilder.Entity<UserAbility>().Navigation(x => x.Ability).AutoInclude();
             modelBuilder.Entity<PostTag>().Navigation(x => x.Post).AutoInclude();
@@ -152,6 +160,11 @@ namespace WorkSynergy.Infrastucture.Persistence.Contexts
                 .HasOne(x => x.Contract)
                 .WithMany(x => x.HourlyMilestones)
                 .HasForeignKey(x => x.ContractId);
+
+            modelBuilder.Entity<HourlyMilestone>()
+                .HasMany(x => x.Deliverables)
+                .WithOne(x => x.HourlyMilestone)
+                .HasForeignKey(x => x.HourlyMilestoneId);
 
             modelBuilder.Entity<JobApplication>()
                 .HasOne(x => x.Post)

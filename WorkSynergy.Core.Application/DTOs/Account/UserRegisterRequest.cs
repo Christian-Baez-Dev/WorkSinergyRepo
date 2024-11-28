@@ -11,6 +11,8 @@ namespace WorkSynergy.Core.Application.Dtos.Account
     {
         [SwaggerParameter(Description = "El username del usuario")]
         public string Username { get; set; }
+        [SwaggerParameter(Description = "Descripcion del usuario")]
+        public string Description { get; set; }
         [SwaggerParameter(Description = "El correo electronico del usuario")]
         public string Email { get; set; }
         [SwaggerParameter(Description = "Fecha de nacimiento del usuario")]
@@ -25,9 +27,9 @@ namespace WorkSynergy.Core.Application.Dtos.Account
         public string? ConfirmPassword { get; set; }
         [SwaggerParameter(Description = "El rol del usuario")]
         public string Role { get; set; }
-        //[SwaggerParameter(Description = "Link de la foto de perfil del usuario")]
-        //public string? UserImagePath { get; set; }
-        //public IFormFile? UserImage { get; set; }
+        [SwaggerParameter(Description = "Link de la foto de perfil del usuario")]
+        public string? UserImagePath { get; set; }
+        public IFormFile? UserImage { get; set; }
 
 
     }

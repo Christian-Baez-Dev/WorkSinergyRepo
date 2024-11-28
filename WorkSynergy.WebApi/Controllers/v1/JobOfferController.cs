@@ -66,7 +66,12 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetByIdJobOfferQuery query)
         {
-            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
+            var result = await Mediator.Send(query);
+            var clientResponse = await _accountService.GetByIdAsyncDTO(result.Data.ClientUserId);
+            result.Data.Client = clientResponse.Data;
+            var freelancerResponse = await _accountService.GetByIdAsyncDTO(result.Data.FreelancerId);
+            result.Data.Freelancer = freelancerResponse.Data;
+            return ResponseHelper.CreateResponse(result, this);
         }
 
         [HttpGet("GetByClient/{id}")]
@@ -87,7 +92,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
                 var userResponse = await _accountService.GetByIdAsyncDTO(item.FreelancerId);
                 item.Freelancer = userResponse.Data;
             }
-            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
+            return ResponseHelper.CreateResponse(result, this);
         }
 
         [HttpGet("GetByFreelancer/{id}")]
@@ -108,7 +113,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
                 var userResponse = await _accountService.GetByIdAsyncDTO(item.ClientUserId);
                 item.Client = userResponse.Data;
             }
-            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
+            return ResponseHelper.CreateResponse(result, this);
         }
         [HttpPatch("{id}")]
         [SwaggerOperation(

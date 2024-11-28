@@ -3,6 +3,7 @@
     public enum UploadEntities
     {
         User,
-        Job
+        HourlyDeliverable,
+        FixedPriceDeliverable
     }
 }

@@ -73,7 +73,7 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Commands.CreateJobOffe
                 {
                     throw new ApiException("Error while updating the status of the job offer", StatusCodes.Status500InternalServerError);
                 }
-
+                
                 switch (jobOffer.ContractOptionId)
                 {
                     case (int)ContractOptions.FixedPrice:

@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using WorkSynergy.Core.Application.DTOs.Entities.Ability;
+using WorkSynergy.Core.Application.DTOs.Entities.Contract;
 using WorkSynergy.Core.Application.DTOs.Entities.ContractOption;
 using WorkSynergy.Core.Application.DTOs.Entities.Currency;
+using WorkSynergy.Core.Application.DTOs.Entities.FixedPriceMilestone;
+using WorkSynergy.Core.Application.DTOs.Entities.HourlyMilestone;
 using WorkSynergy.Core.Application.DTOs.Entities.JobApplication;
 using WorkSynergy.Core.Application.DTOs.Entities.JobOffer;
 using WorkSynergy.Core.Application.DTOs.Entities.Post;
@@ -110,6 +113,20 @@ namespace WorkSynergy.Core.Application.Mappings
             CreateMap<JobOffer, JobOfferResponse>()
                 .ReverseMap();
             CreateMap<CreateJobOfferCommand, JobOffer>()
+                .ReverseMap();
+            #endregion
+            #region Contract
+            CreateMap<Contract, ContractResponse>()
+                .ReverseMap();
+            #endregion
+            #region Fixed price milestone
+            CreateMap<FixedPriceMilestone, FixedPriceMilestoneResponse>()
+                .ReverseMap();
+
+            #endregion
+            #region Hourly milestone
+            CreateMap<HourlyMilestone, HourlyMilestonResponse>()
+                .ForMember(x => x.Deliverables, opt => opt.MapFrom(x => x.Deliverables.Select(x => x.FilePath)))
                 .ReverseMap();
             #endregion
 

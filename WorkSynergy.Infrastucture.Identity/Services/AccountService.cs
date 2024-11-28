@@ -178,10 +178,10 @@ namespace WorkSynergy.Infrastucture.Identity.Services
                 PhoneNumberConfirmed = true,
                 IsActive = true,
                 EmailConfirmed = true,
+                Description = request.Description
 
 
             };
-
             var result = await _userManager.CreateAsync(user, request.Password);
             var createdUser = await _userManager.FindByNameAsync(user.UserName);
             if (result.Succeeded && createdUser != null)

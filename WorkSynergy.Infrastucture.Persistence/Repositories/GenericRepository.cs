@@ -135,15 +135,6 @@ namespace WorkSynergy.Infrastucture.Persistence.Repositories
             return  _context.Database.BeginTransaction().GetDbTransaction();
         }
 
-        public async Task Commit()
-        {
-            await _context.Database.CommitTransactionAsync();
-        }
 
-        public async Task Rollback()
-        {
-            await _context.Database.CommitTransactionAsync();
-            
-        }
     }
 }

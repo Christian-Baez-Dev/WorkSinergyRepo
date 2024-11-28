@@ -28,8 +28,6 @@ namespace WorkSynergy.Core.Application.Interfaces.Repositories
 
         Task<List<T>> FindAllAsync(Expression<Func<T, bool>> match);
         IDbTransaction BeginTransaction();
-        Task Commit();
-        Task Rollback();
 
 
 

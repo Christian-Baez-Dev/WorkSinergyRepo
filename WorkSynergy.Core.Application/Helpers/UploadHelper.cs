@@ -5,6 +5,10 @@ namespace WorkSynergy.Core.Application.Helpers
 {
     public static class UploadHelper
     {
+        public static string GetBasePath(string path)
+        {
+            return Path.Combine(Directory.GetCurrentDirectory(), $"Images{path}");
+        }
         public static string UploadFile(IFormFile file, string id, string type, bool isEditMode = false, string imagePath = "")
         {
             if (isEditMode)
@@ -18,9 +22,9 @@ namespace WorkSynergy.Core.Application.Helpers
             {
                 return "";
             }
-            string basePath = $"/Images/{type}/{id}";
+            string basePath = $"/{type}/{id}";
 
-            string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot{basePath}");
+            string path = Path.Combine(Directory.GetCurrentDirectory(), $"Images{basePath}");
 
             if (!Directory.Exists(path))
             {
