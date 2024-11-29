@@ -28,10 +28,11 @@ namespace WorkSynergy.Core.Application.Mappings
     {
         public ApplicationProfile()
         {
+            CreateMap<DateTime, DateOnly>();
             #region Post
             CreateMap<Post, PostResponse>()
                 .ForMember(x => x.ApplicationsCount, opt => opt.MapFrom(x => x.Applications.Count))
-                .ForMember(x => x.CreatedAt, opt => opt.MapFrom(x => DateOnly.FromDateTime(x.CreatedAt)))
+                //.ForMember(x => x.CreatedAt, opt => opt.MapFrom(x => DateOnly.FromDateTime(x.CreatedAt)))
                 .ReverseMap();
             CreateMap<UpdatePostCommand, Post>()
                 .ReverseMap()

@@ -10,15 +10,15 @@ namespace WorkSynergy.Core.Application.DTOs.Entities.JobOffer
         public int Id { get; set; }
         public string Description { get; set; }
         public string Title { get; set; }
-        public DateTime StartDate { get; set; } //fecha de inicio
-        public DateTime EndDate { get; set; }  // fecha de cierre
+        public DateOnly StartDate { get; set; } //fecha de inicio
+        public DateOnly EndDate { get; set; }  // fecha de cierre
         public double HourlyRate { get; set; } // promedio de money por horas
         public string ClientUserId { get; set; }
         public UserDTO Client {  get; set; }
         public string FreelancerId { get; set; }
         public UserDTO Freelancer { get; set; }
         public bool IsAcepted { get; set; }
-        public DateTime ExpirationDate { get; set; }
+        public DateOnly ExpirationDate { get; set; }
         public int PostId { get; set; }
         public PostResponse? Post { get; set; }
         public int CurrencyId { get; set; }

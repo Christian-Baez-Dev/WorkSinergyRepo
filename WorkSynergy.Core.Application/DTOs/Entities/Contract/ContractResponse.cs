@@ -16,8 +16,8 @@ namespace WorkSynergy.Core.Application.DTOs.Entities.Contract
         public string Title { get; set; }
         public int ContractOptionId { get; set; }
         public ContractOptionResponse? ContractOption { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateOnly StartDate { get; set; }
+        public DateOnly EndDate { get; set; }
         public string FreelancerId { get; set; }
         public string CreatorUserId { get; set; }
         public ICollection<FixedPriceMilestoneResponse>? FixedPriceMilestones { get; set; }

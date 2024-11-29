@@ -16,21 +16,27 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Queries.GetByIdJobOffe
     public class GetByIdJobOfferQueryHandler : IRequestHandler<GetByIdJobOfferQuery, Response<JobOfferResponse>>
     {
         private readonly IJobOfferRepository _jobOfferRepository;
+        private readonly IPostRepository _postRepository;
         private readonly IMapper _mapper;
 
-        public GetByIdJobOfferQueryHandler(IJobOfferRepository jobOfferRepository, IMapper mapper
-            )
+        public GetByIdJobOfferQueryHandler(IJobOfferRepository jobOfferRepository, IPostRepository postRepository, IMapper mapper)
         {
             _jobOfferRepository = jobOfferRepository;
+            _postRepository = postRepository;
             _mapper = mapper;
         }
 
         public async Task<Response<JobOfferResponse>> Handle(GetByIdJobOfferQuery request, CancellationToken cancellationToken)
         {
-            var result = await _jobOfferRepository.GetByIdIncludeAsync(request.Id, x => x.Currency, x => x.ContractOption, x => x.Post);
-            if (result == null) 
+            var result = await _jobOfferRepository.GetByIdIncludeAsync(request.Id, x => x.Currency, x => x.ContractOption);
+            if (result == null)
             {
                 throw new ApiException("No ability were found", StatusCodes.Status404NotFound);
+            }
+            result.Post = await _postRepository.GetByIdIncludeAsync(result.PostId, x => x.Tags, x => x.Abilities);
+            if(result.Post == null)
+            {
+                throw new ApiException("Invalid post", StatusCodes.Status500InternalServerError);
             }
             Response<JobOfferResponse> response = new();
             response.Succeeded = true;
