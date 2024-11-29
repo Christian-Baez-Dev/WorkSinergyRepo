@@ -12,7 +12,8 @@ namespace WorkSynergy.Core.Application.DTOs.Entities.JobOffer
         public string Title { get; set; }
         public DateOnly StartDate { get; set; } //fecha de inicio
         public DateOnly EndDate { get; set; }  // fecha de cierre
-        public double HourlyRate { get; set; } // promedio de money por horas
+        public double HourlyRate { get; set; } // promedio de money por horas\
+        public string Status { get; set; }
         public string ClientUserId { get; set; }
         public UserDTO Client {  get; set; }
         public string FreelancerId { get; set; }
