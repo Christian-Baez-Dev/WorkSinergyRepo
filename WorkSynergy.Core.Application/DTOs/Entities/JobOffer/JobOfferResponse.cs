@@ -17,7 +17,6 @@ namespace WorkSynergy.Core.Application.DTOs.Entities.JobOffer
         public UserDTO Client {  get; set; }
         public string FreelancerId { get; set; }
         public UserDTO Freelancer { get; set; }
-        public bool IsAcepted { get; set; }
         public DateOnly ExpirationDate { get; set; }
         public int PostId { get; set; }
         public PostResponse? Post { get; set; }

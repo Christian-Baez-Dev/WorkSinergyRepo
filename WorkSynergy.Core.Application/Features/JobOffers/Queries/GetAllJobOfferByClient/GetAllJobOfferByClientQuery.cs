@@ -19,11 +19,13 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Queries.GetAllJobOffer
     public class GetAllJobOfferByClientQueryHandler : IRequestHandler<GetAllJobOfferByClientQuery, ManyJobOffersResponse>
     {
         private readonly IJobOfferRepository _jobOfferRepository;
+        private readonly IPostRepository _postRepository;
         private readonly IMapper _mapper;
 
-        public GetAllJobOfferByClientQueryHandler(IJobOfferRepository jobOfferRepository, IMapper mapper)
+        public GetAllJobOfferByClientQueryHandler(IJobOfferRepository jobOfferRepository, IPostRepository postRepository, IMapper mapper)
         {
             _jobOfferRepository = jobOfferRepository;
+            _postRepository = postRepository;
             _mapper = mapper;
         }
 
@@ -34,6 +36,14 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Queries.GetAllJobOffer
             if (result.Result == null || result.Result.Count == 0) 
             {
                 throw new ApiException("No abilities were found", StatusCodes.Status404NotFound);
+            }
+            foreach (var item in result.Result)
+            {
+                item.Post = await _postRepository.GetByIdIncludeAsync(item.PostId, x => x.Tags, x => x.Abilities);
+                if (item.Post == null)
+                {
+                    throw new ApiException("Invalid post", StatusCodes.Status500InternalServerError);
+                }
             }
             response.Data = _mapper.Map<List<JobOfferResponse>>(result.Result);
             response.TotalPages = result.TotalPages;
