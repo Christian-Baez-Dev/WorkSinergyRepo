@@ -32,10 +32,6 @@ namespace WorkSynergy.Core.Application.Features.Currencies.Queries.GetAllCurrenc
         {
             var result = await _currencyRepository.GetAllOrderAndPaginateAsync(null, null, false, request.PageNumber, request.PageSize);
             ManyCurrencyResponse response = new();
-            if (result.Result == null || result.Result.Count == 0) 
-            {
-                throw new ApiException("No currencies were found", StatusCodes.Status404NotFound);
-            }
             response.Data = _mapper.Map<List<CurrencyResponse>>(result.Result);
             response.TotalPages = result.TotalPages;
             response.HasPrevious = result.HasPrevious;

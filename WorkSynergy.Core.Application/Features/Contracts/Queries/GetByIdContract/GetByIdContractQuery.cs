@@ -33,7 +33,7 @@ namespace WorkSynergy.Core.Application.Features.Contracts.Queries.GetByIdContrac
             var result = await _contractRepository.GetByIdIncludeAsync(request.Id, x => x.ContractOption, x => x.Currency, x => x.FixedPriceMilestones, x => x.HourlyMilestones);
             if (result == null)
             {
-                throw new ApiException("No currency were found", StatusCodes.Status404NotFound);
+                throw new ApiException("No contract were found", StatusCodes.Status404NotFound);
             }
             Response<ContractResponse> response = new();
             response.Data = _mapper.Map<ContractResponse>(result);

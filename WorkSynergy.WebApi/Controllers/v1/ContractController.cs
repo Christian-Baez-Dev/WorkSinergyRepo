@@ -3,6 +3,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 using WorkSynergy.Core.Application.DTOs.Entities.Contract;
 using WorkSynergy.Core.Application.Features.Contracts.Commands.DownloadDeliverable;
+using WorkSynergy.Core.Application.Features.Contracts.Queries.GetAllContract;
 using WorkSynergy.Core.Application.Features.Contracts.Queries.GetByIdContract;
 using WorkSynergy.Core.Application.Features.Currencies.Commands.UploadFixedPriceMilestoneDeliverable;
 using WorkSynergy.Core.Application.Features.Currencies.Commands.UploadHourlyMilestoneDeliverable;

@@ -34,10 +34,6 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Queries.GetAllJobOffer
         {
             var result = await _jobOfferRepository.GetAllOrderAndPaginateAsync(x => x.ClientUserId == request.Id && x.Status == nameof(AsynchronousStatus.Waiting), null, false, request.PageNumber, request.PageSize, x => x.ContractOption, x => x.Currency, x => x.Post);
             ManyJobOffersResponse response = new();
-            if (result.Result == null || result.Result.Count == 0) 
-            {
-                throw new ApiException("No abilities were found", StatusCodes.Status404NotFound);
-            }
             foreach (var item in result.Result)
             {
                 item.Post = await _postRepository.GetByIdIncludeAsync(item.PostId, x => x.Tags, x => x.Abilities);

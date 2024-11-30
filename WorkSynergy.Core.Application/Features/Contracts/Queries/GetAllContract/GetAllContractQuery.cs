@@ -9,7 +9,7 @@ using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Wrappers;
 
-namespace WorkSynergy.Core.Application.Features.Currencies.Queries.GetAllCurrency
+namespace WorkSynergy.Core.Application.Features.Contracts.Queries.GetAllContract
 {
     public class GetAllContractQuery : IRequest<ManyContractResponse>
     {
@@ -34,10 +34,6 @@ namespace WorkSynergy.Core.Application.Features.Currencies.Queries.GetAllCurrenc
         {
             var result = await _contractRepository.GetAllOrderAndPaginateAsync(x => x.FreelancerId == request.UserId || x.CreatorUserId == request.UserId, null, false, request.PageNumber, request.PageSize, x => x.ContractOption, x => x.Currency, x => x.FixedPriceMilestones, x => x.HourlyMilestones);
             ManyContractResponse response = new();
-            if (result.Result == null || result.Result.Count == 0)
-            {
-                throw new ApiException("No contracts were found", StatusCodes.Status404NotFound);
-            }
             response.Data = _mapper.Map<List<ContractResponse>>(result.Result);
             response.TotalPages = result.TotalPages;
             response.HasPrevious = result.HasPrevious;

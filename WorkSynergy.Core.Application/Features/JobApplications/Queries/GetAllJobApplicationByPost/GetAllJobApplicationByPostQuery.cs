@@ -32,8 +32,7 @@ namespace WorkSynergy.Core.Application.Features.JobApplications.Queries.GetAllJo
             null, false, request.PageNumber, request.PageSize);
 
 
-            if (result.Result == null || result.TotalCount == 0)
-                throw new ApiException("No job applications were found based on this provided identificator", StatusCodes.Status404NotFound);
+
 
             ManyJobApplicationResponse response = new();
             response.TotalCount = result.TotalCount;

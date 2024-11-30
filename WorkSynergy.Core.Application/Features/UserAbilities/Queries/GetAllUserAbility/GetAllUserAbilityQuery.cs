@@ -39,12 +39,6 @@ namespace WorkSynergy.Core.Application.Features.UserAbilities.Queries.GetAllUser
                 x => x.Ability);
 
 
-
-            if (result.Result == null)
-            {
-                throw new ApiException("No user ability were found", StatusCodes.Status404NotFound);
-
-            }
             ManyUserAbilityResponse response = new();
             response.TotalCount = result.TotalCount;
             response.TotalPages = result.TotalPages;

@@ -32,10 +32,6 @@ namespace WorkSynergy.Core.Application.Features.Abilities.Queries.GetAllAbilitie
         {
             var result = await _abilityRepository.GetAllOrderAndPaginateAsync(null, null, false, request.PageNumber, request.PageSize);
             ManyAbilityResponse response = new();
-            if (result.Result == null || result.Result.Count == 0) 
-            {
-                throw new ApiException("No abilities were found", StatusCodes.Status404NotFound);
-            }
             response.Data = _mapper.Map<List<AbilityResponse>>(result.Result);
             response.TotalPages = result.TotalPages;
             response.HasPrevious = result.HasPrevious;

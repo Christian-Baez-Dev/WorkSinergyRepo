@@ -29,10 +29,6 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Queries.GetByIdJobOffe
         public async Task<Response<JobOfferResponse>> Handle(GetByIdJobOfferQuery request, CancellationToken cancellationToken)
         {
             var result = await _jobOfferRepository.GetByIdIncludeAsync(request.Id, x => x.Currency, x => x.ContractOption);
-            if (result == null)
-            {
-                throw new ApiException("No ability were found", StatusCodes.Status404NotFound);
-            }
             result.Post = await _postRepository.GetByIdIncludeAsync(result.PostId, x => x.Tags, x => x.Abilities);
             if(result.Post == null)
             {
