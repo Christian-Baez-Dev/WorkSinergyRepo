@@ -32,7 +32,7 @@ namespace RealEstateApp.Infrastructure.Identity.Mappings
             #region User Ability
             CreateMap<UserAbility, AbilityResponse>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Ability.Name))
-                .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Ability.Id));
+                .ForMember(x => x.Id, opt => opt.MapFrom(x => x.Ability.Id));
             #endregion
 
         }
