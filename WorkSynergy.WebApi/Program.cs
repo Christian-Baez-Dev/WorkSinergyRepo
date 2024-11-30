@@ -56,16 +56,15 @@ namespace WorkSynergy.WebApi
                     var context = services.GetRequiredService<ApplicationContext>();
                     var userManager = services.GetRequiredService<UserManager<WorkSynergyUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-
-                    await DefaultRoles.SeedAsync(userManager, roleManager);
-                    await DefaultFreelancer.SeedAsync(userManager, roleManager);
-                    await DefaultClient.SeedAsync(userManager, roleManager);
                     await AbilitySeeding.SeedAsync(context);
                     await ContractOptionsSeeding.SeedAsync(context);
                     await CurrencySeeding.SeedAsync(context);
                     await TagSeeding.SeedAsync(context);
                     await PostSeeding.SeedAsync(context);
 
+                    await DefaultRoles.SeedAsync(userManager, roleManager);
+                    await DefaultFreelancer.SeedAsync(userManager, roleManager, context);
+                    await DefaultClient.SeedAsync(userManager, roleManager);
 
                 }
                 catch (Exception ex)

@@ -127,7 +127,7 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Commands.CreateJobOffe
             }
             var response = new Response<int>();
             response.Succeeded = true;
-            response.StatusCode = StatusCodes.Status204NoContent;
+            response.StatusCode = StatusCodes.Status200OK;
             return response;
         }
     }
