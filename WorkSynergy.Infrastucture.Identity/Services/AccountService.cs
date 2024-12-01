@@ -183,12 +183,12 @@ namespace WorkSynergy.Infrastucture.Identity.Services
             var createdUser = await _userManager.FindByNameAsync(user.UserName);
             if (result.Succeeded && createdUser != null)
             {
-                //if (request.UserImage != null)
-                //{
-                //    createdUser.UserImagePath = UploadHelper.UploadFile(request.UserImage, createdUser.Id, nameof(UploadEntities.User));
-                //    await _userManager.UpdateAsync(createdUser);
+                if (request.UserImage != null)
+                {
+                    createdUser.UserImagePath = UploadHelper.UploadFile(request.UserImage, createdUser.Id, nameof(UploadEntities.User));
+                    await _userManager.UpdateAsync(createdUser);
 
-                //}
+                }
                 await _userManager.AddToRoleAsync(user, request.Role);
                 if(request.Abilities != null && request.Abilities.Count() > 0)
                 {
