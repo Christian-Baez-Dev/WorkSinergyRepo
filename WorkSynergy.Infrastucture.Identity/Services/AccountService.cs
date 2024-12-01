@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -18,13 +19,9 @@ using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Helpers;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
 using WorkSynergy.Core.Application.Interfaces.Services;
-using WorkSynergy.Core.Application.ViewModels.Account;
 using WorkSynergy.Core.Application.Wrappers;
-using WorkSynergy.Core.Domain.Models;
 using WorkSynergy.Core.Domain.Settings;
 using WorkSynergy.Infrastucture.Identity.Models;
-using WorkSynergy.Infrastucture.Persistence.Repositories;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WorkSynergy.Infrastucture.Identity.Services
 {
@@ -193,6 +190,13 @@ namespace WorkSynergy.Infrastucture.Identity.Services
 
                 //}
                 await _userManager.AddToRoleAsync(user, request.Role);
+                if(request.Abilities != null && request.Abilities.Count() > 0)
+                {
+                    foreach (var item in request.Abilities)
+                    {
+                        await _userAbilityRepository.CreateAsync(new () { AbilityId = item, UserId = createdUser.Id});
+                    }
+                }
 
 
                 //var verificationUri = await SendVerificationEmailUri(user, origin);

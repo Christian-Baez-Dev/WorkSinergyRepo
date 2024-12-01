@@ -28,7 +28,8 @@ namespace WorkSynergy.Core.Application.Dtos.Account
         [SwaggerParameter(Description = "El rol del usuario")]
         public string Role { get; set; }
         [SwaggerParameter(Description = "Link de la foto de perfil del usuario")]
-        public string? UserImagePath { get; set; }
+        public List<int>? Abilities { get; set; }
+        [SwaggerParameter(Description = "Link de la foto de perfil del usuario")]
         public IFormFile? UserImage { get; set; }
 
 
