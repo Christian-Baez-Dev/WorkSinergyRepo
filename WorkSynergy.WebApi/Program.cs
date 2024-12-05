@@ -61,7 +61,8 @@ namespace WorkSynergy.WebApi
                     await CurrencySeeding.SeedAsync(context);
                     await TagSeeding.SeedAsync(context);
                     await PostSeeding.SeedAsync(context);
-
+                    await JobApplicationSeeding.SeedAsync(context);
+                    await JobOfferSeeding.SeedAsync(context);   
                     await DefaultRoles.SeedAsync(userManager, roleManager);
                     await DefaultFreelancer.SeedAsync(userManager, roleManager, context);
                     await DefaultClient.SeedAsync(userManager, roleManager);
