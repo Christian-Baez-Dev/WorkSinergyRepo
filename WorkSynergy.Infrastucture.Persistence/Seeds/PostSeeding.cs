@@ -1,12 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using WorkSynergy.Core.Application.Enums;
-using WorkSynergy.Core.Domain.Models;
+﻿using WorkSynergy.Core.Domain.Models;
 using WorkSynergy.Infrastucture.Persistence.Contexts;
 
 namespace WorkSynergy.Infrastucture.Persistence.Seeds
@@ -26,7 +18,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                         Title = "Diseño de interfaz para aplicación móvil",
                         Description = "Requerimos un diseñador especializado en UX/UI para mejorar la experiencia del usuario.",
                         CurrencyId = 1,
-                        CreatorUserId = "User1",
+                        CreatorUserId = "client1-id",
                         From = 300.00,
                         To = 700.00,
                         ContractOptionId = 1, // Fixed Price
@@ -47,7 +39,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                         Title = "Desarrollo de backend con NodeJs",
                         Description = "Busco un programador para construir un API escalable.",
                         CurrencyId = 2,
-                        CreatorUserId = "User2",
+                        CreatorUserId = "client1-id",
                         From = 1000.00,
                         To = 2500.00,
                         ContractOptionId = 2, // Per Hour
@@ -67,7 +59,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                         Title = "Creación de modelo de IA para predicción",
                         Description = "Se busca especialista en IA para construir un modelo de predicción de ventas.",
                         CurrencyId = 1,
-                        CreatorUserId = "User3",
+                        CreatorUserId = "client2-id",
                         From = 2000.00,
                         To = 5000.00,
                         ContractOptionId = 1, // Fixed Price
@@ -88,7 +80,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                         Title = "Optimización de base de datos SQL Server",
                         Description = "Busco experto en optimización de bases de datos para mejorar el rendimiento de consultas SQL Server.",
                         CurrencyId = 2,
-                        CreatorUserId = "User4",
+                        CreatorUserId = "client2-id",
                         From = 500.00,
                         To = 1500.00,
                         ContractOptionId = 2, // Per Hour
@@ -107,7 +99,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                         Title = "Desarrollo de aplicación web con Angular",
                         Description = "Necesitamos un desarrollador frontend para crear una SPA con Angular.",
                         CurrencyId = 1,
-                        CreatorUserId = "User5",
+                        CreatorUserId = "client3-id",
                         From = 800.00,
                         To = 2000.00,
                         ContractOptionId = 1, // Fixed Price
@@ -127,7 +119,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                         Title = "Desarrollo de microservicio en ASP.NET Core",
                         Description = "Requerimos un desarrollador backend con experiencia en ASP.NET Core y arquitectura de microservicios.",
                         CurrencyId = 2,
-                        CreatorUserId = "User6",
+                        CreatorUserId = "client3-id",
                         From = 1500.00,
                         To = 3000.00,
                         ContractOptionId = 2, // Per Hour
@@ -148,7 +140,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                         Title = "Diseño 3D para modelado arquitectónico",
                         Description = "Se busca diseñador con experiencia en modelado 3D para proyecto arquitectónico.",
                         CurrencyId = 1,
-                        CreatorUserId = "User7",
+                        CreatorUserId = "client4-id",
                         From = 1200.00,
                         To = 4000.00,
                         ContractOptionId = 1, // Fixed Price
@@ -168,7 +160,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                         Title = "Desarrollo de aplicación web con VueJs",
                         Description = "Se necesita un desarrollador frontend para trabajar en un proyecto con VueJs.",
                         CurrencyId = 2,
-                        CreatorUserId = "User8",
+                        CreatorUserId = "client4-id",
                         From = 800.00,
                         To = 1800.00,
                         ContractOptionId = 2, // Per Hour
@@ -188,7 +180,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                         Title = "Implementación de sistema de aprendizaje automático",
                         Description = "Buscamos experto en Machine Learning para desarrollar un modelo predictivo.",
                         CurrencyId = 1,
-                        CreatorUserId = "User9",
+                        CreatorUserId = "client1-id",
                         From = 2500.00,
                         To = 6000.00,
                         ContractOptionId = 1, // Fixed Price
@@ -209,7 +201,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                         Title = "Desarrollo de backend con Spring Boot",
                         Description = "Requerimos un desarrollador backend con experiencia en Spring Boot para trabajar en un sistema escalable.",
                         CurrencyId = 2,
-                        CreatorUserId = "User10",
+                        CreatorUserId = "client1-id",
                         From = 1000.00,
                         To = 3000.00,
                         ContractOptionId = 2, // Per Hour
@@ -229,7 +221,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                         Title = "Automatización de procesos con Python",
                         Description = "Buscamos un desarrollador que automatice tareas repetitivas en nuestra plataforma.",
                         CurrencyId = 1,
-                        CreatorUserId = "User11",
+                        CreatorUserId = "client2-id",
                         From = 500.00,
                         To = 1500.00,
                         ContractOptionId = 1, // Fixed Price
@@ -248,7 +240,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                         Title = "Integración de Firebase en aplicación móvil",
                         Description = "Necesitamos un desarrollador que implemente funcionalidades de Firebase.",
                         CurrencyId = 2,
-                        CreatorUserId = "User12",
+                        CreatorUserId = "client2-id",
                         From = 600.00,
                         To = 1200.00,
                         ContractOptionId = 2, // Per Hour
@@ -268,7 +260,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                         Title = "Optimización de sistema basado en AWS",
                         Description = "Se busca un ingeniero de sistemas para optimizar un entorno basado en AWS.",
                         CurrencyId = 1,
-                        CreatorUserId = "User13",
+                        CreatorUserId = "client3-id",
                         From = 2500.00,
                         To = 5000.00,
                         ContractOptionId = 1, // Fixed Price
@@ -288,7 +280,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                         Title = "Desarrollo de sistema de reportes con SQL Server",
                         Description = "Buscamos un desarrollador que construya reportes complejos usando SQL Server.",
                         CurrencyId = 2,
-                        CreatorUserId = "User14",
+                        CreatorUserId = "client3-id",
                         From = 1200.00,
                         To = 3000.00,
                         ContractOptionId = 2, // Per Hour
@@ -307,7 +299,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                         Title = "Desarrollo de aplicación full-stack",
                         Description = "Requerimos un equipo para construir una aplicación completa con tecnologías modernas.",
                         CurrencyId = 1,
-                        CreatorUserId = "User15",
+                        CreatorUserId = "client4-id",
                         From = 5000.00,
                         To = 10000.00,
                         ContractOptionId = 1, // Fixed Price
@@ -327,7 +319,7 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                         Title = "Creación de panel administrativo en Angular",
                         Description = "Necesitamos un panel administrativo para gestionar recursos internos.",
                         CurrencyId = 2,
-                        CreatorUserId = "User16",
+                        CreatorUserId = "client4-id",
                         From = 1500.00,
                         To = 3000.00,
                         ContractOptionId = 2, // Per Hour

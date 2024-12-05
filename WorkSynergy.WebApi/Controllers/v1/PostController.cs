@@ -8,6 +8,7 @@ using WorkSynergy.Core.Application.Features.Posts.Commands.UpdatePost;
 using WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPost;
 using WorkSynergy.Core.Application.Features.Posts.Queries.GetAllPostByUserId;
 using WorkSynergy.Core.Application.Features.Posts.Queries.GetByIdPost;
+using WorkSynergy.Core.Application.Interfaces.Services;
 using WorkSynergy.WebApi.Helpers;
 
 namespace WorkSynergy.WebApi.Controllers.v1
@@ -17,6 +18,13 @@ namespace WorkSynergy.WebApi.Controllers.v1
     [SwaggerTag("Controller for the Posts")]
     public class PostController : BaseApiController
     {
+        private readonly IAccountService _accountService;
+
+        public PostController(IAccountService accountService)
+        {
+            _accountService = accountService;
+        }
+
         [HttpPost]
         [SwaggerOperation(
             Summary = "Create a new Post",
@@ -45,7 +53,13 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetAllPostQuery query)
         {
-            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
+            var result = await Mediator.Send(query);
+            foreach (var item in result.Data)
+            {
+                var userResponse = await _accountService.GetByIdAsyncDTO(item.CreatorUserId);
+                item.Creator = userResponse.Data;
+            }
+            return ResponseHelper.CreateResponse(result, this);
         }
         [HttpGet("GetByUser/{id}")]
         [SwaggerOperation(
@@ -59,7 +73,13 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetAllPostByUserIdQuery query)
         {
-            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
+            var result = await Mediator.Send(query);
+            foreach (var item in result.Data)
+            {
+                var userResponse = await _accountService.GetByIdAsyncDTO(item.CreatorUserId);
+                item.Creator = userResponse.Data;
+            }
+            return ResponseHelper.CreateResponse(result, this);
         }
         [HttpGet("{id}")]
         [SwaggerOperation(
@@ -72,7 +92,10 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(GetByIdPostQuery query)
         {
-            return ResponseHelper.CreateResponse(await Mediator.Send(query), this);
+            var result = await Mediator.Send(query);
+            var userResponse = await _accountService.GetByIdAsyncDTO(result.Data.CreatorUserId);
+            result.Data.Creator = userResponse.Data;
+            return ResponseHelper.CreateResponse(result, this);
         }
 
         [HttpPut("{id}")]
