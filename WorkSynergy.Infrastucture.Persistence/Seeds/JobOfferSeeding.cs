@@ -24,7 +24,7 @@ public static class JobOfferSeeding
                     HourlyRate = 10000,
                     StartDate = DateTime.Now.AddDays(8),
                     EndDate = DateTime.Now.AddDays(38),
-                    TotalHours = 300 // 12 horas diarias * 30 días
+                    TotalHours = 0 
                 },
                 new JobOffer
                 {
@@ -40,7 +40,7 @@ public static class JobOfferSeeding
                     HourlyRate = 1044560,
                     StartDate = DateTime.Now.AddDays(8),
                     EndDate = DateTime.Now.AddDays(20),
-                    TotalHours = 96 // 12 horas diarias * 12 días
+                    TotalHours = 96 
                 },
                 new JobOffer
                 {
@@ -56,7 +56,7 @@ public static class JobOfferSeeding
                     HourlyRate = 3333333,
                     StartDate = DateTime.Now.AddDays(9),
                     EndDate = DateTime.Now.AddDays(15),
-                    TotalHours = 44 // 12 horas diarias * 6 días
+                    TotalHours = 0 
                 },
                 new JobOffer
                 {
@@ -72,7 +72,7 @@ public static class JobOfferSeeding
                     HourlyRate = 100,
                     StartDate = DateTime.Now.AddDays(7),
                     EndDate = DateTime.Now.AddDays(45),
-                    TotalHours = 250 // 12 horas diarias * 38 días
+                    TotalHours = 250 
                 },
                 new JobOffer
                 {
@@ -88,7 +88,7 @@ public static class JobOfferSeeding
                     HourlyRate = 123123,
                     StartDate = DateTime.Now.AddDays(7),
                     EndDate = DateTime.Now.AddDays(12),
-                    TotalHours = 24 // 12 horas diarias * 5 días
+                    TotalHours = 0 
                 },
                 new JobOffer
                 {
@@ -120,7 +120,7 @@ public static class JobOfferSeeding
                     HourlyRate = 105500,
                     StartDate = DateTime.Now.AddDays(8),
                     EndDate = DateTime.Now.AddDays(11),
-                    TotalHours = 26 // 12 horas diarias * 3 días
+                    TotalHours = 0 
                 },
                 new JobOffer
                 {
