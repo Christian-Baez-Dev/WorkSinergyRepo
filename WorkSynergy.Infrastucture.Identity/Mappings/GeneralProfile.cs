@@ -15,7 +15,7 @@ namespace RealEstateApp.Infrastructure.Identity.Mappings
         public GeneralProfile() 
         {
             CreateMap<WorkSynergyUser, UserDTO>()
-                .ForMember(x => x.UserImagePath, opt => opt.MapFrom(x => UploadHelper.GetBasePath(x.UserImagePath)))
+                .ForMember(x => x.UserImagePath, opt => opt.MapFrom(x => UploadHelper.GetBasePath(x.UserImagePath).Replace(@"\", "/")))
                 .ReverseMap();
 
             CreateMap<AuthenticationRequest, LoginViewModel>()

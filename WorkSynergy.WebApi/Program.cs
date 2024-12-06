@@ -1,6 +1,7 @@
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 using WorkSynergy.Core.Application;
 using WorkSynergy.Infrastucture.Identity;
 using WorkSynergy.Infrastucture.Identity.Models;

@@ -332,7 +332,6 @@ namespace WorkSynergy.Infrastucture.Identity.Services
             var roles = await _userManager.GetRolesAsync(user);
             userDto.Roles = roles.ToList();
             userDto.Abilities = await GetAbilities(userDto.Id);
-
             response.Succeeded = true;
             response.Data = userDto;
             response.StatusCode = StatusCodes.Status200OK;
