@@ -33,7 +33,7 @@ namespace WorkSynergy.Core.Application.Features.JobApplications.Commands.CreateJ
         {
             var jobApplication = _mapper.Map<JobApplication>(request);
             jobApplication.Status = nameof(AsynchronousStatus.Waiting);
-            var jobApplicationWithSameUser = await _jobApplicationRepository.FindAsync(x => x.ApplicantId == request.ApplicantId);
+            var jobApplicationWithSameUser = await _jobApplicationRepository.FindAsync(x => x.ApplicantId == request.ApplicantId && x.PostId == request.PostId);
             if (jobApplicationWithSameUser != null)
             {
                 throw new ApiException("You cannot apply more than once to a job", StatusCodes.Status400BadRequest);
