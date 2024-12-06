@@ -1,4 +1,5 @@
-﻿using WorkSynergy.Core.Application.DTOs.Entities.ContractOption;
+﻿using WorkSynergy.Core.Application.Dtos.Account;
+using WorkSynergy.Core.Application.DTOs.Entities.ContractOption;
 using WorkSynergy.Core.Application.DTOs.Entities.Currency;
 using WorkSynergy.Core.Application.DTOs.Entities.FixedPriceMilestone;
 using WorkSynergy.Core.Application.DTOs.Entities.HourlyMilestone;
@@ -19,7 +20,9 @@ namespace WorkSynergy.Core.Application.DTOs.Entities.Contract
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }
         public string FreelancerId { get; set; }
+        public UserDTO? Freelancer { get; set; }
         public string CreatorUserId { get; set; }
+        public UserDTO? CreatorUser { get; set; }
         public ICollection<FixedPriceMilestoneResponse>? FixedPriceMilestones { get; set; }
         public ICollection<HourlyMilestonResponse>? HourlyMilestones { get; set; }
     }
