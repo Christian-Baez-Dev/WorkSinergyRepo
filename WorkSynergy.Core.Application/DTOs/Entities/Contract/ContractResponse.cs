@@ -9,6 +9,7 @@ namespace WorkSynergy.Core.Application.DTOs.Entities.Contract
 {
     public class ContractResponse
     {
+        public int Id { get; set; }
         public string Description { get; set; }
         public int CurrencyId { get; set; }
         public CurrencyResponse? Currency { get; set; }
