@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
+using System;
 using WorkSynergy.Core.Application;
 using WorkSynergy.Infrastucture.Identity;
 using WorkSynergy.Infrastucture.Identity.Models;
@@ -87,7 +88,11 @@ namespace WorkSynergy.WebApi
 
             app.UseHttpsRedirection();
             app.UseRouting();
-
+            app.UseStaticFiles(new StaticFileOptions{
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "Files")), // Directorio físico
+                RequestPath = "/Files" // Prefijo en la URL
+            });
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSwaggerExtension();
