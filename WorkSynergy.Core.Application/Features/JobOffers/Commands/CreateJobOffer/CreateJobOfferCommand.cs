@@ -19,6 +19,7 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Commands.CreateJobOffe
         public string ClientUserId { get; set; }
         public string FreelancerId { get; set; }
         public DateTime ExpirationDate { get; set; }
+        public int TotalHours { get; set; }
         public int PostId { get; set; }
         public int CurrencyId { get; set; }
         public int ContractOptionId { get; set; }

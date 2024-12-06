@@ -13,6 +13,7 @@ namespace WorkSynergy.Core.Domain.Models
         public string FreelancerId { get; set; }
         public string Status { get; set; }
         public DateTime ExpirationDate { get; set; }
+        public int TotalHours { get; set; }
         public int PostId { get; set; }
         public Post? Post { get; set; }
         public int CurrencyId { get; set; }

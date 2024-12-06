@@ -88,7 +88,7 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Commands.CreateJobOffe
                     case (int)ContractOptions.PerHour:
                         HourlyMilestone hourlyMilestone = new()
                         {
-                            TotalHours = 100,
+                            TotalHours = jobOffer.TotalHours,
 
                         };
                         contract.HourlyMilestones = new List<HourlyMilestone>() { hourlyMilestone };
