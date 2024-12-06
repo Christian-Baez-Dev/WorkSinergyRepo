@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using WorkSynergy.Core.Application.Enums;
+using WorkSynergy.Core.Application.Enums.Upload;
+using WorkSynergy.Core.Application.Helpers;
 using WorkSynergy.Core.Domain.Models;
 using WorkSynergy.Infrastucture.Identity.Models;
 using WorkSynergy.Infrastucture.Persistence.Contexts;
@@ -24,6 +26,7 @@ namespace WorkSynergy.Infrastucture.Identity.Seeds
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true,
                     IsActive = true,
+                    UserImagePath = UploadHelper.GetDefaultPFP()
                 },
                 new WorkSynergyUser
                 {
@@ -36,6 +39,8 @@ namespace WorkSynergy.Infrastucture.Identity.Seeds
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true,
                     IsActive = true,
+                    UserImagePath = UploadHelper.GetDefaultPFP()
+
                 },
                 new WorkSynergyUser
                 {
@@ -48,6 +53,8 @@ namespace WorkSynergy.Infrastucture.Identity.Seeds
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true,
                     IsActive = true,
+                    UserImagePath = UploadHelper.GetDefaultPFP()
+
                 },
                 new WorkSynergyUser
                 {
@@ -60,15 +67,17 @@ namespace WorkSynergy.Infrastucture.Identity.Seeds
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true,
                     IsActive = true,
+                    UserImagePath = UploadHelper.GetDefaultPFP()
+
                 }
             };
-            
+
             foreach (var defaultUser in users)
             {
 
                 if (userManager.Users.All(u => u.Id != defaultUser.Id))
                 {
-                    
+
                     var user = await userManager.FindByEmailAsync(defaultUser.Email);
                     if (user == null)
                     {

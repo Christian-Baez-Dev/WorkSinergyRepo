@@ -7,8 +7,8 @@ namespace WorkSynergy.Core.Domain.Models
         public string Description { get; set; }
         public int CurrencyId { get; set; }
         public Currency? Currency { get; set; }
-        public long TotalPayment { get; set; }
-        public long CurrentPayment { get; set; }
+        public double TotalPayment { get; set; }
+        public double CurrentPayment { get; set; }
         public string Title { get; set; }
         public int ContractOptionId { get; set; }
         public ContractOption? ContractOption { get; set; }

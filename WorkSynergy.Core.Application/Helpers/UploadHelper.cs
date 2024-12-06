@@ -7,24 +7,24 @@ namespace WorkSynergy.Core.Application.Helpers
     {
         public static string GetBasePath(string path)
         {
-            return Path.Combine(Directory.GetCurrentDirectory(), $"Images{path}");
+            return Path.Combine(Directory.GetCurrentDirectory(), $"Files/{path}");
         }
-        public static string UploadFile(IFormFile file, string id, string type, bool isEditMode = false, string imagePath = "")
+        public static string UploadFile(IFormFile file, string id, string type, string entity, bool isEditMode = false, string filePath = "")
         {
             if (isEditMode)
             {
                 if (file == null)
                 {
-                    return imagePath;
+                    return filePath;
                 }
             }
             if (!Enum.IsDefined(typeof(UploadEntities), type))
             {
                 return "";
             }
-            string basePath = $"/{type}/{id}";
+            string basePath = $"{type}/{entity}/{id}";
 
-            string path = Path.Combine(Directory.GetCurrentDirectory(), $"Images{basePath}");
+            string path = Path.Combine(Directory.GetCurrentDirectory(), $"Files{basePath}");
 
             if (!Directory.Exists(path))
             {
@@ -42,9 +42,9 @@ namespace WorkSynergy.Core.Application.Helpers
                 file.CopyTo(stream);
             }
 
-            if (isEditMode && imagePath != null)
+            if (isEditMode && filePath != null)
             {
-                string[] oldImagePart = imagePath.Split("/");
+                string[] oldImagePart = filePath.Split("/");
                 string oldImagePath = oldImagePart[^1];
                 string completeImageOldPath = Path.Combine(path, oldImagePath);
 
@@ -55,14 +55,17 @@ namespace WorkSynergy.Core.Application.Helpers
             }
             return $"{basePath}/{fileName}";
         }
-
-        public static void DeleteFile(string id, string type)
+        public static string GetDefaultPFP()
+        {
+            return $"{UploadTypes.Images}/Default/DefaultPFP.jpg";
+        }
+        public static void DeleteFile(string id, string type, string entity)
         {
             if (Enum.IsDefined(typeof(UploadEntities), type))
             {
 
-                string basePath = $"/Images/{type}/{id}";
-                string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot{basePath}");
+                string basePath = $"/{type}/{entity}/{id}";
+                string path = Path.Combine(Directory.GetCurrentDirectory(), $"/Files/{basePath}");
 
                 if (Directory.Exists(path))
                 {

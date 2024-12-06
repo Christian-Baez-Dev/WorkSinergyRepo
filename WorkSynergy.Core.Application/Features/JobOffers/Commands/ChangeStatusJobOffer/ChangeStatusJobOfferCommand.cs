@@ -77,6 +77,7 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Commands.CreateJobOffe
                 switch (jobOffer.ContractOptionId)
                 {
                     case (int)ContractOptions.FixedPrice:
+                        contract.TotalPayment = jobOffer.HourlyRate;
                         FixedPriceMilestone fixedMilestone = new()
                         {
                             EndDate = jobOffer.EndDate,
@@ -86,6 +87,7 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Commands.CreateJobOffe
                         contract.FixedPriceMilestones = new List<FixedPriceMilestone>() { fixedMilestone };
                         break;
                     case (int)ContractOptions.PerHour:
+                        contract.TotalPayment = jobOffer.HourlyRate * jobOffer.TotalHours;
                         HourlyMilestone hourlyMilestone = new()
                         {
                             TotalHours = jobOffer.TotalHours,

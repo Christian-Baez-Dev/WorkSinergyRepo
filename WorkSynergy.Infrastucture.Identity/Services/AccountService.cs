@@ -186,7 +186,7 @@ namespace WorkSynergy.Infrastucture.Identity.Services
             {
                 if (request.UserImage != null)
                 {
-                    createdUser.UserImagePath = UploadHelper.UploadFile(request.UserImage, createdUser.Id, nameof(UploadEntities.User));
+                    createdUser.UserImagePath = UploadHelper.UploadFile(request.UserImage, createdUser.Id, nameof(UploadTypes.Images), nameof(UploadEntities.User));
                     await _userManager.UpdateAsync(createdUser);
 
                 }
@@ -263,8 +263,12 @@ namespace WorkSynergy.Infrastucture.Identity.Services
             user.Email = request.Email ?? user.Email;
             if (request.UserImage != null)
             {
-                user.UserImagePath = UploadHelper.UploadFile(request.UserImage, user.Id, nameof(UploadEntities.User), true, user.UserImagePath);
+                user.UserImagePath = UploadHelper.UploadFile(request.UserImage, user.Id, nameof(UploadTypes.Deliverables), nameof(UploadEntities.User), true, user.UserImagePath);
 
+            }
+            else
+            {
+                user.UserImagePath = UploadHelper.GetDefaultPFP();
             }
 
             var result = await _userManager.UpdateAsync(user);

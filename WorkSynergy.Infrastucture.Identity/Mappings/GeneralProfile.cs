@@ -3,6 +3,7 @@ using WorkSynergy.Core.Application.Dtos.Account;
 using WorkSynergy.Core.Application.DTOs.Entities.Ability;
 using WorkSynergy.Core.Application.DTOs.Entities.UserAbility;
 using WorkSynergy.Core.Application.Features.UserAbilities.Commands.CreateUserAbility;
+using WorkSynergy.Core.Application.Helpers;
 using WorkSynergy.Core.Application.ViewModels.Account;
 using WorkSynergy.Core.Domain.Models;
 using WorkSynergy.Infrastucture.Identity.Models;
@@ -13,16 +14,8 @@ namespace RealEstateApp.Infrastructure.Identity.Mappings
     {
         public GeneralProfile() 
         {
-
-
-
-            CreateMap<WorkSynergyUser, UserViewModel>()
-                .ReverseMap();
-
-            CreateMap<WorkSynergyUser, SaveUserViewModel>()
-                .ReverseMap();
-
             CreateMap<WorkSynergyUser, UserDTO>()
+                .ForMember(x => x.UserImagePath, opt => opt.MapFrom(x => UploadHelper.GetBasePath(x.UserImagePath)))
                 .ReverseMap();
 
             CreateMap<AuthenticationRequest, LoginViewModel>()

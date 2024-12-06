@@ -51,7 +51,7 @@ namespace WorkSynergy.Core.Application.Features.Currencies.Commands.UploadHourly
             {
                 throw new ApiException("Invalid milestone provided", StatusCodes.Status400BadRequest);
             }
-            var path = UploadHelper.UploadFile(request.Deliverable, contract.Id.ToString(), nameof(UploadEntities.HourlyDeliverable));
+            var path = UploadHelper.UploadFile(request.Deliverable, contract.Id.ToString(), nameof(UploadTypes.Deliverables), nameof(UploadEntities.HourlyDeliverable));
             if (string.IsNullOrEmpty(path))
             {
                 throw new ApiException("Error while saving the deliverable", StatusCodes.Status500InternalServerError);

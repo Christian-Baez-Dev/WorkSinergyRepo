@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using System.Diagnostics.Contracts;
 using WorkSynergy.Core.Application.Enums;
 using WorkSynergy.Core.Application.Exceptions;
 using WorkSynergy.Core.Application.Interfaces.Repositories;
@@ -23,7 +24,7 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Commands.CreateJobOffe
         public int CurrencyId { get; set; }
         public int ContractOptionId { get; set; }
     }
-    
+
     public class CreateJobOfferCommandHandler : IRequestHandler<CreateJobOfferCommand, Response<int>>
     {
         private readonly IJobOfferRepository _jobOfferRepository;
@@ -37,34 +38,47 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Commands.CreateJobOffe
 
         public async Task<Response<int>> Handle(CreateJobOfferCommand request, CancellationToken cancellationToken)
         {
-            var a = TimeSpan.FromHours(request.TotalHours).TotalMilliseconds;
-            var e = TimeSpan.FromHours(8).TotalMilliseconds;
-            var i = TimeSpan.FromHours(request.TotalHours).TotalMilliseconds / TimeSpan.FromHours(8).TotalMilliseconds;
-            var b = (request.EndDate - request.StartDate).TotalMilliseconds;
-            var c = (request.EndDate - request.StartDate).TotalDays;
-            var d = (request.EndDate.AddDays(-7) - request.StartDate).TotalDays;
 
-            if (TimeSpan.FromHours(request.TotalHours).TotalMilliseconds / TimeSpan.FromHours(8).TotalMilliseconds > (request.EndDate - request.StartDate).TotalDays)
+            switch (request.ContractOptionId)
             {
-                throw new ApiException("Invalid total hours provided. The hours cannot exceed the 8 laborable hours", StatusCodes.Status500InternalServerError);
+                case (int)ContractOptions.FixedPrice:
+                    if (request.TotalHours != 0)
+                    {
+                        throw new ApiException("Total hours must be 0 for fixed price", StatusCodes.Status400BadRequest);
+                    }
+                    break;
+                case (int)ContractOptions.PerHour:
+                    if(request.TotalHours == 0)
+                    {
+                        throw new ApiException("Total hours must be more than 0", StatusCodes.Status400BadRequest);
+                    }
+                    if (TimeSpan.FromHours(request.TotalHours).TotalMilliseconds / TimeSpan.FromHours(8).TotalMilliseconds > (request.EndDate - request.StartDate).TotalDays)
+                    {
+                        throw new ApiException("Invalid total hours provided. The hours cannot exceed the 8 laborable hours", StatusCodes.Status400BadRequest);
 
-            }
-            if (TimeSpan.FromHours(request.TotalHours).TotalMilliseconds / TimeSpan.FromHours(8).TotalMilliseconds > (request.EndDate.AddDays(-7) - request.StartDate).TotalDays)
-            {
-                throw new ApiException("Invalid end date provided. The end date has to be at least 7 days extra than the maximum of laborable days", StatusCodes.Status500InternalServerError);
+                    }
+                    if (TimeSpan.FromHours(request.TotalHours).TotalMilliseconds / TimeSpan.FromHours(8).TotalMilliseconds > (request.EndDate.AddDays(-7) - request.StartDate).TotalDays)
+                    {
+                        throw new ApiException("Invalid end date provided. The end date has to be at least 7 days extra than the maximum of laborable days", StatusCodes.Status400BadRequest);
 
+                    }
+                    break;
+                default:
+                    throw new ApiException("Invalid contract option provided", StatusCodes.Status500InternalServerError);
             }
+
+            
             var response = new Response<int>();
             var entity = _mapper.Map<JobOffer>(request);
-            var ola = (entity.StartDate.Date - DateTime.Now.Date).Days;
+
             if ((entity.StartDate.Date - DateTime.Now.Date).Days < 7)
                 entity.ExpirationDate = DateTime.Now.AddDays((entity.StartDate.Date - DateTime.Now.Date).Days).Date.AddDays(1).AddSeconds(-1);
-            else 
+            else
                 entity.ExpirationDate = DateTime.Now.AddDays(7).Date.AddDays(1).AddSeconds(-1);
 
             entity.Status = nameof(AsynchronousStatus.Waiting);
             await _jobOfferRepository.CreateAsync(entity);
-            if(entity.Id == 0)
+            if (entity.Id == 0)
             {
                 throw new ApiException("Error while creating the job offer", StatusCodes.Status500InternalServerError);
             }
