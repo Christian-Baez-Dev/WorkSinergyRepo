@@ -76,7 +76,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetFile(DownloadDeliverableCommand query)
+        public async Task<IActionResult> GetFile([FromQuery] DownloadDeliverableCommand query)
         {
             return await Mediator.Send(query);
         }
