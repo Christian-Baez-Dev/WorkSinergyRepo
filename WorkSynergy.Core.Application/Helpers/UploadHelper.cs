@@ -22,7 +22,7 @@ namespace WorkSynergy.Core.Application.Helpers
             {
                 return "";
             }
-            string basePath = $"{type}/{entity}/{id}";
+            string basePath = $"/{type}/{entity}/{id}";
 
             string path = Path.Combine(Directory.GetCurrentDirectory(), $"Files{basePath}");
 
