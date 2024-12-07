@@ -81,7 +81,7 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Commands.CreateJobOffe
                         FixedPriceMilestone fixedMilestone = new()
                         {
                             EndDate = jobOffer.EndDate,
-                            Name = "First milestone",
+                            Name = jobOffer.Title,
                             StartDate = jobOffer.StartDate
                         };
                         contract.FixedPriceMilestones = new List<FixedPriceMilestone>() { fixedMilestone };
