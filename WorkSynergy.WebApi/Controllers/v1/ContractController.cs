@@ -54,12 +54,14 @@ namespace WorkSynergy.WebApi.Controllers.v1
             Summary = "Pay a certain amount to a contract",
             Description = "Pay a certain amount to a contract"
         )]
-        [Consumes(MediaTypeNames.Multipart.FormData)]
+        [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> PayContract(PayContractCommand command)
+        public async Task<IActionResult> PayContract(int id, [FromForm] PayContractCommand command)
         {
+            if (command.ContractId != id)
+                return BadRequest("The Id in the url and the id in the body doesn't match");
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             return ResponseHelper.CreateResponse(await Mediator.Send(command), this);
