@@ -5,6 +5,7 @@ using WorkSynergy.Core.Application.DTOs.Entities.JobApplication;
 using WorkSynergy.Core.Application.Features.JobApplications.Commands.ChangeStatusJobApplication;
 using WorkSynergy.Core.Application.Features.JobApplications.Commands.CreateJobApplication;
 using WorkSynergy.Core.Application.Features.JobApplications.Queries.GetAllJobApplicationByPost;
+using WorkSynergy.Core.Application.Features.JobApplications.Queries.GetAllJobApplicationByUser;
 using WorkSynergy.Core.Application.Interfaces.Services;
 using WorkSynergy.WebApi.Helpers;
 
@@ -48,7 +49,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Get(GetAllJobApplicationByPostQuery query)
+        public async Task<IActionResult> GetByPost(GetAllJobApplicationByPostQuery query)
         {
             var result = await Mediator.Send(query);
             if(result != null && result.Data.Count > 0)
@@ -61,7 +62,29 @@ namespace WorkSynergy.WebApi.Controllers.v1
             }
             return ResponseHelper.CreateResponse(result, this);
         }
-
+        [HttpGet("GetByUser/{id}")]
+        [SwaggerOperation(
+            Summary = "Get many job application based on a freelancer id",
+            Description = "This endpoint is responsible for the retrieve all the job applications of an freelancer"
+            )]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ManyJobApplicationResponse))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetByUser(GetAllJobApplicationByUserQuery query)
+        {
+            var result = await Mediator.Send(query);
+            if (result != null && result.Data.Count > 0)
+            {
+                foreach (var item in result.Data)
+                {
+                    var userResponse = await _accountService.GetByIdAsyncDTO(item.Post.CreatorUserId);
+                    item.User = userResponse.Data;
+                }
+            }
+            return ResponseHelper.CreateResponse(result, this);
+        }
         [HttpPut]
         [SwaggerOperation(
                Summary = "Change status of a job application",
