@@ -56,7 +56,14 @@ namespace WorkSynergy.Core.Application.Features.Currencies.Commands.UploadHourly
             {
                 throw new ApiException("Error while saving the deliverable", StatusCodes.Status500InternalServerError);
             }
-            milestone.CurrentHours += request.WorkedHours;
+            if (milestone.CurrentHours + request.WorkedHours > milestone.TotalHours)
+            {
+                milestone.CurrentHours = request.WorkedHours - (request.WorkedHours - milestone.TotalHours);
+            }
+            else
+            {
+                milestone.CurrentHours += request.WorkedHours;
+            }
             milestone.Deliverables = new List<HourlyMilestoneDeliverable>() { new() { FilePath = path} };
             var result = await _contractRepository.UpdateAsync(contract, contract.Id);
             var response = new Response<int>();
