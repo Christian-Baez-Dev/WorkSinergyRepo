@@ -32,7 +32,7 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Queries.GetAllJobOffer
 
         public async Task<ManyJobOffersResponse> Handle(GetAllJobOfferByClientQuery request, CancellationToken cancellationToken)
         {
-            var result = await _jobOfferRepository.GetAllOrderAndPaginateAsync(x => x.ClientUserId == request.Id && x.Status == nameof(AsynchronousStatus.Waiting), null, false, request.PageNumber, request.PageSize, x => x.ContractOption, x => x.Currency, x => x.Post);
+            var result = await _jobOfferRepository.GetAllOrderAndPaginateAsync(x => x.ClientUserId == request.Id && x.Status == nameof(AsynchronousStatus.Waiting), null, false, request.PageNumber, request.PageSize, x => x.ContractOption, x => x.Currency);
             ManyJobOffersResponse response = new();
             foreach (var item in result.Result)
             {
