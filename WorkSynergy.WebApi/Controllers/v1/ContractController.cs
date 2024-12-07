@@ -71,7 +71,6 @@ namespace WorkSynergy.WebApi.Controllers.v1
              Summary = "Download a deliverable",
              Description = "This endpoint is responsible to the download of a deliverable"
          )]
-        [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(FileResult), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
