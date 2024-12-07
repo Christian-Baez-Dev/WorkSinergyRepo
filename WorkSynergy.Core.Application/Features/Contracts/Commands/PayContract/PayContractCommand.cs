@@ -46,7 +46,7 @@ namespace WorkSynergy.Core.Application.Features.Contracts.Commands.PayContract
             var result = await _contractRepository.UpdateAsync(contract, contract.Id);
             var response = new Response<int>();
             response.Succeeded = true;
-            response.StatusCode = StatusCodes.Status204NoContent;
+            response.StatusCode = StatusCodes.Status200OK;
             return response;
         }
     }
