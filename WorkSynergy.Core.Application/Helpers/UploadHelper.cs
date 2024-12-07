@@ -18,7 +18,7 @@ namespace WorkSynergy.Core.Application.Helpers
                     return filePath;
                 }
             }
-            if (!Enum.IsDefined(typeof(UploadEntities), type))
+            if (!Enum.IsDefined(typeof(UploadEntities), entity) || !Enum.IsDefined(typeof(UploadTypes), type))
             {
                 return "";
             }
