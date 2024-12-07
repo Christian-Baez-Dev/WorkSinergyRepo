@@ -52,9 +52,9 @@ namespace WorkSynergy.WebApi.Controllers.v1
         public async Task<IActionResult> GetByPost(GetAllJobApplicationByPostQuery query)
         {
             var result = await Mediator.Send(query);
-            if(result != null && result.Data.Count > 0)
+            if (result != null && result.Data.Count > 0)
             {
-                foreach(var item in result.Data)
+                foreach (var item in result.Data)
                 {
                     var userResponse = await _accountService.GetByIdAsyncDTO(item.ApplicantId);
                     item.User = userResponse.Data;
@@ -82,6 +82,28 @@ namespace WorkSynergy.WebApi.Controllers.v1
                     var userResponse = await _accountService.GetByIdAsyncDTO(item.Post.CreatorUserId);
                     item.User = userResponse.Data;
                 }
+            }
+            return ResponseHelper.CreateResponse(result, this);
+        }
+        [HttpGet("Get/{id}")]
+        [SwaggerOperation(
+            Summary = "Get one job application based on a its id",
+            Description = "This endpoint is responsible for the retrieve a the job application"
+            )]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ManyJobApplicationResponse))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Get(GetJobApplicationByIdQuery query)
+        {
+            var result = await Mediator.Send(query);
+            if (result != null)
+            {
+
+                var userResponse = await _accountService.GetByIdAsyncDTO(result.Data.Post.CreatorUserId);
+                result.Data.User = userResponse.Data;
+
             }
             return ResponseHelper.CreateResponse(result, this);
         }
