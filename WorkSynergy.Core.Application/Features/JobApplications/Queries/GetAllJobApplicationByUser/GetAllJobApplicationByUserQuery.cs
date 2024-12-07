@@ -36,7 +36,7 @@ namespace WorkSynergy.Core.Application.Features.JobApplications.Queries.GetAllJo
             var result = await _jobApplicationRepository.GetAllOrderAndPaginateAsync(x => x.ApplicantId == request.Id && x.Status == nameof(AsynchronousStatus.Waiting), null, false, request.PageNumber, request.PageSize, x => x.Post);
             foreach (var item in result.Result)
             {
-                item.Post = await _postRepository.GetByIdIncludeAsync(item.PostId, x => x.Tags, x => x.Abilities);
+                item.Post = await _postRepository.GetByIdIncludeAsync(item.PostId, x => x.Tags, x => x.Abilities, x => x.ContractOption, x => x.Currency);
                 if (item.Post == null)
                 {
                     throw new ApiException("Invalid post", StatusCodes.Status500InternalServerError);

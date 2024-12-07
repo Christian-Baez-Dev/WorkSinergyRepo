@@ -31,11 +31,18 @@ namespace WorkSynergy.Core.Application.Features.Contracts.Commands.PayContract
         public async Task<Response<int>> Handle(PayContractCommand request, CancellationToken cancellationToken)
         {
             var contract = await _contractRepository.GetByIdIncludeAsync(request.ContractId, x => x.FixedPriceMilestones);
-            if (contract.FixedPriceMilestones == null || !contract.FixedPriceMilestones.Any())
+            if (contract == null)
             {
                 throw new ApiException("Invalid contract provided", StatusCodes.Status400BadRequest);
             }
-            contract.CurrentPayment =+ request.Amount;
+            if (contract.CurrentPayment + request.Amount > contract.TotalPayment)
+            {
+                contract.CurrentPayment = request.Amount - (request.Amount - contract.TotalPayment);
+            }
+            else
+            {
+                contract.CurrentPayment =+ request.Amount;
+            }
             var result = await _contractRepository.UpdateAsync(contract, contract.Id);
             var response = new Response<int>();
             response.Succeeded = true;
