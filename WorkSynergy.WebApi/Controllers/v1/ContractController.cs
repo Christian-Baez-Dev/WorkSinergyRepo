@@ -3,6 +3,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 using WorkSynergy.Core.Application.DTOs.Entities.Contract;
 using WorkSynergy.Core.Application.Features.Contracts.Commands.DownloadDeliverable;
+using WorkSynergy.Core.Application.Features.Contracts.Commands.PayContract;
 using WorkSynergy.Core.Application.Features.Contracts.Queries.GetAllContract;
 using WorkSynergy.Core.Application.Features.Contracts.Queries.GetByIdContract;
 using WorkSynergy.Core.Application.Features.Currencies.Commands.UploadFixedPriceMilestoneDeliverable;
@@ -43,6 +44,21 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UploadHourlyDeliverable(UploadHourlyMilestoneDeliverableCommand command)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            return ResponseHelper.CreateResponse(await Mediator.Send(command), this);
+        }
+        [HttpPatch("PayContract")]
+        [SwaggerOperation(
+            Summary = "Pay a certain amount to a contract",
+            Description = "Pay a certain amount to a contract"
+        )]
+        [Consumes(MediaTypeNames.Multipart.FormData)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> PayContract(PayContractCommand command)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
