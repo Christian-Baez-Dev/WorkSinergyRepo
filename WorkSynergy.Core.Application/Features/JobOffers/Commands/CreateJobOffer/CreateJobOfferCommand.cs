@@ -48,26 +48,26 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Commands.CreateJobOffe
                     }
                     break;
                 case (int)ContractOptions.PerHour:
-                    if(request.TotalHours == 0)
+                    if (request.TotalHours == 0)
                     {
                         throw new ApiException("Total hours must be more than 0", StatusCodes.Status400BadRequest);
                     }
-                    if (TimeSpan.FromHours(request.TotalHours).TotalMilliseconds / TimeSpan.FromHours(8).TotalMilliseconds > (request.EndDate - request.StartDate).TotalDays)
-                    {
-                        throw new ApiException("Invalid total hours provided. The hours cannot exceed the 8 laborable hours", StatusCodes.Status400BadRequest);
+                    //if (TimeSpan.FromHours(request.TotalHours).TotalMilliseconds / TimeSpan.FromHours(8).TotalMilliseconds > (request.EndDate - request.StartDate).TotalDays)
+                    //{
+                    //    throw new ApiException("Invalid total hours provided. The hours cannot exceed the 8 laborable hours", StatusCodes.Status400BadRequest);
 
-                    }
-                    if (TimeSpan.FromHours(request.TotalHours).TotalMilliseconds / TimeSpan.FromHours(8).TotalMilliseconds > (request.EndDate.AddDays(-7) - request.StartDate).TotalDays)
-                    {
-                        throw new ApiException("Invalid end date provided. The end date has to be at least 7 days extra than the maximum of laborable days", StatusCodes.Status400BadRequest);
+                    //}
+                    //if (TimeSpan.FromHours(request.TotalHours).TotalMilliseconds / TimeSpan.FromHours(8).TotalMilliseconds > (request.EndDate.AddDays(-7) - request.StartDate).TotalDays)
+                    //{
+                    //    throw new ApiException("Invalid end date provided. The end date has to be at least 7 days extra than the maximum of laborable days", StatusCodes.Status400BadRequest);
 
-                    }
+                    //}
                     break;
                 default:
                     throw new ApiException("Invalid contract option provided", StatusCodes.Status500InternalServerError);
             }
 
-            
+
             var response = new Response<int>();
             var entity = _mapper.Map<JobOffer>(request);
 

@@ -23,77 +23,77 @@ namespace WorkSynergy.Infrastucture.Persistence.Seeds
                     new JobApplication 
                     {
                         ApplicantId = "freelancer1-id",
-                        Description = "Quiero aplicar ola",
+                        Description = "Quiero aplicar a una oportunidad de trabajo en un area donde soy experto",
                         PostId = 1,
                         Status = nameof(AsynchronousStatus.Waiting),
                     },
                     new JobApplication
                     {
                         ApplicantId = "freelancer2-id",
-                        Description = "Quiero aplicar ola",
+                        Description = "Quiero aplicar a una oportunidad de trabajo en un area donde soy experto",
                         PostId = 1,
                         Status = nameof(AsynchronousStatus.Waiting),
                     },
                     new JobApplication
                     {
                         ApplicantId = "freelancer3-id",
-                        Description = "Quiero aplicar ola",
+                        Description = "Quiero aplicar a una oportunidad de trabajo en un area donde soy experto",
                         PostId = 1,
                         Status = nameof(AsynchronousStatus.Waiting),
                     },
                     new JobApplication
                     {
                         ApplicantId = "freelancer1-id",
-                        Description = "Quiero aplicar ola",
+                        Description = "Quiero aplicar a una oportunidad de trabajo en un area donde soy experto",
                         PostId = 2,
                         Status = nameof(AsynchronousStatus.Waiting),
                     },
                     new JobApplication
                     {
                         ApplicantId = "freelancer4-id",
-                        Description = "Quiero aplicar ola",
+                        Description = "Quiero aplicar a una oportunidad de trabajo en un area donde soy experto",
                         PostId = 2,
                         Status = nameof(AsynchronousStatus.Waiting),
                     },
                     new JobApplication
                     {
                         ApplicantId = "freelancer2-id",
-                        Description = "Quiero aplicar ola",
+                        Description = "Quiero aplicar a una oportunidad de trabajo en un area donde soy experto",
                         PostId = 3,
                         Status = nameof(AsynchronousStatus.Waiting),
                     },
                     new JobApplication
                     {
                         ApplicantId = "freelancer2-id",
-                        Description = "Quiero aplicar ola",
+                        Description = "Quiero aplicar a una oportunidad de trabajo en un area donde soy experto",
                         PostId = 4,
                         Status = nameof(AsynchronousStatus.Waiting),
                     },
                     new JobApplication
                     {
                         ApplicantId = "freelancer3-id",
-                        Description = "Quiero aplicar ola",
+                        Description = "Quiero aplicar a una oportunidad de trabajo en un area donde soy experto",
                         PostId = 5,
                         Status = nameof(AsynchronousStatus.Waiting),
                     },
                     new JobApplication
                     {
                         ApplicantId = "freelancer3-id",
-                        Description = "Quiero aplicar ola",
+                        Description = "Quiero aplicar a una oportunidad de trabajo en un area donde soy experto",
                         PostId = 6,
                         Status = nameof(AsynchronousStatus.Waiting),
                     },
                     new JobApplication
                     {
                         ApplicantId = "freelancer4-id",
-                        Description = "Quiero aplicar ola",
+                        Description = "Quiero aplicar a una oportunidad de trabajo en un area donde soy experto",
                         PostId = 7,
                         Status = nameof(AsynchronousStatus.Waiting),
                     },
                     new JobApplication
                     {
                         ApplicantId = "freelancer4-id",
-                        Description = "Quiero aplicar ola",
+                        Description = "Quiero aplicar a una oportunidad de trabajo en un area donde soy experto",
                         PostId = 8,
                         Status = nameof(AsynchronousStatus.Waiting),
                     },
