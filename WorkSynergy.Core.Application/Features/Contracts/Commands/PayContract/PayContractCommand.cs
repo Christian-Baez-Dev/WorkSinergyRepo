@@ -41,7 +41,7 @@ namespace WorkSynergy.Core.Application.Features.Contracts.Commands.PayContract
             }
             else
             {
-                contract.CurrentPayment =+ request.Amount;
+                contract.CurrentPayment += request.Amount;
             }
             var result = await _contractRepository.UpdateAsync(contract, contract.Id);
             var response = new Response<int>();
