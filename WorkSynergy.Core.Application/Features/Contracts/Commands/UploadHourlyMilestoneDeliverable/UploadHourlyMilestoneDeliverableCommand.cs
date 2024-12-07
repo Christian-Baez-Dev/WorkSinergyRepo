@@ -61,7 +61,8 @@ namespace WorkSynergy.Core.Application.Features.Currencies.Commands.UploadHourly
             var result = await _contractRepository.UpdateAsync(contract, contract.Id);
             var response = new Response<int>();
             response.Succeeded = true;
-            response.StatusCode = StatusCodes.Status204NoContent;
+            response.Data = milestone.Id;
+            response.StatusCode = StatusCodes.Status200OK;
             return response;
         }
     }

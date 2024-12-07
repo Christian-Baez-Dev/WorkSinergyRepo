@@ -25,7 +25,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
             Description = "Upload fixed price"
         )]
         [Consumes(MediaTypeNames.Multipart.FormData)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UploadFixedPriceDeliverable(UploadFixedPriceMilestoneDeliverableCommand command)
@@ -40,7 +40,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
             Description = "Upload fixed price"
         )]
         [Consumes(MediaTypeNames.Multipart.FormData)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UploadHourlyDeliverable(UploadHourlyMilestoneDeliverableCommand command)

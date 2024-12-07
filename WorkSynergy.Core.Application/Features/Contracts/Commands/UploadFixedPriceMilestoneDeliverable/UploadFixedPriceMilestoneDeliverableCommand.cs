@@ -47,7 +47,7 @@ namespace WorkSynergy.Core.Application.Features.Currencies.Commands.UploadFixedP
                 throw new ApiException("Invalid contract provided", StatusCodes.Status400BadRequest);
             }
             var milestone = contract.FixedPriceMilestones.FirstOrDefault(x => x.Id == request.MilestoneId);
-            if (milestone == null)
+            if (milestone != null)
             {
                 throw new ApiException("Invalid milestone provided", StatusCodes.Status400BadRequest);
             }
@@ -60,8 +60,10 @@ namespace WorkSynergy.Core.Application.Features.Currencies.Commands.UploadFixedP
             milestone.FilePath = path;
             var result = await _contractRepository.UpdateAsync(contract, contract.Id);
             var response = new Response<int>();
+
             response.Succeeded = true;
-            response.StatusCode = StatusCodes.Status204NoContent;
+            response.Data = milestone.Id;
+            response.StatusCode = StatusCodes.Status200OK;
             return response;
         }
     }
