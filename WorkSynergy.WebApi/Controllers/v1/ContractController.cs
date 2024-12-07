@@ -58,7 +58,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> PayContract(int id, [FromForm] PayContractCommand command)
+        public async Task<IActionResult> PayContract(int id, [FromBody] PayContractCommand command)
         {
             if (command.ContractId != id)
                 return BadRequest("The Id in the url and the id in the body doesn't match");
