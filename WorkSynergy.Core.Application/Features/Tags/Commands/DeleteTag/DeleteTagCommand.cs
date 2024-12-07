@@ -32,7 +32,7 @@ namespace WorkSynergy.Core.Application.Features.Tags.Commands.DeleteTag
             }
             await _tagRepository.DeleteAsync(post);
             response.Succeeded = true;
-            response.StatusCode = StatusCodes.Status204NoContent;
+            response.StatusCode = StatusCodes.Status200OK;
             return response;
         }
     }

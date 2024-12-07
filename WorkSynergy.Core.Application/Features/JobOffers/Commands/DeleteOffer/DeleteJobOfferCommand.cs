@@ -32,7 +32,7 @@ namespace WorkSynergy.Core.Application.Features.JobOffers.Commands.DeleteJobOffe
             }
             await _jobOfferRepository.DeleteAsync(ability);
             response.Succeeded = true;
-            response.StatusCode = StatusCodes.Status204NoContent;
+            response.StatusCode = StatusCodes.Status200OK;
             return response;
         }
     }

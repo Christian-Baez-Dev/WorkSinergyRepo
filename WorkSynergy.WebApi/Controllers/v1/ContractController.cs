@@ -55,7 +55,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
             Description = "Pay a certain amount to a contract"
         )]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> PayContract(int id, [FromBody] PayContractCommand command)

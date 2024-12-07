@@ -121,8 +121,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
             Description = "Recieve the paremeter to change the status of a job offer"
         )]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult>ChangeStatus (int id, [FromBody]ChangeStatusJobOfferCommand command)
@@ -139,7 +138,7 @@ namespace WorkSynergy.WebApi.Controllers.v1
             Description = "Recieve the Id to delete the Job Offers"
         )]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
